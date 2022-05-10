@@ -26,22 +26,19 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
-  lastName: {
-    type: String,
-    maxlength: 20,
-    default: "lastName",
-    trim: true,
-  },
-  location: {
-    type: String,
-    trim: true,
-    maxlength: 20,
-    default: "my city",
-  },
   reset_token: {
     type: String,
     maxlength: 30,
     default: null,
+  },
+  confirm_token: {
+    type: String,
+    maxlength: 30,
+    default: null,
+  },
+  confirmed: {
+    type: Boolean,
+    default: false,
   },
 });
 

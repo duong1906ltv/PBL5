@@ -14,16 +14,15 @@ const register = async (req, res, next) => {
     throw new BadRequestError("Email already in use");
   }
   const user = await User.create({ name, email, password });
+  send_confirm_email(email);
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({
     user: {
       email: user.email,
-      lastName: user.lastName,
-      location: user.location,
       name: user.name,
+      confirm_token: user.confirm_token,
     },
     token,
-    location: user.location,
   });
 };
 const login = async (req, res) => {
@@ -107,6 +106,34 @@ const reset_password = async (req, res) => {
   user.password = newPassword;
   user.save();
   res.json("UPDATED");
+};
+
+async function send_confirm_email(email) {
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    throw new UnAuthenticatedError("Invalid Credentials");
+  }
+  const token = randtoken.generate(20);
+  const subject = "Confirm your account";
+  const html =
+    '<p>Please click here <a href="http://localhost:3000/confirm_email/' +
+    token +
+    '">link</a> to confirm your account</p>';
+  const sent = sendEmail(email, token, subject, html);
+  if (sent != 0) {
+    user.confirm_token = token;
+    user.save();
+  }
+}
+
+const confirm_user = async (req, res) => {
+  const { token } = req.body;
+  const user = await User.findOne({ where: { confirm_token: token } });
+  if (!user) {
+    res.json({ error: "User Doesn't Exist" });
+  }
+  user.update({ confirmed: true });
+  res.status(StatusCodes.OK).json("SUCCESS");
 };
 
 export { register, login, updateUser, reset_password_email, reset_password };
