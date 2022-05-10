@@ -1,25 +1,38 @@
-import React from 'react'
-import { BriefPost, Menu } from '../../components'
+import React, { useState } from 'react'
+import { BriefPost, Menu, Filter } from '../../components'
 import styled from 'styled-components'
 import posts from '../../utils/post'
 
 function HomePage() {
+  const [openMenuItem, setOpenMenuItem] = useState(-1)
   function getHotPosts() {
     return posts.filter((post) => post.status === 'hot')
   }
-
   function getNewPosts() {
     return posts.filter((post) => post.status === 'new')
   }
-
   const hotPosts = getHotPosts()
-
   const newPosts = getNewPosts()
+
+  function toggle(id) {
+    setOpenMenuItem((prevId) => (prevId === id ? 0 : id))
+  }
+
+  if (openMenuItem === 1) {
+    return (
+      <Wrapper>
+        <div className='container'>
+          <Menu toggle={toggle} />
+          <Filter />
+        </div>
+      </Wrapper>
+    )
+  }
 
   return (
     <Wrapper>
       <div className='container'>
-        <Menu />
+        <Menu toggle={toggle} />
         <div className='contents'>
           <div className='hot-content'>
             <h3>Hot Posts</h3>
