@@ -3,13 +3,14 @@ import Register from "./pages/Register";
 import Landing from "./pages/Landing";
 import ResetPassword from "./pages/ResetPassword";
 import { Error } from "./pages";
+import Resending from "./pages/Resending";
 import {
   AddJob,
   AllJobs,
   Profile,
   SharedLayout,
   Stats,
-  HomePage
+  HomePage,
 } from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -34,6 +35,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
+        <Route path="/resending" element={<Resending />} />
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
