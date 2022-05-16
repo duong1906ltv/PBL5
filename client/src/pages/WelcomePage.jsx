@@ -1,5 +1,6 @@
 import Wrapper from "../assets/wrappers/WelcomePage";
-import logo from "../assets/images/logo.svg"
+import logo from "../assets/images/logo.svg";
+import { Link } from "react-router-dom";
 
 const Welcome = () => {
   return (
@@ -8,7 +9,7 @@ const Welcome = () => {
         <img src={logo} />
         <h1>Welcome!!!</h1>
         <p>Congratulations, you have successfully registered.</p>
-        <button>Continue</button>
+        <Link to="/"><button>Continue</button></Link>
       </div>
     </Wrapper>
   );
