@@ -2,14 +2,12 @@ import styled from "styled-components";
 
 const Wrapper = styled.main`
   text-align: center;
-  body {
-    background-image: url(https://i.pinimg.com/originals/14/f1/55/14f15590d4723f4826076d0620979cfa.jpg);
+    background-image: url('https://i.pinimg.com/originals/14/f1/55/14f15590d4723f4826076d0620979cfa.jpg');
     text-align: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-position: center;
-  }
+    background-position: center;  
   .image {
   position: right;
   }
