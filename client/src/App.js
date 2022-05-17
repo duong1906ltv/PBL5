@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Landing from "./pages/Landing";
 import ResetPassword from "./pages/ResetPassword";
+import Welcome from "./pages/WelcomePage";
 import { Error } from "./pages";
 import {
   AddJob,
@@ -34,6 +35,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
