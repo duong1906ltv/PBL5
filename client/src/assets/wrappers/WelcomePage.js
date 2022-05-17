@@ -2,16 +2,17 @@ import styled from "styled-components";
 
 const Wrapper = styled.main`
   text-align: center; 
+  font-family: "Comic Sans MS", cursive, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;  
   background-image: url('https://img.freepik.com/free-vector/white-background-with-blue-confetti-celebration-carnival-ribbons_29865-936.jpg?w=1380');
   background-size: cover;
   h1 {
-    margin-top: 2rem;
     margin-bottom: 0.5rem;
     font-size: 8rem;
     color: coral;
+    font-family: "Comic Sans MS", cursive, sans-serif;
   }
   p {
     margin-top: 0.5rem;
