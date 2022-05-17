@@ -15,7 +15,7 @@ function HomePage() {
   const newPosts = getNewPosts()
 
   function toggle(id) {
-    setOpenMenuItem((prevId) => (prevId === id ? 0 : id))
+    setOpenMenuItem((prevId) => (prevId < 0 ? id : id * -1))
   }
 
   if (openMenuItem === 1) {
