@@ -7,7 +7,7 @@ const Resending = () => {
     <Wrapper className="full-page">
       <div>
       <div className='image'>
-      <img src={img} alt="logo" />
+      <img src={img} width="650" height="150" alt="logo" />
       </div>
      <div className='ResendContainer'>
        
