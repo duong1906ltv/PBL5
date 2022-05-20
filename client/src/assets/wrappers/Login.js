@@ -2,20 +2,27 @@ import styled from "styled-components";
 
 const Wrapper = styled.main`
 
-    background: linear-gradient(120deg,#0a90ea, #08a073);
 
-    
+
+
+
+.logo {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 1.38rem;
+        margin-top: 10px;
+      }   
 .login{
     position: absolute;
     width: 400px;
-    height: 600px;
-    border: 2px solid grey;
+    height: 700px;
+    border: 3px solid grey;
     border-radius: 10px;
     text-align: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;    
+    background: linear-gradient(120deg,#0a90ea, #08a073);   
     
 }
 h1{
@@ -31,6 +38,7 @@ input{
     border-radius: 10px;
     border: 2px solid grey;
     padding-left: 20px;
+    
 }
 button{
     width: 300px;
@@ -50,12 +58,12 @@ button{
 }
 
 .continue{
-    width: 300px;
+    width: 250px;
     height: 45px;
     margin-bottom: 25px;
     border-radius: 5px;
     border: none;
-    background: rgba(255, 255, 255, 0.266);
+    background: white;
     color: rgb(0, 0, 0);
     font-size: medium;
     font-family: sans-serif;
@@ -77,5 +85,18 @@ button:hover{
     margin: 20px 20px 20px 20px ;
 
 }
+
+.icon1{
+    color: red;
+    padding: 10px;
+    min-width: 20px;
+}
+
+.icon2{
+    color: blue;
+    padding: 10px;
+    min-width: 20px;
+}
+
 `;
 export default Wrapper

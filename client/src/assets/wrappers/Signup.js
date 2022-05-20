@@ -2,9 +2,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.main`
 
-    background: linear-gradient(120deg,#0a90ea, #08a073);
-
     
+
+.logo {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 1.38rem;
+        margin-top: 10px;
+      }   
 .login{
     position: absolute;
     width: 400px;
@@ -15,7 +20,7 @@ const Wrapper = styled.main`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;    
+    background: linear-gradient(120deg,#0a90ea, #08a073);   
     
 }
 h1{
@@ -33,7 +38,7 @@ input{
     padding-left: 20px;
 }
 button{
-    width: 300px;
+    width: 250px;
     height: 45px;
     margin-bottom: 25px;
     border-radius: 5px;

@@ -13,17 +13,9 @@ const Forgot = () => {
                     <div class="signup">
                         <a href="http://localhost:3000/Login">Back to Login</a>
                     </div>
-
              </div> 
-         
-            
-           
-               
-           
-           
         </Wrapper>
     );
 
 };
-
 export default Forgot;
