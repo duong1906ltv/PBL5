@@ -21,7 +21,7 @@ function BriefPost(props) {
         <sup>2</sup>
       </span>
       <span className='position-content'>{position}</span>
-      {status === 'hot' && <span className='time-content'>{time}</span>}
+      {status !== 'new' && <span className='time-content'>{time}</span>}
     </div>
   )
 
@@ -42,12 +42,12 @@ function BriefPost(props) {
           <div className='post-content'>
             <div className='main-content'>
               <h5>{title}</h5>
-              {status === 'hot' && infoContent}
-              {status === 'hot' && (
+              {status !== 'new' && infoContent}
+              {status !== 'new' && (
                 <p className='description-content'>{description}</p>
               )}
             </div>
-            {status === 'hot' && authorContent}
+            {status !== 'new' && authorContent}
           </div>
         </div>
         {status === 'new' && infoContent}

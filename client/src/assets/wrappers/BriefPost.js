@@ -1,6 +1,8 @@
 import styled from "styled-components"
 
 const Wrapper = styled.div`
+  background-color: var(--white);
+  
   .post {
     width: 100%;
     display: flex;

@@ -10,7 +10,8 @@ import {
   Profile,
   SharedLayout,
   Stats,
-  HomePage
+  HomePage,
+  DetailPost
 } from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
           <Route path="stats" element={<Stats />} />
+          <Route path="detail-post" element={<DetailPost />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />
