@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Landing from "./pages/Landing";
 import ResetPassword from "./pages/ResetPassword";
+import Welcome from "./pages/WelcomePage";
 import { Error } from "./pages";
 import Resending from "./pages/Resending";
 import {
@@ -11,6 +12,7 @@ import {
   SharedLayout,
   Stats,
   HomePage,
+  DetailPost
 } from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -31,6 +33,7 @@ function App() {
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
           <Route path="stats" element={<Stats />} />
+          <Route path="detail-post" element={<DetailPost />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />

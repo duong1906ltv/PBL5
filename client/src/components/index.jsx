@@ -7,6 +7,7 @@ import SmallSidebar from './SmallSidebar'
 import BriefPost from './BriefPost'
 import Menu from './Menu'
 import Filter from './Filter'
+import ImageSlider from './ImageSlider'
 
 export {
   Logo,
@@ -18,4 +19,5 @@ export {
   BriefPost,
   Menu,
   Filter,
+  ImageSlider,
 }

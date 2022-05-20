@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     width: 100%;
   }
 
-  .menu-item {
+  .menu-item { 
     display: flex;
     align-items: center;
     justify-content: center;
