@@ -7,15 +7,16 @@ function Filter() {
         <div className='input-group flex-row'>
           <label htmlFor='city'>City</label>
           <select name='city' id='city'>
-            <option value='1'>Da Nang</option>
-            <option value='2'>Vung Tau</option>
+            <option value='1'>Đà Nẵng</option>
+            <option value='2'>Hà Nội</option>
+            <option value='2'>Hồ Chí Minh</option>
           </select>
         </div>
         <div className='input-group flex-row'>
           <label htmlFor='district'>District</label>
           <select name='district' id='district'>
-            <option value='1'>Hai Chau</option>
-            <option value='2'>Son Tra</option>
+            <option value='1'>Hải Châu</option>
+            <option value='2'>Sơn Trà</option>
           </select>
         </div>
         <div className='input-group flex-row'>
@@ -75,7 +76,7 @@ function Filter() {
             <input type='radio' id='find-more' name='status' />
           </div>
         </div>
-        <button>Submit</button>
+        <button className='btn'>Submit</button>
       </form>
     </Wrapper>
   )

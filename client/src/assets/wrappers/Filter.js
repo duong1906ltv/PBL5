@@ -1,6 +1,15 @@
 import styled from "styled-components"
 
 const Wrapper = styled.div`
+  .form{
+    background: linear-gradient(120deg,#08a073,#0a90ea );
+    color: black;
+  }
+  .btn{
+    background: orange;
+    text-align: center;
+    margin-left: 180px;
+  }
   .input-group {
     display: flex;
     margin-top: 1rem; 
