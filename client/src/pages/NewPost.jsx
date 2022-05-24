@@ -30,7 +30,6 @@ const NewPost = () => {
     for (const x of data) {
       citis.options[citis.options.length] = new Option(x.Name, x.Id)
     }
-
     // xứ lý khi thay đổi tỉnh thành thì sẽ hiển thị ra quận huyện thuộc tỉnh thành đó
     citis.onchange = function () {
       districts.length = 1
@@ -62,86 +61,55 @@ const NewPost = () => {
   return (
     <Wrapper>
       <form>
-        <div className='address-box'>
-          <h5 className='label-main'>Address</h5>
-          <div className='post-row'>
-            <div class='input-group'>
-              <select name='city' id='city'>
-                <option value='' selected>
-                  Select city
-                </option>
-              </select>
-            </div>
-            <div class='input-group'>
-              <select name='district' id='district'>
-                <option value='' selected>
-                  Select district
-                </option>
-              </select>
-            </div>
-            <div class='input-group'>
-              <select name='ward' id='ward'>
-                <option value='' selected>
-                  Select ward
-                </option>
-              </select>
-            </div>
-            {/* <div>
+            <div className='form-control'>
               <label>City</label>
-              <select>
-                <option>Da Nang</option>
-                <option>Ha Noi</option>
+              <select name='city' id='city' >
+                <option value='' selected />                
               </select>
             </div>
-            <div>
+            <div className='form-control'>
               <label>District</label>
-              <select>
-                <option>Hai Chau</option>
-                <option>Lien Chieu</option>
+              <select name='district' id='district'>
+                <option value='' selected/>
               </select>
-            </div> 
-            <div>
+            </div>
+            <div className='form-control'>
               <label>Ward</label>
-              <select>
-                <option>Hoa Khanh</option>
-                <option>Hoa Vang</option>
+              <select name='ward' id='ward'>
+                <option value='' selected/>
               </select>
-            </div> */}
-          </div>
-          <div>
+            </div>
+          <div className='form-control'>
             <label>Specific Address</label>
             <input type='text'></input>
           </div>
+          <div className='form-control'>
+            <label>Price</label>
+            <input type='text' placeholder='VND'></input>
+          </div>
+          <div className='form-control'>
+            <label>Deposit</label>
+            <input type='text' placeholder='VND'></input>
+          </div>
+          <div className='form-control'>
+            <label>Area</label>
+            <input type='text' placeholder='m2'></input>
+          </div>
+        <div className='form-control'>
+          <label>Tittle</label>                    
+          <input type='text'></input>          
         </div>
-        <div className='post-row'>
-          <div>
-            <label className='label-main'>Price</label>
-            <input type='text'></input>
-          </div>
-          <div>
-            <label className='label-main'>Deposit</label>
-            <input type='text'></input>
-          </div>
-          <div>
-            <label className='label-main'>Area</label>
-            <input type='text'></input>
-          </div>
-        </div>
-        <div>
-          <label className='label-main'>Tittle</label>
+        <div className='form-control'>
+          <label>Description</label>
           <input type='text'></input>
         </div>
         <div>
-          <label className='label-main'>Description</label>
-          <input type='text'></input>
-        </div>
-        <div className='post-row'>
-          <div>
-            <label className='label-main'>Images</label>
+          <div className='form-control'>
+            <label>Images</label>
             <input type='file'></input>
           </div>
-          <div>
-            <label className='label-main'>Videos</label>
+          <div className='form-control'>
+            <label>Videos</label>
             <input type='file'></input>
           </div>
         </div>

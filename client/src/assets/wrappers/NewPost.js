@@ -2,32 +2,30 @@ import styled from "styled-components";
 
 const Wrapper = styled.main`
   text-align: left; 
-  display: flex;
+  display: flex;  
   align-items: center;
   justify-content: center;   
   background-size: cover;
-  position: absolute;
-  .post-row {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-  }
-  .address-box{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border: 1px solid var(--primary-600);
-    border-radius: 1rem;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  .label-main{
+  font-size: 20px;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  label{
+    margin-right: 1rem;
     font-weight: bold;
   }
-  label{
-    margin-right: 0.5rem;
-  }  
+  input{
+    width:70%;
+  }
+  .form-control{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: stretch;
+  } 
+  
   button{    
     font-size: 1rem;
     padding-left: 2rem;
