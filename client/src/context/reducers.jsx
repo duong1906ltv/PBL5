@@ -6,6 +6,8 @@ import {
   SETUP_USER_SUCCESS,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -64,6 +66,16 @@ const reducer = (state, action) => {
       token: null,
       userLocation: "",
       jobLocation: "",
+    };
+  }
+  if (action.type === GET_POSTS_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_POSTS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      posts: action.payload.posts,
     };
   }
 

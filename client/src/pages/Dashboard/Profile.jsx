@@ -1,68 +1,68 @@
-import React from 'react'
-import styled from 'styled-components'
-import userPosts from '../../utils/userPost'
-import { NavLink } from 'react-router-dom'
-import { BsThreeDots } from 'react-icons/bs'
-import { BriefPost } from '../../components'
+import React from "react";
+import styled from "styled-components";
+import userPosts from "../../utils/userPost";
+import { NavLink } from "react-router-dom";
+import { BsThreeDots } from "react-icons/bs";
+import { BriefPost } from "../../components";
 
 function Profile() {
-  const posts = userPosts
+  const posts = userPosts;
   return (
     <Wrapper>
-      <header className='profile-header'>
-        <div className='profile-background'>
-          <div className='profile-ava'>
+      <header className="profile-header">
+        <div className="profile-background">
+          <div className="profile-ava">
             <img
-              src='https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg  '
-              alt='user-name'
+              src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg  "
+              alt="user-name"
             />
           </div>
         </div>
-        <div className='profile-info'>
+        <div className="profile-info">
           <p>Dinh Duong</p>
           <p>Address...</p>
           <p>Introduction...</p>
         </div>
-        <nav className='profile-nav'>
-          <div className='nav-list nav-left'>
-            <NavLink to='/' className='nav-item'>
+        <nav className="profile-nav">
+          <div className="nav-list nav-left">
+            <NavLink to="/" className="nav-item">
               <span>10</span>
               <span>Posts</span>
             </NavLink>
-            <NavLink to='/' className='nav-item'>
+            <NavLink to="/" className="nav-item">
               <span>5</span>
               <span>Follower</span>
             </NavLink>
-            <NavLink to='/' className='nav-item'>
+            <NavLink to="/" className="nav-item">
               <span>1</span>
               <span>Following</span>
             </NavLink>
           </div>
-          <div className='nav-list nav-right'>
+          <div className="nav-list nav-right">
             <div>
-              <button className='nav-item chat-btn'>Chat</button>
+              <button className="nav-item chat-btn">Chat</button>
             </div>
             <div>
-              <button className='nav-item follow-btn'>Follow</button>
+              <button className="nav-item follow-btn">Follow</button>
             </div>
             <div>
-              <button className='nav-item more-btn'>
+              <button className="nav-item more-btn">
                 <BsThreeDots />
               </button>
             </div>
           </div>
         </nav>
       </header>
-      <section className='profile-content'>
-        <div className='content-header'></div>
-        <div className='content-main'>
+      <section className="profile-content">
+        <div className="content-header"></div>
+        <div className="content-main">
           {posts.map((post) => (
             <BriefPost key={post.id} post={post} />
           ))}
         </div>
       </section>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
@@ -74,7 +74,7 @@ const Wrapper = styled.main`
 
     .profile-background {
       height: 20vh;
-      background: url('https://wallpaperaccess.com/full/1129092.jpg');
+      background: url("https://wallpaperaccess.com/full/1129092.jpg");
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -190,6 +190,6 @@ const Wrapper = styled.main`
       gap: 1rem;
     }
   }
-`
+`;
 
-export default Profile
+export default Profile;

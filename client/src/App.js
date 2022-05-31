@@ -7,12 +7,12 @@ import { Error } from "./pages";
 import Resending from "./pages/Resending";
 import {
   AddJob,
-  AllJobs,
+  AllPosts,
   Profile,
   SharedLayout,
   Stats,
   HomePage,
-  DetailPost
+  DetailPost,
 } from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -29,7 +29,7 @@ function App() {
           }
         >
           <Route index element={<HomePage />} />
-          <Route path="all-jobs" element={<AllJobs />} />
+          <Route path="all-jobs" element={<AllPosts />} />
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
           <Route path="stats" element={<Stats />} />

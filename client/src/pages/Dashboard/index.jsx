@@ -1,9 +1,9 @@
-import AddJob from './AddJob'
-import AllJobs from './AllJobs'
-import Profile from './Profile'
-import SharedLayout from './SharedLayout'
-import Stats from './Stats'
-import HomePage from './HomePage'
-import DetailPost from './DetailPost'
+import AddJob from "./AddJob";
+import AllPosts from "./AllPosts";
+import Profile from "./Profile";
+import SharedLayout from "./SharedLayout";
+import Stats from "./Stats";
+import HomePage from "./HomePage";
+import DetailPost from "./DetailPost";
 
-export { AllJobs, Profile, SharedLayout, Stats, AddJob, HomePage, DetailPost }
+export { AllPosts, Profile, SharedLayout, Stats, AddJob, HomePage, DetailPost };

@@ -1,25 +1,25 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError } from "../errors/index.js";
+import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 import randtoken from "rand-token";
 import nodemailer from "nodemailer";
 
 const register = async (req, res, next) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
     throw new BadRequestError("Please provide all values");
   }
   const userAlreadyExists = await User.findOne({ email });
   if (userAlreadyExists) {
     throw new BadRequestError("Email already in use");
   }
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ username, email, password });
   send_confirm_email(email);
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({
     user: {
       email: user.email,
-      name: user.name,
+      username: user.username,
       confirm_token: user.confirm_token,
     },
     token,
@@ -39,7 +39,7 @@ const login = async (req, res) => {
   }
   const token = user.createJWT();
   user.password = undefined;
-  res.status(StatusCodes.OK).json({ user, token, location: user.location });
+  res.status(StatusCodes.OK).json({ user, token });
 };
 const updateUser = (req, res) => {
   res.send("update user");
