@@ -17,7 +17,6 @@ import postRouter from "./routes/postRoutes.js";
 // middleware
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandleMiddleware from "./middleware/error-handler.js";
-import authenticateUser from "./middleware/auth.js";
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -34,7 +33,7 @@ app.get("/test", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/auth", jobRouter);
-app.use("/api/post", authenticateUser, postRouter);
+app.use("/api/post", postRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandleMiddleware);

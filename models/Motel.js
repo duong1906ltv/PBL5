@@ -47,11 +47,11 @@ const MotelSchema = new mongoose.Schema({
     required: true,
   },
   rent_price: {
-    type: Number,
+    type: String,
     required: true,
   },
   motel_area: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: String,
   },
   rental_object: {
     type: String,
@@ -61,6 +61,14 @@ const MotelSchema = new mongoose.Schema({
   },
   motel_video: {
     type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  status: {
+    type: String,
+    default: "New",
   },
 });
 

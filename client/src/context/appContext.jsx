@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useState, useReducer, useContext, useEffect } from "react";
 import reducer from "./reducers";
 import axios from "axios";
 import {
@@ -9,6 +9,8 @@ import {
   SETUP_USER_SUCCESS,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -34,6 +36,7 @@ const initialState = {
   userLocation: userLocation || "",
   jobLocation: userLocation || "",
   showSidebar: false,
+  posts: [],
 };
 
 const AppContext = React.createContext();
@@ -98,7 +101,23 @@ const AppProvider = ({ children }) => {
     } catch (error) {}
   };
 
-  
+  const getPosts = async () => {
+    dispatch({ type: GET_POSTS_BEGIN });
+    try {
+      const { data } = await axios.get(`/api/post`);
+      const posts = data;
+      dispatch({
+        type: GET_POSTS_SUCCESS,
+        payload: {
+          posts,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+  };
+
 
   return (
     <AppContext.Provider
@@ -109,6 +128,7 @@ const AppProvider = ({ children }) => {
         resetPassword,
         toggleSidebar,
         logoutUser,
+        getPosts,
       }}
     >
       {children}

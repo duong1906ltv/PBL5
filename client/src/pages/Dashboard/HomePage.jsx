@@ -1,39 +1,40 @@
-import React, { useState } from 'react'
-import { BriefPost, Menu, Filter } from '../../components'
-import styled from 'styled-components'
-import posts from '../../utils/post'
+import React, { useState } from "react";
+import { BriefPost, Menu, Filter, PostsContainer } from "../../components";
+import styled from "styled-components";
+import posts from "../../utils/post";
 
 function HomePage() {
-  const [openMenuItem, setOpenMenuItem] = useState(-1)
+  const [openMenuItem, setOpenMenuItem] = useState(-1);
   function getHotPosts() {
-    return posts.filter((post) => post.status === 'hot')
+    return posts.filter((post) => post.status === "hot");
   }
   function getNewPosts() {
-    return posts.filter((post) => post.status === 'new')
+    return posts.filter((post) => post.status === "new");
   }
-  const hotPosts = getHotPosts()
-  const newPosts = getNewPosts()
+  const hotPosts = getHotPosts();
+  const newPosts = getNewPosts();
 
   function toggle(id) {
-    setOpenMenuItem((prevId) => (prevId === id ? 0 : id))
+    setOpenMenuItem((prevId) => (prevId < 0 ? id : id * -1));
   }
 
   if (openMenuItem === 1) {
     return (
       <Wrapper>
-        <div className='container'>
+        <div className="container">
           <Menu toggle={toggle} />
           <Filter />
         </div>
       </Wrapper>
-    )
+    );
   }
 
   return (
     <Wrapper>
-      <div className='container'>
+      <div className="container">
         <Menu toggle={toggle} />
-        <div className='contents'>
+        <PostsContainer />
+        {/* <div className='contents'>
           <div className='hot-content'>
             <h3>Hot Posts</h3>
             <div className='posts'>
@@ -50,10 +51,10 @@ function HomePage() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
@@ -91,6 +92,6 @@ const Wrapper = styled.main`
     gap: 1rem;
     padding: 1rem;
   }
-`
+`;
 
-export default HomePage
+export default HomePage;
