@@ -3,6 +3,8 @@ import Register from "./pages/Register";
 import Landing from "./pages/Landing";
 import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/WelcomePage";
+import NewPost from "./pages/NewPost";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Error } from "./pages";
 import Resending from "./pages/Resending";
 import {
@@ -33,6 +35,7 @@ function App() {
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
           <Route path="stats" element={<Stats />} />
+          <Route path="/newpost" element={<NewPost />} />
           <Route path="detail-post/" element={<DetailPost />}>
             <Route path=":id" element={<DetailPost />} />
           </Route>
