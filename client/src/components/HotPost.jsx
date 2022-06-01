@@ -15,7 +15,9 @@ function HotPost() {
       <h3>Hot Posts</h3>
       <div className="posts">
         {hotPosts.map((post) => (
-          <BriefPost key={post._id} post={post} />
+          <React.Fragment key={post._id}>
+            <BriefPost post={post} />
+          </React.Fragment>
         ))}
       </div>
     </div>

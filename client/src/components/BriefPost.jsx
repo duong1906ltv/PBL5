@@ -1,12 +1,15 @@
 import Wrapper from "../assets/wrappers/BriefPost";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
-function BriefPost({ key, post }) {
+function BriefPost({ post }) {
   let date = moment(post.date);
   date = date.format("MMM Do, YYYY");
+  let navigate = useNavigate();
+  let id = post._id;
 
   const clickPost = () => {
-    console.log("HELLO");
+    navigate("/detail-post/" + id);
   };
 
   const infoContent = (
