@@ -1,10 +1,38 @@
 import Wrapper from '../assets/wrappers/NewPost'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { Button, Form, FormControl } from 'react-bootstrap';
+import FormRowControl from '../components/FormRowControl';
+import { useAppContext } from '../context/appContext';
+import { Alert } from '../components'
+
+const initialState = {
+  city: '',
+  district: '',
+  ward: '',
+  address: '',
+  price: '',
+  deposit: '',
+  area: '',
+  title: '',
+  description: '',
+  image: ''
+
+}
 
 const NewPost = () => {
   let citis = document.getElementById('city')
   let districts = document.getElementById('district')
   let wards = document.getElementById('ward')
+
+  const { showAlert, displayAlert } = useAppContext();
+
+  const [values, setValues] = useState(initialState);
+
+
+  const handlePostInput = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value })
+  }
+
 
   const getData = () => {
     fetch('data.json', {
@@ -18,7 +46,9 @@ const NewPost = () => {
         return response.json()
       })
       .then(function (myJson) {
-        console.log(myJson)
+        citis = document.getElementById('city')
+        districts = document.getElementById('district')
+        wards = document.getElementById('ward')
         renderCity(myJson)
       })
   }
@@ -58,67 +88,117 @@ const NewPost = () => {
       }
     }
   }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const { city, district, ward, address, price, deposit, area, title, description, image } = values
+    if (!city || !district || !ward || !address || !price
+      || !deposit || !area || !title || !description || !image) {
+      displayAlert()
+      return
+    }
+    console.log(city, district, ward, address, price, deposit, area, title, description, image);
+
+  }
   return (
     <Wrapper>
-      <form>
-            <div className='form-control'>
-              <label>City</label>
-              <select name='city' id='city' >
-                <option value='' selected />                
-              </select>
-            </div>
-            <div className='form-control'>
-              <label>District</label>
-              <select name='district' id='district'>
-                <option value='' selected/>
-              </select>
-            </div>
-            <div className='form-control'>
-              <label>Ward</label>
-              <select name='ward' id='ward'>
-                <option value='' selected/>
-              </select>
-            </div>
-          <div className='form-control'>
-            <label>Specific Address</label>
-            <input type='text'></input>
-          </div>
-          <div className='form-control'>
-            <label>Price</label>
-            <input type='text' placeholder='VND'></input>
-          </div>
-          <div className='form-control'>
-            <label>Deposit</label>
-            <input type='text' placeholder='VND'></input>
-          </div>
-          <div className='form-control'>
-            <label>Area</label>
-            <input type='text' placeholder='m2'></input>
-          </div>
-        <div className='form-control'>
-          <label>Tittle</label>                    
-          <input type='text'></input>          
-        </div>
-        <div className='form-control'>
-          <label>Description</label>
-          <input type='text'></input>
-        </div>
-        <div>
-          <div className='form-control'>
-            <label>Images</label>
-            <input type='file'></input>
-          </div>
-          <div className='form-control'>
-            <label>Videos</label>
-            <input type='file'></input>
-          </div>
-        </div>
-        <div className='button-group'>
-          <button>Preview</button>
-          <button>Post</button>
-          <button>Cancel</button>
-        </div>
-      </form>
+
+      <Form onSubmit={onSubmit}>
+
+        {showAlert && <Alert/>}
+
+        <Form.Group className='form-control'>
+          <Form.Label>City:</Form.Label>
+          <Form.Select name='city' id='city' onChange={handlePostInput}>
+            <option value={values.city} selected />
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group className='form-control'>
+          <Form.Label>District:</Form.Label>
+          <Form.Select name='district' id='district' onChange={handlePostInput}>
+            <option value={values.city} selected />
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group className='form-control'>
+          <Form.Label>Ward:</Form.Label>
+          <Form.Select name='ward' id='ward' onChange={handlePostInput}>
+            <option value={values.city} selected />
+          </Form.Select>
+        </Form.Group>
+
+        <FormRowControl
+          labelText='Address:'
+          type='text'
+          name='address'
+          value={values.address}
+          placeholder='Specific Address'
+          handleChange={handlePostInput}
+        />
+
+        <FormRowControl
+          labelText='Price:'
+          type='number'
+          name='price'
+          value={values.price}
+          placeholder='VND'
+          handleChange={handlePostInput}
+        />
+
+        <FormRowControl
+          labelText='Deposit:'
+          type='number'
+          name='deposit'
+          value={values.deposit}
+          placeholder='VND'
+          handleChange={handlePostInput}
+        />
+
+        <FormRowControl
+          labelText='Area:'
+          type='number'
+          name='area'
+          value={values.area}
+          placeholder='m2'
+          handleChange={handlePostInput}
+        />
+
+        <FormRowControl
+          labelText='Title:'
+          type='text'
+          name='title'
+          value={values.title}
+          handleChange={handlePostInput}
+        />
+
+
+        <Form.Group className="form-control" controlId="description">
+          <Form.Label>Description:</Form.Label>
+          <Form.Control as="textarea" name='description' placeholder="Write description here"
+                        style={{ height: '100px' }} value={values.description} onChange={handlePostInput} />
+        </Form.Group>
+
+        <Form.Group className="form-control">
+          <Form.Label>Image:</Form.Label>
+          <FormControl
+            aria-describedby="basic-addon1"
+            type='file'
+            accept="image/*"
+            multiple
+            name='image'
+            value={values.image}
+            onChange={handlePostInput}
+          />
+        </Form.Group>
+
+        <Form.Group className="form-control">
+          <Button variant="primary">Preview</Button>
+          <Button variant="success" type='submit'>Post</Button>
+          <Button variant="danger" href='/'>Cancel</Button>
+        </Form.Group>
+
+      </Form>
     </Wrapper>
   )
 }
