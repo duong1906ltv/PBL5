@@ -4,6 +4,7 @@ import Landing from "./pages/Landing";
 import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/WelcomePage";
 import NewPost from "./pages/NewPost";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Error } from "./pages";
 import Resending from "./pages/Resending";
 import {

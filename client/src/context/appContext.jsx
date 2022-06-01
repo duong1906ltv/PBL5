@@ -23,6 +23,16 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  city: '',
+  district: '',
+  ward: '',
+  address: '',
+  price: '',
+  deposit: '',
+  area: '',
+  title: '',
+  description: '',
+  image: '',
   userLocation: userLocation || "",
   jobLocation: userLocation || "",
   showSidebar: false,
@@ -107,6 +117,7 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
 
   return (
     <AppContext.Provider
