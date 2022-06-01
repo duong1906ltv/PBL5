@@ -5,13 +5,15 @@ import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/WelcomePage";
 import NewPost from "./pages/NewPost";
 import { Error } from "./pages";
+import Resending from "./pages/Resending";
 import {
   AddJob,
-  AllJobs,
+  AllPosts,
   Profile,
   SharedLayout,
   Stats,
-  HomePage
+  HomePage,
+  DetailPost,
 } from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -28,16 +30,20 @@ function App() {
           }
         >
           <Route index element={<HomePage />} />
-          <Route path="all-jobs" element={<AllJobs />} />
+          <Route path="all-jobs" element={<AllPosts />} />
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
           <Route path="stats" element={<Stats />} />
           <Route path="/newpost" element={<NewPost />} />
+          <Route path="detail-post/" element={<DetailPost />}>
+            <Route path=":id" element={<DetailPost />} />
+          </Route>
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
-        <Route path="/welcome" element={<Welcome />} />        
+        <Route path="/resending" element={<Resending />} />
+        <Route path="/welcome" element={<Welcome />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

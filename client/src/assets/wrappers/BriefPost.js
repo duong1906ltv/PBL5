@@ -1,6 +1,8 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Wrapper = styled.div`
+  background-color: var(--white);
+
   .post {
     width: 100%;
     display: flex;
@@ -8,7 +10,8 @@ const Wrapper = styled.div`
     padding: 1rem;
     border: 1px solid var(--primary-600);
     border-radius: 0.15rem;
-    gap: 1rem;
+    gap: 2rem;
+    justify-content: space-around;
 
     * {
       margin: 0;
@@ -21,23 +24,26 @@ const Wrapper = styled.div`
     gap: 1rem;
   }
 
-  .post-image{
+  .post-image {
     width: 30%;
     border-radius: 0.3rem;
   }
 
-  .post-content{
-    60%;
+  .post-content {
+    width: 65%;
+    position: relative;
 
-      h5 {
-        font-size: 1.2em;
-        color: var(--primary-600);
-      }
+    h5 {
+      font-size: 1.2em;
+      color: var(--primary-600);
+      cursor: pointer;
+    }
 
-      .description-content {
-        font-size: 0.9rem;
-        color: var(--grey-500);
-      }
+    .description-content {
+      font-size: 0.9rem;
+      color: var(--grey-500);
+      margin-bottom: 2.5rem;
+    }
   }
 
   .info-content {
@@ -45,16 +51,17 @@ const Wrapper = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0.5rem 0rem;
+    width: 100%;
 
     .price-content {
       color: var(--yellow-dark);
       border-bottom: 1px solid var(--yellow-dark);
     }
-    
-    .area-content, .position-content {
+
+    .area-content,
+    .position-content {
       color: var(--grey-700);
       border-bottom: 1px solid var(--grey-700);
-
     }
 
     .time-content {
@@ -64,9 +71,11 @@ const Wrapper = styled.div`
   }
 
   .author-content {
-    margin-top: 0.5rem;
     display: flex;
+    position: absolute;
+    bottom: 0px;
     gap: 0.5rem;
+    width: 100%;
     img {
       width: 30px;
       height: 30px;
@@ -77,7 +86,7 @@ const Wrapper = styled.div`
       color: var(--grey-400);
     }
 
-    .author-phone{
+    .author-phone {
       margin-left: auto;
       border: 1px solid var(--primary-500);
       border-radius: 3px;
@@ -90,11 +99,10 @@ const Wrapper = styled.div`
       border: 1px solid var(--primary-500);
       border-radius: 3px;
       background: var(--primary-500);
-      color: var(--white);  
+      color: var(--white);
       padding: 0 0.5rem;
     }
   }
+`;
 
-`
-
-export default Wrapper
+export default Wrapper;

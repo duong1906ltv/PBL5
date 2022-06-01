@@ -6,16 +6,15 @@ const Wrapper = styled.nav`
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  
   .logo {
-    display: flex;
-    align-items: center;
     width: 100px;
   }
   .nav-center {
     display: flex;
     width: 90vw;
     align-items: center;
-    justify-content: space-between;
   }
   .toggle-btn {
     background: transparent;
@@ -25,15 +24,18 @@ const Wrapper = styled.nav`
     cursor: pointer;
     display: flex;
     align-items: center;
+    flex: 1 1 0;
   }
   background: var(--white);
   .btn-container {
     position: relative;
   }
+  .btn-container {
+    flex: 1 1 0;
+  }
   .btn {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-left: auto;
     gap: 0 0.5rem;
     position: relative;
     box-shadow: var(--shadow-2);
@@ -49,6 +51,8 @@ const Wrapper = styled.nav`
     text-align: center;
     visibility: hidden;
     border-radius: var(--borderRadius);
+    display: flex;
+    flex-direction: column;
   }
   .show-dropdown {
     visibility: visible;
@@ -60,10 +64,17 @@ const Wrapper = styled.nav`
     letter-spacing: var(--letterSpacing);
     text-transform: capitalize;
     cursor: pointer;
+    padding: 10px 0;
+  }
+  .logo-text-container {
+    flex: 2 1 0;
+    text-align: center;
   }
   .logo-text {
     display: none;
     margin: 0;
+    text-align: center;
+
   }
   @media (min-width: 992px) {
     position: sticky;
