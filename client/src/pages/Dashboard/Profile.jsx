@@ -3,193 +3,148 @@ import styled from 'styled-components'
 import userPosts from '../../utils/userPost'
 import { NavLink } from 'react-router-dom'
 import { BsThreeDots } from 'react-icons/bs'
-import { BriefPost } from '../../components'
+import { useAppContext } from '../../context/appContext'
 
 function Profile() {
   const posts = userPosts
+  const {user}= useAppContext()
   return (
     <Wrapper>
-      <header className='profile-header'>
-        <div className='profile-background'>
-          <div className='profile-ava'>
-            <img
-              src='https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg  '
-              alt='user-name'
-            />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+      <div className='index'>
+        <div className='img'>
+        </div>
+        <div className='infor'>
+            <p className='p-infor'>Username</p>
+            <p className='p-infor'>Address</p>
+            <p className='p-infor'>Phone Number</p>
+            <p className='p-infor'>University</p>
+            <p className='p-infor'>Hobby</p>
+        </div>
+        <div className='name'>
+          {/* <p>Nguyen Duc Chinh - Admin</p> */}
+          <h4>Profile</h4>
+          <h5>Nguyen Duc Chinh - Admin</h5>
+          <p className='email'>ducchinhbg01@gmail.com</p>
+          <button className='ib'><i class="fas fa-cat"></i> Chat</button>
+        </div>
+        <div className='input'>
+          <div className='input1'>
+            <p className='p-input'>ducchinhbg01</p>
+          </div>
+          <div className='input1'>
+            <p className='p-input'>123 Nguyen Luong Bang, Lien Chieu, Da Nang</p>
+          </div>
+          <div className='input1'>
+            <p className='p-input'>0981669453</p>
+          </div>
+          <div className='input1'>
+            <p className='p-input'>Dai hoc Bach Khoa Da Nang</p>
+          </div>
+          <div className='input1'>
+            <p className='p-input'></p>
           </div>
         </div>
-        <div className='profile-info'>
-          <p>Dinh Duong</p>
-          <p>Address...</p>
-          <p>Introduction...</p>
-        </div>
-        <nav className='profile-nav'>
-          <div className='nav-list nav-left'>
-            <NavLink to='/' className='nav-item'>
-              <span>10</span>
-              <span>Posts</span>
-            </NavLink>
-            <NavLink to='/' className='nav-item'>
-              <span>5</span>
-              <span>Follower</span>
-            </NavLink>
-            <NavLink to='/' className='nav-item'>
-              <span>1</span>
-              <span>Following</span>
-            </NavLink>
-          </div>
-          <div className='nav-list nav-right'>
-            <div>
-              <button className='nav-item chat-btn'>Chat</button>
-            </div>
-            <div>
-              <button className='nav-item follow-btn'>Follow</button>
-            </div>
-            <div>
-              <button className='nav-item more-btn'>
-                <BsThreeDots />
-              </button>
-            </div>
-          </div>
-        </nav>
-      </header>
-      <section className='profile-content'>
-        <div className='content-header'></div>
-        <div className='content-main'>
-          {posts.map((post) => (
-            <BriefPost key={post.id} post={post} />
-          ))}
-        </div>
-      </section>
+      </div>
+  
+
+      
+      
     </Wrapper>
   )
 }
 
 const Wrapper = styled.main`
+
+.index{
   position: relative;
+  width:100%;
+  height: 700px;
+  background-color: white;
 
-  .profile-header {
-    position: relative;
-    background-color: white;
+}
+.img{
+  position: absolute;
+  width:300px;
+  height: 300px;
+  border: 0.5px solid #F5F5F5;
+  background-color:#F8F8F8;
 
-    .profile-background {
-      height: 20vh;
-      background: url('https://wallpaperaccess.com/full/1129092.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      position: relative;
+}
+.infor{
+  position: absolute;
+  width:300px;
+  height: 400px;
+  top:300px;
+  border: 0.5px solid #F5F5F5;
+  // background-color: yellow;
+}
+.name{
+  position: absolute;
+  width:842px;
+  height: 300px;
+  left:300px;
+  border: 0.5px solid #F5F5F5;
+  // background-color: yellow;
 
-      .profile-ava img {
-        border-radius: 50%;
-        width: 150px;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    }
+}
+.input{
+  position: absolute;
+  width:842px;
+  height: 400px;
+  left:300px;
+  top:300px;
+  border: 0.5px solid #F5F5F5;
+ 
+}
+p{
+  margin-left:15px;
+  margin-top: 35px;
+ 
+}
+h5{
+  margin-left:15px;
+  margin-top: 35px;
+ 
+}
+h4{
+  margin-left:250px;
+  margin-top: 35px;
+  color: #00BFFF;
+ 
+}
+.input1{
+  
+  width:700px;
+  height: 35px;
+  margin-left:15px;
+  margin-top: 30px;
 
-    .profile-info {
-      height: 30vh;
-      padding: 70px 0 0 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-bottom: 1px solid #dee2e6;
+  background-color: #F0F0F0;
+ 
+}
+.p-input{
+  position: absolute;
+  margin-top:5px;
+  
+}
+.ib{
+  position: absolute;
+  width:150px;
+  height: 40px;
+  top:250px;
+  left:300px;
+  color: white;
+  background-color: #228B22;
+}
+.email{
+  color: #00BFFF;
+}
 
-      p {
-        margin: 0;
-      }
-    }
 
-    .profile-nav {
-      height: 10vh;
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
 
-      .nav-list {
-        display: flex;
-        align-items: center;
-
-        .nav-item {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          color: var(--black);
-          text-transform: capitalize;
-          transition: var(--transition);
-        }
-      }
-
-      .nav-left {
-        margin-right: auto;
-
-        .nav-item {
-          padding: 0 2rem;
-        }
-
-        .nav-item:hover {
-          color: var(--primary-600);
-          border-bottom: 3px solid var(--primary-600);
-        }
-      }
-
-      .nav-right {
-        margin-left: auto;
-        gap: 1rem;
-
-        .chat-btn {
-          background: var(--yellow-dark);
-          outline: none;
-          border: 1px solid var(--yellow-dark);
-          color: var(--white);
-          padding: 0.5rem 2rem;
-          border-radius: 3px;
-          cursor: pointer;
-        }
-
-        .follow-btn {
-          background: var(--white);
-          outline: none;
-          border: 1px solid var(--primary-500);
-          color: var(--primary-500);
-          padding: 0.5rem 2rem;
-          border-radius: 3px;
-          cursor: pointer;
-        }
-
-        .more-btn {
-          background: var(--white);
-          color: var(--black);
-          width: 5px;
-          outline: none;
-          border: none;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-
-  .profile-content {
-    max-width: 900px;
-    margin: 2rem auto;
-
-    .content-header {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .content-main {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
   }
 `
 
 export default Profile
+
