@@ -23,6 +23,9 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  title: '',
+  category: '',
+  renter: '',
   city: '',
   district: '',
   ward: '',
@@ -30,7 +33,6 @@ const initialState = {
   price: '',
   deposit: '',
   area: '',
-  title: '',
   description: '',
   image: '',
   userLocation: userLocation || "",
@@ -98,7 +100,7 @@ const AppProvider = ({ children }) => {
         `/api/auth/reset-password`,
         passwordChange
       );
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const getPosts = async () => {

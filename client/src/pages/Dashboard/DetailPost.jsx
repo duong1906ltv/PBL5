@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useAppContext } from "../../context/appContext";
+import { useEffect } from "react";
 import { ImageSlider } from "../../components";
 import SliderData from "../../utils/sliderData";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
@@ -9,163 +11,183 @@ import {
   AiOutlineCaretRight,
   AiOutlineLeft,
 } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 
 function DetailPost(props) {
+  const { getPosts, posts, isLoading } = useAppContext();
+
+  let { id } = useParams();
+
+  useEffect(() => {
+    getPosts();
+  }, [id]);
+
+  function getPostDetail() {
+    return posts.filter((post) => post._id === id);
+  }
+
+  const postDetails = getPostDetail();
+
   return (
     <Wrapper>
-      <div className="flex-row align-center space-between nav-menu">
-        <div className="nav-path">
-          City X
-          <AiOutlineLeft className="icon" />
-          District Y
-          <AiOutlineLeft className="icon" />
-          Ward Z
-        </div>
-        <div className="nav-btns flex-row space-between">
-          <div className="btn-left">
-            <AiOutlineCaretLeft className="icon icon-left" />
-            Back to list
-          </div>
-          <div className="btn-right icon-right">
-            Next post
-            <AiOutlineCaretRight className="icon icon-right" />
-          </div>
-        </div>
-      </div>
-      <div className="detail-post-container flex-row align-start space-between">
-        <div className="post-container flex-column">
-          <div className="post-slide">
-            <ImageSlider slides={SliderData} />
-          </div>
-          <div className="post-content flex-column">
-            <span>
-              <b>Motel Name:</b> KIKI
-            </span>
-            <div className="flex-row space-between">
-              <span>
-                <b>Price:</b> 1000$
-              </span>
-              <span>
-                <b>Area:</b> 150m<sup>2</sup>
-              </span>
+      {postDetails.map((data) => (
+        <>
+          <div className="flex-row align-center space-between nav-menu">
+            <div className="nav-path">
+              {data.city}
+              <AiOutlineLeft className="icon" />
+              {data.district}
+              <AiOutlineLeft className="icon" />
+              {data.ward}
             </div>
-            <span>
-              <b>Detail:</b> A beautiful house for u
-            </span>
-            <span className="flex-row align-center">
-              <b>Rating:</b>
-              <div className="icon-container">
-                <BsStarFill className="icon icon-star" />
-                <BsStarFill className="icon icon-star" />
-                <BsStarFill className="icon icon-star" />
-                <BsStarFill className="icon icon-star" />
-                <BsStar className="icon icon-star" />
+            <div className="nav-btns flex-row space-between">
+              <div className="btn-left">
+                <AiOutlineCaretLeft className="icon icon-left" />
+                Back to list
               </div>
-            </span>
-          </div>
-          <div className="post-address"></div>
-        </div>
-        <div className="author-container flex-column">
-          <div className="author-info flex-row align-center">
-            <img
-              src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
-              alt="user-name"
-              className="ava"
-            />
-            <div className="flex-column">
-              <span className="name">Dinh Duong</span>
-              <span className="time-active">Active 5 minutes ago</span>
+              <div className="btn-right icon-right">
+                Next post
+                <AiOutlineCaretRight className="icon icon-right" />
+              </div>
             </div>
-            <div className="flex-column evaluate">
-              <span className="flex-row align-center">
-                Rating:
-                <div className="icon-container">
-                  <BsStarFill className="icon icon-star" />
-                  <BsStarFill className="icon icon-star" />
-                  <BsStarFill className="icon icon-star" />
-                  <BsStarFill className="icon icon-star" />
-                  <BsStarHalf className="icon icon-star" />
+          </div>
+          <div className="detail-post-container flex-row align-start space-between">
+            <div className="post-container flex-column">
+              <div className="post-slide">
+                <ImageSlider slides={SliderData} />
+              </div>
+              <div className="post-content flex-column">
+                <span>
+                  <b>Motel Name:</b> {data.title}
+                </span>
+                <div className="flex-row space-between">
+                  <span>
+                    <b>Price:</b> {data.rent_price}
+                  </span>
+                  <span>
+                    <b>Area:</b> {data.motel_area}<sup>2</sup>
+                  </span>
                 </div>
-              </span>
-              <span>Chat Response: 76%</span>
-            </div>
-          </div>
-          <div className="author-contact-container flex-column align-center justify-center">
-            <div className="author-phone flex-row align-center">
-              <span className="icon-container">
-                <FiPhoneCall className="icon icon-phone" />
-              </span>
-              <span className="phone">0123******</span>
-              <span style={{ marginLeft: "1rem" }}>Click to see full..</span>
-            </div>
-            <div className="author-chat flex-row align-center">
-              <span className="icon-container">
-                <AiFillWechat className="icon icon-chat" />
-              </span>
-              <span>Chat with Seller</span>
-            </div>
-          </div>
-          <div className="post-comment">
-            <h6>Comment about this post</h6>
-            <div className="comment-list">
-              <div className="comment-item">
-                <div className="flex-row align-center">
-                  <img
-                    src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
-                    alt="user-name"
-                    className="ava"
-                  />
-                  <div className="flex-column justify-center">
-                    <span className="comment-author">Nguyen Van A</span>
-                    <span className="comment-time">6 months ago</span>
+                <span>
+                  <b>Detail:</b> {data.description}
+                </span>
+                <span className="flex-row align-center">
+                  <b>Rating:</b>
+                  <div className="icon-container">
+                    <BsStarFill className="icon icon-star" />
+                    <BsStarFill className="icon icon-star" />
+                    <BsStarFill className="icon icon-star" />
+                    <BsStarFill className="icon icon-star" />
+                    <BsStar className="icon icon-star" />
                   </div>
-                  <div className="rating">
-                    <span className="flex-row align-center">
-                      <span>Rating:</span>
-                      <div className="icon-container">
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
+                </span>
+              </div>
+              <div className="post-address"></div>
+            </div>
+            <div className="author-container flex-column">
+              <div className="author-info flex-row align-center">
+                <img
+                  src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                  alt="user-name"
+                  className="ava"
+                />
+                <div className="flex-column">
+                  <span className="name">Dinh Duong</span>
+                  <span className="time-active">Active 5 minutes ago</span>
+                </div>
+                <div className="flex-column evaluate">
+                  <span className="flex-row align-center">
+                    Rating:
+                    <div className="icon-container">
+                      <BsStarFill className="icon icon-star" />
+                      <BsStarFill className="icon icon-star" />
+                      <BsStarFill className="icon icon-star" />
+                      <BsStarFill className="icon icon-star" />
+                      <BsStarHalf className="icon icon-star" />
+                    </div>
+                  </span>
+                  <span>Chat Response: 76%</span>
+                </div>
+              </div>
+              <div className="author-contact-container flex-column align-center justify-center">
+                <div className="author-phone flex-row align-center">
+                  <span className="icon-container">
+                    <FiPhoneCall className="icon icon-phone" />
+                  </span>
+                  <span className="phone">0{data.phone_number}</span>
+                  <span style={{ marginLeft: "1rem" }}></span>
+                </div>
+                <div className="author-chat flex-row align-center">
+                  <span className="icon-container">
+                    <AiFillWechat className="icon icon-chat" />
+                  </span>
+                  <span>Chat with Seller</span>
+                </div>
+              </div>
+              <div className="post-comment">
+                <h6>Comment about this post</h6>
+                <div className="comment-list">
+                  <div className="comment-item">
+                    <div className="flex-row align-center">
+                      <img
+                        src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
+                        alt="user-name"
+                        className="ava"
+                      />
+                      <div className="flex-column justify-center">
+                        <span className="comment-author">Nguyen Van A</span>
+                        <span className="comment-time">6 months ago</span>
                       </div>
-                    </span>
-                  </div>
-                </div>
-                <div className="comment-content">
-                  This house is clean, the owner is very friendly!!
-                </div>
-              </div>
-              <div className="comment-item">
-                <div className="flex-row align-center">
-                  <img
-                    src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
-                    alt="user-name"
-                    className="ava"
-                  />
-                  <div className="flex-column justify-center">
-                    <span className="comment-author">Nguyen Van B</span>
-                    <span className="comment-time">1 year ago</span>
-                  </div>
-                  <div className="rating">
-                    <span className="flex-row align-center">
-                      <span>Rating:</span>
-                      <div className="icon-container">
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
+                      <div className="rating">
+                        <span className="flex-row align-center">
+                          <span>Rating:</span>
+                          <div className="icon-container">
+                            <BsStarFill className="icon icon-star" />
+                            <BsStarFill className="icon icon-star" />
+                            <BsStarFill className="icon icon-star" />
+                            <BsStarFill className="icon icon-star" />
+                            <BsStar className="icon icon-star" />
+                          </div>
+                        </span>
                       </div>
-                    </span>
+                    </div>
+                    <div className="comment-content">
+                      This house is clean, the owner is very friendly!!
+                    </div>
+                  </div>
+                  <div className="comment-item">
+                    <div className="flex-row align-center">
+                      <img
+                        src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
+                        alt="user-name"
+                        className="ava"
+                      />
+                      <div className="flex-column justify-center">
+                        <span className="comment-author">Nguyen Van B</span>
+                        <span className="comment-time">1 year ago</span>
+                      </div>
+                      <div className="rating">
+                        <span className="flex-row align-center">
+                          <span>Rating:</span>
+                          <div className="icon-container">
+                            <BsStarFill className="icon icon-star" />
+                            <BsStarFill className="icon icon-star" />
+                            <BsStar className="icon icon-star" />
+                            <BsStar className="icon icon-star" />
+                            <BsStar className="icon icon-star" />
+                          </div>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="comment-content">A little noisy!!!</div>
                   </div>
                 </div>
-                <div className="comment-content">A little noisy!!!</div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      ))}
+
     </Wrapper>
   );
 }

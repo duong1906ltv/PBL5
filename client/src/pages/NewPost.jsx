@@ -1,11 +1,14 @@
 import Wrapper from '../assets/wrappers/NewPost'
 import { useEffect, useState } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap';
+import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import FormRowControl from '../components/FormRowControl';
 import { useAppContext } from '../context/appContext';
 import { Alert } from '../components'
 
 const initialState = {
+  title: '',
+  category: '',
+  renter: '',
   city: '',
   district: '',
   ward: '',
@@ -13,7 +16,6 @@ const initialState = {
   price: '',
   deposit: '',
   area: '',
-  title: '',
   description: '',
   image: ''
 
@@ -91,40 +93,68 @@ const NewPost = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    const { city, district, ward, address, price, deposit, area, title, description, image } = values
-    if (!city || !district || !ward || !address || !price
-      || !deposit || !area || !title || !description || !image) {
+    const { title, category, renter, city, district, ward, address,
+      price, deposit, area, description, image } = values
+    if (!title || !category || !renter || !city || !district || !ward || !address 
+               || !price || !deposit || !area || !description || !image) {
       displayAlert()
       return
     }
-    console.log(city, district, ward, address, price, deposit, area, title, description, image);
+    console.log(values);
 
   }
   return (
-    <Wrapper>
+    <Wrapper>      
 
       <Form onSubmit={onSubmit}>
 
-        {showAlert && <Alert/>}
+        <h1>Add New Post</h1>
+
+        {showAlert && <Alert />}
+
+        <FormRowControl
+          labelText='Title:'
+          type='text'
+          name='title'
+          value={values.title}
+          handleChange={handlePostInput}
+        />
+
+        <Form.Group className='form-control'>
+          <Form.Label>Category:</Form.Label>
+          <Form.Select name='category' id='category' value={values.category} onChange={handlePostInput}>
+            <option value="rentalRoom">Rental Room</option>
+            <option value="findRoomate">Find Roomate</option>
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group className='form-control'>
+          <Form.Label>Renter:</Form.Label>
+          <Form.Select name='renter' id='renter' value={values.renter} onChange={handlePostInput}>
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </Form.Select>
+        </Form.Group>
 
         <Form.Group className='form-control'>
           <Form.Label>City:</Form.Label>
-          <Form.Select name='city' id='city' onChange={handlePostInput}>
-            <option value={values.city} selected />
+          <Form.Select name='city' id='city' value={values.city} onChange={handlePostInput}>
+            <option value=" " selected />
           </Form.Select>
         </Form.Group>
 
         <Form.Group className='form-control'>
           <Form.Label>District:</Form.Label>
-          <Form.Select name='district' id='district' onChange={handlePostInput}>
-            <option value={values.city} selected />
+          <Form.Select name='district' id='district' value={values.district} onChange={handlePostInput}>
+            <option value=" " selected />
           </Form.Select>
         </Form.Group>
 
         <Form.Group className='form-control'>
           <Form.Label>Ward:</Form.Label>
-          <Form.Select name='ward' id='ward' onChange={handlePostInput}>
-            <option value={values.city} selected />
+          <Form.Select name='ward' id='ward' value={values.ward} onChange={handlePostInput}>
+            <option value=" " selected />
           </Form.Select>
         </Form.Group>
 
@@ -164,19 +194,11 @@ const NewPost = () => {
           handleChange={handlePostInput}
         />
 
-        <FormRowControl
-          labelText='Title:'
-          type='text'
-          name='title'
-          value={values.title}
-          handleChange={handlePostInput}
-        />
-
 
         <Form.Group className="form-control" controlId="description">
           <Form.Label>Description:</Form.Label>
           <Form.Control as="textarea" name='description' placeholder="Write description here"
-                        style={{ height: '100px' }} value={values.description} onChange={handlePostInput} />
+            style={{ height: '100px' }} value={values.description} onChange={handlePostInput} />
         </Form.Group>
 
         <Form.Group className="form-control">
