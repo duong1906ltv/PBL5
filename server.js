@@ -24,13 +24,6 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send({ msg: "Welcome!" });
-});
-app.get("/test", (req, res) => {
-  res.send({ msg: "Welcome!" });
-});
-
 app.use("/api/auth", authRouter);
 app.use("/api/auth", jobRouter);
 app.use("/api/post", postRouter);

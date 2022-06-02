@@ -7,7 +7,7 @@ const Wrapper = styled.nav`
   justify-content: center;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  
+
   .logo {
     width: 100px;
   }
@@ -74,7 +74,6 @@ const Wrapper = styled.nav`
     display: none;
     margin: 0;
     text-align: center;
-
   }
   @media (min-width: 992px) {
     position: sticky;

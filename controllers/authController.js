@@ -136,4 +136,41 @@ const confirm_user = async (req, res) => {
   res.status(StatusCodes.OK).json("SUCCESS");
 };
 
-export { register, login, updateUser, reset_password_email, reset_password };
+const change_password = async (req, res) => {
+  const _id = req.user.userId;
+  const { oldPassword, newPassword, confirmNewPassword } = req.body;
+
+  const user = await User.findOne({ _id }).select("+password");
+
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new UnAuthenticatedError("Wrong password");
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    throw new BadRequestError("Password does not match ");
+  }
+
+  if (oldPassword === newPassword) {
+    throw new BadRequestError(
+      "Your new password have to be different with old password"
+    );
+  }
+
+  user.password = newPassword;
+  try {
+    await user.save();
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json("Password must be at least 6");
+  }
+  res.status(StatusCodes.OK).json("change Password success");
+};
+
+export {
+  register,
+  login,
+  updateUser,
+  reset_password_email,
+  reset_password,
+  change_password,
+};

@@ -1,11 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register";
-import Landing from "./pages/Landing";
 import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/WelcomePage";
-import NewPost from "./pages/NewPost";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Error } from "./pages";
+import { AddPost, Error, Landing, Register } from "./pages/index";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Resending from "./pages/Resending";
 import {
   AddJob,
@@ -35,7 +32,7 @@ function App() {
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
           <Route path="stats" element={<Stats />} />
-          <Route path="/newpost" element={<NewPost />} />
+          <Route path="/addpost" element={<AddPost />} />
           <Route path="detail-post/" element={<DetailPost />}>
             <Route path=":id" element={<DetailPost />} />
           </Route>

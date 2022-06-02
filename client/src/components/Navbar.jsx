@@ -22,7 +22,7 @@ function Navbar() {
         <div className="btn-container">
           <button className="btn" onClick={() => setShowLogout(!showLogout)}>
             <FaUserCircle />
-            duong
+            {user.name}
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>

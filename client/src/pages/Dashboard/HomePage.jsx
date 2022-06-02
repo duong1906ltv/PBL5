@@ -1,18 +1,9 @@
 import React, { useState } from "react";
-import { BriefPost, Menu, Filter, PostsContainer } from "../../components";
+import { Menu, Filter, PostsContainer } from "../../components";
 import styled from "styled-components";
-import posts from "../../utils/post";
 
 function HomePage() {
   const [openMenuItem, setOpenMenuItem] = useState(-1);
-  function getHotPosts() {
-    return posts.filter((post) => post.status === "hot");
-  }
-  function getNewPosts() {
-    return posts.filter((post) => post.status === "new");
-  }
-  const hotPosts = getHotPosts();
-  const newPosts = getNewPosts();
 
   function toggle(id) {
     setOpenMenuItem((prevId) => (prevId < 0 ? id : id * -1));
@@ -34,24 +25,6 @@ function HomePage() {
       <div className="container">
         <Menu toggle={toggle} />
         <PostsContainer />
-        {/* <div className='contents'>
-          <div className='hot-content'>
-            <h3>Hot Posts</h3>
-            <div className='posts'>
-              {hotPosts.map((post) => (
-                <BriefPost key={post.id} post={post} />
-              ))}
-            </div>
-          </div>
-          <div className='new-content'>
-            <h3>New Posts</h3>
-            <div className='posts'>
-              {newPosts.map((post) => (
-                <BriefPost key={post.id} post={post} />
-              ))}
-            </div>
-          </div>
-        </div> */}
       </div>
     </Wrapper>
   );
