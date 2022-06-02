@@ -12,24 +12,24 @@ function Navbar() {
   return (
     <Wrapper>
       <div className="nav-center">
-        <button className="toggle-btn" onClick={toggleSidebar}>
+        <button className="toggle-button" onClick={toggleSidebar}>
           <FaAlignLeft />
         </button>
         <div className="logo-text-container">
           <Logo />
           <h3 className="logo-text">dashboard</h3>
         </div>
-        <div className="btn-container">
-          <button className="btn" onClick={() => setShowLogout(!showLogout)}>
+        <div className="button-container">
+          <button className="button" onClick={() => setShowLogout(!showLogout)}>
             <FaUserCircle />
             {user.name}
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
             <Link to="/profile">
-              <button className="dropdown-btn">profile</button>
+              <button className="dropdown-button">profile</button>
             </Link>
-            <button className="dropdown-btn" onClick={logoutUser}>
+            <button className="dropdown-button" onClick={logoutUser}>
               logout
             </button>
           </div>
