@@ -20,6 +20,8 @@ const initialState = {
 }
 
 const NewPost = () => {
+  document.title ="Add New Post"
+
   let citis = document.getElementById('city')
   let districts = document.getElementById('district')
   let wards = document.getElementById('ward')
@@ -105,7 +107,9 @@ const NewPost = () => {
 
       <Form onSubmit={onSubmit}>
 
-        {showAlert && <Alert/>}
+        <h1>Add New Post</h1>
+
+        {showAlert && <Alert/>}        
 
         <Form.Group className='form-control'>
           <Form.Label>City:</Form.Label>

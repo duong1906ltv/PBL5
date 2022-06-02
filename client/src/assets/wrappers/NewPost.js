@@ -12,6 +12,12 @@ const Wrapper = styled.main`
   label{
     width:25%;
   }
+  h1{
+    text-align: center;   
+    color: #243A73; 
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
   .form-control{
     display: flex;
     flex-direction: row;
