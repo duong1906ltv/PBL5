@@ -18,10 +18,13 @@ function Profile() {
             />
           </div>
         </div>
-        <div className="profile-info">
-          <p>Dinh Duong</p>
-          <p>Address...</p>
-          <p>Introduction...</p>
+        <div className='profile-info'>
+          <p>Phùng Đình Dương</p>
+          <p>Address: 113 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng</p>
+          <p>Phone number: 0981669453</p>
+          <p>Facebook: <a href="https://www.facebook.com/phungdinh.duong.5" target="_blank">Đình Dương</a> </p>
+          <p>University: Đại học Bách khoa Đà Nẵng</p>
+          <p>Hobby: LoL, Đàm Nhiên, du lịch, ăn uống</p>
         </div>
         <nav className="profile-nav">
           <div className="nav-list nav-left">
@@ -91,15 +94,18 @@ const Wrapper = styled.main`
     }
 
     .profile-info {
-      height: 30vh;
+      height: 50vh;
       padding: 70px 0 0 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       border-bottom: 1px solid #dee2e6;
+     
 
       p {
         margin: 0;
+        margin-top: 10px;
+        color: #20B2AA;
       }
     }
 
