@@ -1,59 +1,33 @@
-import React, { useState } from 'react'
-import { BriefPost, Menu, Filter } from '../../components'
-import styled from 'styled-components'
-import posts from '../../utils/post'
+import React, { useState } from "react";
+import { Menu, Filter, PostsContainer } from "../../components";
+import styled from "styled-components";
 
 function HomePage() {
-  const [openMenuItem, setOpenMenuItem] = useState(-1)
-  function getHotPosts() {
-    return posts.filter((post) => post.status === 'hot')
-  }
-  function getNewPosts() {
-    return posts.filter((post) => post.status === 'new')
-  }
-  const hotPosts = getHotPosts()
-  const newPosts = getNewPosts()
+  const [openMenuItem, setOpenMenuItem] = useState(-1);
 
   function toggle(id) {
-    setOpenMenuItem((prevId) => (prevId < 0 ? id : id * -1))
+    setOpenMenuItem((prevId) => (prevId < 0 ? id : id * -1));
   }
 
   if (openMenuItem === 1) {
     return (
       <Wrapper>
-        <div className='container'>
+        <div className="container">
           <Menu toggle={toggle} />
           <Filter />
         </div>
       </Wrapper>
-    )
+    );
   }
 
   return (
     <Wrapper>
-      <div className='container'>
+      <div className="container">
         <Menu toggle={toggle} />
-        <div className='contents'>
-          <div className='hot-content'>
-            <h3>Hot Posts</h3>
-            <div className='posts'>
-              {hotPosts.map((post) => (
-                <BriefPost key={post.id} post={post} />
-              ))}
-            </div>
-          </div>
-          <div className='new-content'>
-            <h3>New Posts</h3>
-            <div className='posts'>
-              {newPosts.map((post) => (
-                <BriefPost key={post.id} post={post} />
-              ))}
-            </div>
-          </div>
-        </div>
+        <PostsContainer />
       </div>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
@@ -91,6 +65,6 @@ const Wrapper = styled.main`
     gap: 1rem;
     padding: 1rem;
   }
-`
+`;
 
-export default HomePage
+export default HomePage;

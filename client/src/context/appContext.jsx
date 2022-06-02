@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useReducer, useContext } from "react";
 import reducer from "./reducers";
 import axios from "axios";
 import {
@@ -9,6 +9,11 @@ import {
   SETUP_USER_SUCCESS,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
+  CREATE_POST_BEGIN,
+  CREATE_POST_ERROR,
+  CREATE_POST_SUCCESS,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -24,12 +29,44 @@ const initialState = {
   userLocation: userLocation || "",
   jobLocation: userLocation || "",
   showSidebar: false,
+  posts: [],
 };
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // axios
+  const authFetch = axios.create({
+    baseURL: "/api",
+  });
+  // request
+
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  // response
+
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      // console.log(error.response)
+      if (error.response.status === 401) {
+        logoutUser();
+      }
+      return Promise.reject(error);
+    }
+  );
+
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
@@ -77,15 +114,47 @@ const AppProvider = ({ children }) => {
 
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
   };
 
   const resetPassword = async ({ passwordChange }) => {
+    // try {
+    //   const { data } = await axios.post(
+    //     `/api/auth/reset-password`,
+    //     passwordChange
+    //   );
+    // } catch (error) {}
+  };
+
+  const getPosts = async () => {
+    dispatch({ type: GET_POSTS_BEGIN });
     try {
-      const { data } = await axios.post(
-        `/api/auth/reset-password`,
-        passwordChange
-      );
-    } catch (error) {}
+      const { data } = await axios.get(`/api/post`);
+      const posts = data;
+      dispatch({
+        type: GET_POSTS_SUCCESS,
+        payload: {
+          posts,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+    clearAlert();
+  };
+
+  const createPost = async (post) => {
+    dispatch({ type: CREATE_POST_BEGIN });
+    try {
+      await authFetch.post("/post", post);
+      dispatch({ type: CREATE_POST_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: CREATE_POST_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
   };
 
   return (
@@ -97,6 +166,8 @@ const AppProvider = ({ children }) => {
         resetPassword,
         toggleSidebar,
         logoutUser,
+        getPosts,
+        createPost,
       }}
     >
       {children}

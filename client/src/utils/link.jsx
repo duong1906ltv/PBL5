@@ -20,8 +20,8 @@ const links = [
   },
   {
     id: 3,
-    text: "new post",
-    path: "all-jobs",
+    text: "Add post",
+    path: "addpost",
     icon: <FaAddressBook />,
   },
 

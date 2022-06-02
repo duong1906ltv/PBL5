@@ -17,7 +17,6 @@ import postRouter from "./routes/postRoutes.js";
 // middleware
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandleMiddleware from "./middleware/error-handler.js";
-import authenticateUser from "./middleware/auth.js";
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -25,16 +24,9 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send({ msg: "Welcome!" });
-});
-app.get("/test", (req, res) => {
-  res.send({ msg: "Welcome!" });
-});
-
 app.use("/api/auth", authRouter);
 app.use("/api/auth", jobRouter);
-app.use("/api/post", authenticateUser, postRouter);
+app.use("/api/post", postRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandleMiddleware);

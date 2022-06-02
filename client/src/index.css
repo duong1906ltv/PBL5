@@ -5,7 +5,7 @@
 }
 
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap");
 
 html {
   font-size: 100%;
@@ -46,8 +46,8 @@ html {
   --yellow-dark: #f59f00;
 
   /* fonts  */
-  --headingFont: 'Roboto Condensed', Sans-Serif;
-  --bodyFont: 'Cabin', Sans-Serif;
+  --headingFont: "Roboto Condensed", Sans-Serif;
+  --bodyFont: "Cabin", Sans-Serif;
   --small-text: 0.875rem;
   --extra-small-text: 0.7em;
   /* rest of the vars */
@@ -147,7 +147,7 @@ ul {
 }
 /* buttons */
 
-.btn {
+.button {
   cursor: pointer;
   color: var(--white);
   background: var(--primary-500);
@@ -160,30 +160,30 @@ ul {
   text-transform: capitalize;
   display: inline-block;
 }
-.btn:hover {
+.button:hover {
   background: var(--primary-700);
   box-shadow: var(--shadow-3);
 }
-.btn-hipster {
+.button-hipster {
   color: var(--primary-500);
   background: var(--primary-200);
 }
-.btn-hipster:hover {
+.button-hipster:hover {
   color: var(--primary-200);
   background: var(--primary-700);
 }
-.btn-block {
+.button-block {
   width: 100%;
 }
-.btn-hero {
+.button-hero {
   font-size: 1.25rem;
   padding: 0.5rem 1.25rem;
 }
-.btn-danger {
+.button-danger {
   background: var(--red-light);
   color: var(--red-dark);
 }
-.btn-danger:hover {
+.button-danger:hover {
   background: var(--red-dark);
   color: var(--white);
 }
@@ -238,7 +238,7 @@ ul {
 }
 .form-input,
 .form-select,
-.btn-block {
+.button-block {
   height: 35px;
 }
 .form-row {

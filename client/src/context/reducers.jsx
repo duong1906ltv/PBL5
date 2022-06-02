@@ -6,6 +6,11 @@ import {
   SETUP_USER_SUCCESS,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  GET_POSTS_BEGIN,
+  GET_POSTS_SUCCESS,
+  CREATE_POST_BEGIN,
+  CREATE_POST_ERROR,
+  CREATE_POST_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -64,6 +69,40 @@ const reducer = (state, action) => {
       token: null,
       userLocation: "",
       jobLocation: "",
+    };
+  }
+  if (action.type === GET_POSTS_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_POSTS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      posts: action.payload.posts,
+    };
+  }
+
+  if (action.type === CREATE_POST_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === CREATE_POST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "New Post Created!",
+    };
+  }
+
+  if (action.type === CREATE_POST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
 

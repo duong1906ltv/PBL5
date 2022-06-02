@@ -1,4 +1,5 @@
 import express from "express";
+import authenticateUser from "../middleware/auth.js";
 const router = express.Router();
 
 import {
@@ -8,7 +9,10 @@ import {
   updatePost,
 } from "../controllers/postController.js";
 
-router.route("/").post(createPost).get(getAllPosts);
-router.route("/:id").delete(deletePost).patch(updatePost);
+router.route("/").post(authenticateUser, createPost).get(getAllPosts);
+router
+  .route("/:id")
+  .delete(deletePost, authenticateUser)
+  .patch(updatePost, authenticateUser);
 
 export default router;

@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: [true, "Please provide name"],
     minlength: 3,
@@ -39,6 +39,19 @@ const UserSchema = new mongoose.Schema({
   confirmed: {
     type: Boolean,
     default: false,
+  },
+  user_ava: {
+    type: String,
+    default:
+      "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=20&m=1223671392&s=170667a&w=0&h=kEAA35Eaz8k8A3qAGkuY8OZxpfvn9653gDjQwDHZGPE=",
+  },
+  phone_number: {
+    type: Number,
+    default: 935014520,
+  },
+  role: {
+    type: String,
+    default: "user",
   },
 });
 

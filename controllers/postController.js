@@ -6,6 +6,8 @@ import {
   UnAuthenticatedError,
 } from "../errors/index.js";
 import checkPermissions from "../utils/checkPermissions.js";
+import User from "../models/User.js";
+import mongoose from "mongoose";
 
 const createPost = async (req, res) => {
   const { title, category, city, district, ward, phone_number, rent_price } =
@@ -50,13 +52,29 @@ const deletePost = async (req, res) => {
 };
 const getAllPosts = async (req, res) => {
   try {
-    const Posts = await Motel.find();
-    console.log(Posts.user);
-    res.status(StatusCodes.OK).json(Posts);
+    const posts = await Motel.find().populate("createdBy");
+    res.status(StatusCodes.OK).json(posts);
   } catch (error) {
-    console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("SOME THING WENT WRONG");
+    res.status(500).json(error);
   }
+
+  // let posts_name = await User.aggregate([
+  //   {
+  //     $match: { _id: mongoose.Types.ObjectId("6275515a08c932db6fa1e0ef") },
+  //   },
+  // ]);
+  // let posts = await Motel.aggregate([
+  //   {
+  //     $lookup: {
+  //       from: "User",
+  //       localField: "createdBy",
+  //       foreignField: "_id",
+  //       as: "test",
+  //     },
+  //     // $match: { createdBy: mongoose.Types.ObjectId(User._id) },
+  //   },
+  // ]);
+  // res.status(StatusCodes.OK).json(posts);
 };
 const updatePost = async (req, res) => {
   const { id: postId } = req.params;
