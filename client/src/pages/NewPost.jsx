@@ -20,8 +20,6 @@ const initialState = {
 }
 
 const NewPost = () => {
-  document.title ="Add New Post"
-
   let citis = document.getElementById('city')
   let districts = document.getElementById('district')
   let wards = document.getElementById('ward')
