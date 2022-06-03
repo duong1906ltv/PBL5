@@ -5,5 +5,6 @@ import SharedLayout from "./SharedLayout";
 import Stats from "./Stats";
 import HomePage from "./HomePage";
 import DetailPost from "./DetailPost";
+import ChangePassword from "./ChangePassword";
 
-export { AllPosts, Profile, SharedLayout, Stats, AddJob, HomePage, DetailPost };
+export { AllPosts, Profile, SharedLayout, Stats, AddJob, HomePage, DetailPost, ChangePassword };
