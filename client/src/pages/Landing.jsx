@@ -16,7 +16,7 @@ const Landing = () => {
             Home <span>Finding</span> app
           </h1>
           <p>If you want to find home for rent. Join with us.</p>
-          <Link to="/register" className="btn btn-hero">
+          <Link to="/register" className="button button-hero">
             Login/Register
           </Link>
         </div>
