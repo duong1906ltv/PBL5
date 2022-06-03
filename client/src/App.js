@@ -11,6 +11,7 @@ import {
   Profile,
   SharedLayout,
   Stats,
+  ChangePassword,
   HomePage,
   DetailPost,
 } from "./pages/Dashboard";
@@ -32,6 +33,7 @@ function App() {
           <Route path="all-jobs" element={<AllPosts />} />
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="ChangePassword" element={<ChangePassword />} />
           <Route path="stats" element={<Stats />} />
           <Route path="detail-post/" element={<DetailPost />}>
             <Route path=":id" element={<DetailPost />} />

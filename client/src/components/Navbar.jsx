@@ -26,6 +26,9 @@ function Navbar() {
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
+          <Link to="/ChangePassword">
+              <button className="dropdown-btn">Change password</button>
+            </Link>
             <Link to="/profile">
               <button className="dropdown-btn">profile</button>
             </Link>
