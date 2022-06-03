@@ -22,12 +22,12 @@ function Navbar() {
         <div className="button-container">
           <button className="button" onClick={() => setShowLogout(!showLogout)}>
             <FaUserCircle />
-            {user.name}
+            {user.username}
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-          <Link to="/ChangePassword">
-              <button className="dropdown-btn">Change password</button>
+            <Link to="/ChangePassword">
+              <button className="dropdown-button">Change password</button>
             </Link>
             <Link to="/profile">
               <button className="dropdown-button">profile</button>

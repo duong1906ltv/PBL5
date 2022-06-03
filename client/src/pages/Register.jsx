@@ -5,7 +5,7 @@ import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
-  name: "",
+  username: "",
   email: "",
   password: "",
   isMember: true,
@@ -26,12 +26,12 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const { name, email, password, isMember } = values;
-    if (!email || !password || (!isMember && !name)) {
+    const { username, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !username)) {
       displayAlert();
       return;
     }
-    const currentUser = { name, email, password };
+    const currentUser = { username, email, password };
     if (isMember) {
       setupUser({
         currentUser,
@@ -63,8 +63,8 @@ const Register = () => {
         {!values.isMember && (
           <FormRow
             type="text"
-            name="name"
-            value={values.name}
+            name="username"
+            value={values.username}
             handleChange={handleChange}
           />
         )}
