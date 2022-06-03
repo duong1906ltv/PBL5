@@ -7,7 +7,7 @@ function NewPost() {
   const { posts } = useAppContext();
 
   function getNewPosts() {
-    return posts.filter((post) => post.status === "new");
+    return posts.filter((post) => post.status === "New");
   }
   const newPosts = getNewPosts();
 
