@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Alert } from "../../components";
 import styled from "styled-components";
 import {Button, Label , Input, FormGroup,Form} from 'reactstrap';
+import { useAppContext } from "../../context/appContext";
 
 const initialData = {
   oldPassword: "",
@@ -8,17 +10,19 @@ const initialData = {
   confirmNewPassword:""
 };
 function ChangePassword() {
-  
+ 
   const [values, setValues] = useState(initialData);
+  const { changePassword,showAlert, isLoading } = useAppContext();
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    changePassword(values)
   };
   return (
     <Wrapper>
+      {showAlert && <Alert/>}
         <header>
           <h1>Change your password</h1>
         </header>
@@ -55,7 +59,7 @@ function ChangePassword() {
                onChange={handleChange}/>
             </FormGroup>
             <div className="changeButton">
-            <Button  type="submit" color="info"outline >Change password</Button>
+            <Button  type="submit" color="info"outline disabled={isLoading} >Change password</Button>
             </div>
   
           </Form>

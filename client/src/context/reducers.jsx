@@ -11,6 +11,9 @@ import {
   CREATE_POST_BEGIN,
   CREATE_POST_ERROR,
   CREATE_POST_SUCCESS,
+  CHANGE_PASS_BEGIN,
+  CHANGE_PASS_SUCCESS,
+  CHANGE_PASS_ERROR,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -106,6 +109,29 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === CHANGE_PASS_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === CHANGE_PASS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: action.payload.alertText,
+    };
+  }
+
+  if (action.type === CHANGE_PASS_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
   throw new Error(`no such action : ${action.type}`);
 };
 
