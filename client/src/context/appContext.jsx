@@ -14,6 +14,9 @@ import {
   CREATE_POST_BEGIN,
   CREATE_POST_ERROR,
   CREATE_POST_SUCCESS,
+  CHANGE_PASS_BEGIN,
+  CHANGE_PASS_SUCCESS,
+  CHANGE_PASS_ERROR,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -157,6 +160,26 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const changePassword = async (values) => { 
+    dispatch({ type: CHANGE_PASS_BEGIN });
+    try {
+      await authFetch.post(`/auth/change-password`, values);
+
+     
+      dispatch({
+        type: CHANGE_PASS_SUCCESS,
+        payload: { alertText:"change password success" },
+      });
+      
+    } catch (error) {
+      dispatch({
+        type: CHANGE_PASS_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -168,6 +191,7 @@ const AppProvider = ({ children }) => {
         logoutUser,
         getPosts,
         createPost,
+        changePassword,
       }}
     >
       {children}

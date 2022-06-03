@@ -27,7 +27,7 @@ function Navbar() {
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
           <Link to="/ChangePassword">
-              <button className="dropdown-btn">Change password</button>
+              <button className="dropdown-button">Change password</button>
             </Link>
             <Link to="/profile">
               <button className="dropdown-button">profile</button>
