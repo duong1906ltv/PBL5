@@ -10,7 +10,7 @@ import User from "../models/User.js";
 import mongoose from "mongoose";
 
 const createPost = async (req, res) => {
-  const { title, category, city, district, ward, phone_number, rent_price } =
+  const { title, category, city, district, ward, phone_number, price } =
     req.body;
 
   if (
@@ -20,7 +20,7 @@ const createPost = async (req, res) => {
     !ward ||
     !district ||
     !phone_number ||
-    !rent_price
+    !price
   ) {
     throw new BadRequestError("Please provide all values");
   }

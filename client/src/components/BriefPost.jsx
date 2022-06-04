@@ -14,9 +14,9 @@ function BriefPost({ post }) {
 
   const infoContent = (
     <div className="info-content">
-      <span className="price-content">{post.rent_price}</span>
+      <span className="price-content">{post.price} VND</span>
       <span className="area-content">
-        {post.motel_area}
+        {post.area}
         <sup>2</sup>
       </span>
       <span className="position-content">{post.city}</span>
@@ -37,7 +37,7 @@ function BriefPost({ post }) {
     <Wrapper>
       <div className="post">
         <div className="flex-row">
-          <img className="post-image" src={post.motel_image} alt={post.title} />
+          <img className="post-image" src={post.image} alt={post.title} />
           <div className="post-content">
             <div className="main-content" onClick={clickPost}>
               <h5>{post.title}</h5>

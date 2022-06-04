@@ -32,34 +32,30 @@ const MotelSchema = new mongoose.Schema({
     maxlength: 50,
     required: true,
   },
-  street: {
-    type: String,
-    maxlength: 50,
-  },
-  motel_number: {
-    type: Number,
-  },
-  detailed_address: {
+  address: {
     type: String,
   },
   phone_number: {
+    type: String,
+    required: true,
+  },
+  price: {
     type: Number,
     required: true,
   },
-  rent_price: {
-    type: String,
-    required: true,
+  deposit: {
+    type: Number,
   },
-  motel_area: {
-    type: String,
+  area: {
+    type: Number,
   },
-  rental_object: {
-    type: String,
-  },
-  motel_image: {
+  renter: {
     type: String,
   },
-  motel_video: {
+  image: {
+    type: String,
+  },
+  video: {
     type: String,
   },
   date: {

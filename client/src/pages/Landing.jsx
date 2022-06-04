@@ -53,6 +53,14 @@ const Wrapper = styled.main`
   .main-img {
     display: none;
   }
+  a {
+    text-decoration: none;
+    letter-spacing: var(--letterSpacing);
+  }
+  a,
+  button {
+    line-height: 1.15;
+  }
   @media (min-width: 992px) {
     .page {
       grid-template-columns: 1fr 1fr;
