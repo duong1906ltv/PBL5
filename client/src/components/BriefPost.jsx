@@ -19,7 +19,7 @@ function BriefPost({ post }) {
         {post.area}
         <sup>2</sup>
       </span>
-      <span className="position-content">{post.city}</span>
+      <span className="position-content">{post.city.name}</span>
       {post.status !== "new" && <span className="time-content">{date}</span>}
     </div>
   );

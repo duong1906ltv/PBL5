@@ -14,6 +14,10 @@ import {
   CHANGE_PASS_BEGIN,
   CHANGE_PASS_SUCCESS,
   CHANGE_PASS_ERROR,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_BEGIN,
+  EDIT_POST_ERROR,
+  SET_EDIT_POST,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -132,6 +136,43 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+
+  if (action.type === SET_EDIT_POST) {
+    const id = action.payload.id;
+    return {
+      ...state,
+      isEditing: true,
+      editPostId: id,
+    };
+  }
+
+  if (action.type === EDIT_POST_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === EDIT_POST_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      isEditing: false,
+      editPostId: "",
+      showAlert: true,
+      alertType: "success",
+      alertText: "Post Updated!",
+    };
+  }
+  if (action.type === EDIT_POST_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+
   throw new Error(`no such action : ${action.type}`);
 };
 

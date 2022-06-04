@@ -13,6 +13,6 @@ router.route("/").post(authenticateUser, createPost).get(getAllPosts);
 router
   .route("/:id")
   .delete(deletePost, authenticateUser)
-  .patch(updatePost, authenticateUser);
+  .patch(authenticateUser, updatePost);
 
 export default router;

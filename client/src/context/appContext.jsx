@@ -17,6 +17,10 @@ import {
   CHANGE_PASS_BEGIN,
   CHANGE_PASS_SUCCESS,
   CHANGE_PASS_ERROR,
+  SET_EDIT_POST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_BEGIN,
+  EDIT_POST_ERROR,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -33,6 +37,8 @@ const initialState = {
   jobLocation: userLocation || "",
   showSidebar: false,
   posts: [],
+  isEditing: false,
+  editPostId: "",
 };
 
 const AppContext = React.createContext();
@@ -160,20 +166,38 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const changePassword = async (values) => { 
+  const changePassword = async (values) => {
     dispatch({ type: CHANGE_PASS_BEGIN });
     try {
       await authFetch.post(`/auth/change-password`, values);
 
-     
       dispatch({
         type: CHANGE_PASS_SUCCESS,
-        payload: { alertText:"change password success" },
+        payload: { alertText: "change password success" },
       });
-      
     } catch (error) {
       dispatch({
         type: CHANGE_PASS_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const setEditPost = (id) => {
+    dispatch({ type: SET_EDIT_POST, payload: { id } });
+    return;
+  };
+  const editJob = async (post) => {
+    dispatch({ type: EDIT_POST_BEGIN });
+
+    try {
+      await authFetch.patch(`/post/${state.editPostId}`, post);
+      dispatch({ type: EDIT_POST_SUCCESS });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_POST_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
@@ -192,6 +216,8 @@ const AppProvider = ({ children }) => {
         getPosts,
         createPost,
         changePassword,
+        setEditPost,
+        editJob,
       }}
     >
       {children}

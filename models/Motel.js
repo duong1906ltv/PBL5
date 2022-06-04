@@ -18,19 +18,34 @@ const MotelSchema = new mongoose.Schema({
     required: true,
   },
   city: {
-    type: String,
-    maxlength: 20,
-    required: true,
+    id: {
+      type: String,
+    },
+    name: {
+      type: String,
+      maxlength: 20,
+      required: true,
+    },
   },
   ward: {
-    type: String,
-    maxlength: 50,
-    required: true,
+    id: {
+      type: String,
+    },
+    name: {
+      type: String,
+      maxlength: 20,
+      required: true,
+    },
   },
   district: {
-    type: String,
-    maxlength: 50,
-    required: true,
+    id: {
+      type: String,
+    },
+    name: {
+      type: String,
+      maxlength: 20,
+      required: true,
+    },
   },
   address: {
     type: String,

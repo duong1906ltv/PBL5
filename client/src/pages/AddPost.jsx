@@ -9,9 +9,9 @@ const initialState = {
   title: "",
   category: "Rental Room",
   renter: "All",
-  city: "",
-  district: "",
-  ward: "",
+  city: { id: 0, name: "" },
+  district: { id: 0, name: "" },
+  ward: { id: 0, name: "" },
   address: "",
   price: 0,
   deposit: 0,
@@ -27,34 +27,18 @@ const AddPost = () => {
   let districts = document.getElementById("district");
   let wards = document.getElementById("ward");
 
-  const { showAlert, displayAlert, createPost } = useAppContext();
+  const {
+    showAlert,
+    displayAlert,
+    createPost,
+    isEditing,
+    getPosts,
+    posts,
+    editPostId,
+    editJob,
+  } = useAppContext();
 
   const [values, setValues] = useState(initialState);
-
-  const handlePostInput = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const getData = () => {
-    fetch("data.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (myJson) {
-        citis = document.getElementById("city");
-        districts = document.getElementById("district");
-        wards = document.getElementById("ward");
-        renderCity(myJson);
-      });
-  };
-  useEffect(() => {
-    getData();
-  }, []);
 
   function renderCity(data) {
     for (const x of data) {
@@ -92,11 +76,84 @@ const AddPost = () => {
     };
   }
 
+  const getData = () => {
+    fetch("data.json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (myJson) {
+        citis = document.getElementById("city");
+        districts = document.getElementById("district");
+        wards = document.getElementById("ward");
+        renderCity(myJson);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+    getPosts();
+    if (isEditing) {
+      getData();
+
+      const post = posts.find((post) => post._id === editPostId);
+      setValues({
+        ...values,
+        title: post.title,
+        area: post.area,
+        category: post.category,
+        renter: post.renter,
+        address: post.address,
+        price: post.price,
+        phone_number: post.phone_number,
+        description: post.description,
+        city: post.city,
+        district: post.district,
+        ward: post.ward,
+        deposit: post.deposit,
+        image: post.image,
+        video: post.video,
+      });
+      districts = document.getElementById("district");
+      wards = document.getElementById("ward");
+      console.log("HELLO");
+      districts.options[values.district.id].text = post.district.name;
+      wards.options[values.ward.id].text = post.ward.name;
+    }
+    console.log(values);
+  }, [isEditing]);
+
+  const handlePostInput = (e) => {
+    if (
+      e.target.name === "city" ||
+      e.target.name === "ward" ||
+      e.target.name === "district"
+    ) {
+      setValues({
+        ...values,
+        [e.target.name]: {
+          id: e.target.value,
+          name: e.target.options[e.target.selectedIndex].text,
+        },
+      });
+      return;
+    }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const { title, city, district, ward, address, price, area } = values;
     if (!title || !city || !district || !ward || !address || !price || !area) {
       displayAlert();
+      return;
+    }
+    if (isEditing) {
+      editJob(values);
       return;
     }
     createPost(values);
@@ -148,7 +205,7 @@ const AddPost = () => {
           <Form.Select
             name="city"
             id="city"
-            value={values.city}
+            value={values.city.id}
             onChange={handlePostInput}
           >
             <option value=" " selected />
@@ -160,7 +217,7 @@ const AddPost = () => {
           <Form.Select
             name="district"
             id="district"
-            value={values.district}
+            value={values.district.id}
             onChange={handlePostInput}
           >
             <option value=" " selected />
@@ -172,7 +229,7 @@ const AddPost = () => {
           <Form.Select
             name="ward"
             id="ward"
-            value={values.ward}
+            value={values.ward.id}
             onChange={handlePostInput}
           >
             <option value=" " selected />

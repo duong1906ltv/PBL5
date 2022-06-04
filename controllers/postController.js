@@ -78,7 +78,7 @@ const getAllPosts = async (req, res) => {
 };
 const updatePost = async (req, res) => {
   const { id: postId } = req.params;
-  const { title, category, city, district, ward, phone_number, rent_price } =
+  const { title, category, city, district, ward, phone_number, price } =
     req.body;
 
   if (
@@ -88,24 +88,21 @@ const updatePost = async (req, res) => {
     !ward ||
     !district ||
     !phone_number ||
-    !rent_price
+    !price
   ) {
     throw new BadRequestError("Please provide all values");
   }
 
   const post = await Motel.findOne({ _id: postId });
-
   if (!post) {
     throw new NotFoundError(`No post with id :${postId}`);
   }
 
   checkPermissions(req.user, post.createdBy);
-
   const updatedPost = await Motel.findOneAndUpdate({ _id: postId }, req.body, {
     new: true,
     runValidators: true,
   });
-
   res.status(StatusCodes.OK).json({ updatedPost });
 };
 
