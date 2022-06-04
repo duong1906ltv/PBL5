@@ -7,7 +7,7 @@ import Resending from "./pages/Resending";
 import {
   AddJob,
   AllPosts,
-  Profile,
+  ProfileTest,
   SharedLayout,
   Stats,
   ChangePassword,
@@ -31,7 +31,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="all-jobs" element={<AllPosts />} />
           <Route path="add-job" element={<AddJob />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<ProfileTest />} />
           <Route path="ChangePassword" element={<ChangePassword />} />
           <Route path="stats" element={<Stats />} />
           <Route path="/addpost" element={<AddPost />} />
