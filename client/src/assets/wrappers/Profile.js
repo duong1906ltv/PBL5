@@ -15,7 +15,7 @@ const Wrapper = styled.main`
       background-size: cover;
       background-position: center;
       position: relative;
-
+ 
       .profile-ava img {
         border-radius: 50%;
         width: 150px;
