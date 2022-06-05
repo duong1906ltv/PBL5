@@ -4,6 +4,7 @@ import Welcome from "./pages/WelcomePage";
 import { AddPost, Error, Landing, Register } from "./pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Resending from "./pages/Resending";
+import EditPost from "./pages/EditPost";
 import {
   AddJob,
   AllPosts,
@@ -35,6 +36,9 @@ function App() {
           <Route path="ChangePassword" element={<ChangePassword />} />
           <Route path="stats" element={<Stats />} />
           <Route path="/addpost" element={<AddPost />} />
+          <Route path="edit-post/" element={<EditPost />}>
+            <Route path=":id" element={<EditPost />} />
+          </Route>
           <Route path="detail-post/" element={<DetailPost />}>
             <Route path=":id" element={<DetailPost />} />
           </Route>

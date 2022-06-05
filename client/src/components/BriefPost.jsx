@@ -12,6 +12,10 @@ function BriefPost({ post }) {
     navigate("/detail-post/" + id);
   };
 
+  const clickEditPost = () => {
+    navigate("/edit-post/" + id)
+  }
+
   const infoContent = (
     <div className="info-content">
       <span className="price-content">{post.rent_price}</span>
@@ -46,7 +50,9 @@ function BriefPost({ post }) {
                 <p className="description-content">{post.description}</p>
               )}
             </div>
+            <div onClick={clickEditPost}>
             {post.status !== "new" && authorContent}
+            </div>
           </div>
         </div>
         {post.status === "new" && infoContent}
