@@ -21,6 +21,10 @@ import {
   EDIT_POST_SUCCESS,
   EDIT_POST_BEGIN,
   EDIT_POST_ERROR,
+  GET_PROFILE_BEGIN,
+  UPDATE_PROFILE_BEGIN,
+  GET_PROFILE_SUCCESS,
+  HANDLE_CHANGE,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -33,12 +37,17 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
-  userLocation: userLocation || "",
-  jobLocation: userLocation || "",
   showSidebar: false,
   posts: [],
   isEditing: false,
   editPostId: "",
+  numOfPages: 2,
+  page: 1,
+  username: "",
+  firstName: "",
+  lastName: "",
+  phone_number: "",
+  address: "",
 };
 
 const AppContext = React.createContext();
@@ -152,10 +161,12 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const createPost = async (post) => {
+  const createPost = async (post, formData) => {
     dispatch({ type: CREATE_POST_BEGIN });
     try {
-      await authFetch.post("/post", post);
+      const { data } = await authFetch.post("/post", post);
+      const id = data.post._id;
+      await authFetch.patch(`/post/saveImage/${id}`, formData);
       dispatch({ type: CREATE_POST_SUCCESS });
     } catch (error) {
       dispatch({
@@ -188,7 +199,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_EDIT_POST, payload: { id } });
     return;
   };
-  const editJob = async (post) => {
+  const editPost = async (post) => {
     dispatch({ type: EDIT_POST_BEGIN });
 
     try {
@@ -204,6 +215,25 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getProfileById = async (id) => {
+    const Users = await axios.get(`/api/auth/getProfiles`);
+    const user = Users.data.find((item) => item._id === id);
+    dispatch({
+      type: GET_PROFILE_SUCCESS,
+      payload: { user },
+    });
+  };
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+
+  const updateUserProfile = async (id) => {
+    dispatch({ type: UPDATE_PROFILE_BEGIN });
+    try {
+      await axios.post(`/api/auth/updateUser/${id}`);
+    } catch (error) {}
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -217,7 +247,10 @@ const AppProvider = ({ children }) => {
         createPost,
         changePassword,
         setEditPost,
-        editJob,
+        editPost,
+        getProfileById,
+        updateUserProfile,
+        handleChange,
       }}
     >
       {children}

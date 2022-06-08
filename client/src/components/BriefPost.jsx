@@ -16,19 +16,24 @@ function BriefPost({ post }) {
     <div className="info-content">
       <span className="price-content">{post.price} VND</span>
       <span className="area-content">
-        {post.area}
-        <sup>2</sup>
+        {post.area} m<sup>2</sup>
       </span>
       <span className="position-content">{post.city.name}</span>
-      {post.status !== "new" && <span className="time-content">{date}</span>}
+      {post.status !== "New" && <span className="time-content">{date}</span>}
     </div>
   );
+
+  const toProfile = () => {
+    navigate("/profile/" + post.createdBy._id);
+  };
 
   const authorContent = (
     <div className="author-content">
       <img src={post.createdBy.user_ava} alt={post.createdBy.username} />
-      <span className="author-name">{post.createdBy.username}</span>
-      <span className="author-phone">{post.createdBy.username}</span>
+      <span className="author-name" onClick={toProfile}>
+        {post.createdBy.username}
+      </span>
+      <span className="author-phone">{post.createdBy.phone_number}</span>
       <span className="contact-content">Contact</span>
     </div>
   );
@@ -41,15 +46,15 @@ function BriefPost({ post }) {
           <div className="post-content">
             <div className="main-content" onClick={clickPost}>
               <h5>{post.title}</h5>
-              {post.status !== "new" && infoContent}
-              {post.status !== "new" && (
+              {post.status !== "New" && infoContent}
+              {post.status !== "New" && (
                 <p className="description-content">{post.description}</p>
               )}
             </div>
-            {post.status !== "new" && authorContent}
+            {post.status !== "New" && authorContent}
           </div>
         </div>
-        {post.status === "new" && infoContent}
+        {post.status === "New" && infoContent}
       </div>
     </Wrapper>
   );

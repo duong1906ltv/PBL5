@@ -23,7 +23,6 @@ const MotelSchema = new mongoose.Schema({
     },
     name: {
       type: String,
-      maxlength: 20,
       required: true,
     },
   },
@@ -33,7 +32,6 @@ const MotelSchema = new mongoose.Schema({
     },
     name: {
       type: String,
-      maxlength: 20,
       required: true,
     },
   },
@@ -43,7 +41,6 @@ const MotelSchema = new mongoose.Schema({
     },
     name: {
       type: String,
-      maxlength: 20,
       required: true,
     },
   },
@@ -79,7 +76,7 @@ const MotelSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "New",
+    default: "hot",
   },
 });
 

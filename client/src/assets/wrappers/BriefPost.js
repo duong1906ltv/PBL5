@@ -85,7 +85,9 @@ const Wrapper = styled.div`
       text-transform: capitalize;
       color: var(--grey-400);
     }
-
+    .author-name {
+      cursor: pointer;
+    }
     .author-phone {
       margin-left: auto;
       border: 1px solid var(--primary-500);

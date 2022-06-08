@@ -6,6 +6,8 @@ const app = express();
 import dotenv from "dotenv";
 dotenv.config();
 
+app.use(express.static("public"));
+
 // db and authenticateUser
 import connectDB from "./db/connect.js";
 

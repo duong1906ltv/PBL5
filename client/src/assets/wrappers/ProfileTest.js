@@ -1,34 +1,39 @@
 import styled from "styled-components";
 
 const Wrapper = styled.main`
-width: 100%;
-display: flex;
-justify-content: space-between;
-max-width: 1440px;
-margin: 0 auto;
-
- .container--left, .container--right {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  justify-content: flex-start;
- }
- .container--left {
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  .container--left,
+  .container--right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+  .container--left {
     width: 30%;
- }
- .container--right {
-  width: 65%;
- }
+  }
+  .container--right {
+    width: 65%;
+  }
 
- .user__info, .user__social, .user__view-more, .user__form, .user__post {
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 5px;
+  .user__info,
+  .user__social,
+  .user__view-more,
+  .user__form,
+  .user__post {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 5px;
   }
 
   .user__info {
@@ -41,7 +46,8 @@ margin: 0 auto;
       img {
         width: 70%;
         border-radius: 50%;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+          rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
       }
     }
 
@@ -53,7 +59,7 @@ margin: 0 auto;
 
     .intro {
       color: var(--grey-500);
-      font-size: 16px;  
+      font-size: 16px;
     }
 
     .action {
@@ -62,7 +68,8 @@ margin: 0 auto;
       justify-content: space-between;
       margin-top: 0.5rem;
 
-      .btn--follow, .btn--message {
+      .btn--follow,
+      .btn--message {
         width: 45%;
         padding: 10px;
         border-radius: 3rem;
@@ -87,17 +94,18 @@ margin: 0 auto;
     padding: 0.5rem 2rem;
     ul {
       margin: 0;
+      padding: 0;
       width: 100%;
       li {
-        display: flex;  
+        display: flex;
         justify-content: space-between;
         position: relative;
-        
+
         &:not(:last-child) {
           margin-bottom: 0.5rem;
 
           &::after {
-            content: '';
+            content: "";
             width: 100%;
             height: 1px;
             background-color: var(--grey-100);
@@ -128,7 +136,7 @@ margin: 0 auto;
   }
 
   .user__form {
-    padding: 2rem  4rem;
+    padding: 2rem 4rem;
     form {
       width: 100%;
       .form-input-group {
@@ -170,8 +178,9 @@ margin: 0 auto;
         display: flex;
         justify-content: flex-end;
         gap: 2rem;
-        
-        .edit-btn, .submit-btn {
+
+        .edit-btn,
+        .submit-btn {
           padding: 7px 10px;
           border-radius: 3px;
           min-width: 80px;
@@ -192,9 +201,9 @@ margin: 0 auto;
     .post__container {
       display: flex;
       gap: 1rem;
+      max-width: 100%;
 
       .post__action {
-        width: 10%;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -204,7 +213,8 @@ margin: 0 auto;
           height: 50px;
           border: none;
           background: var(--white);
-          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+            rgba(0, 0, 0, 0.24) 0px 1px 2px;
           border-radius: 5px;
 
           .edit-icon {
@@ -218,7 +228,6 @@ margin: 0 auto;
           }
         }
       }
-
     }
   }
 `;

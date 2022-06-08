@@ -35,6 +35,16 @@ const createPost = async (req, res) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("SOME THING WENT WRONG");
   }
 };
+
+const create_post_image = async (req, res) => {
+  const { id: postId } = req.params;
+
+  const post = await Motel.findOne({ _id: postId });
+  post.image = "http://127.0.0.1:5000/images/" + req.file.filename;
+  console.log(post.image);
+  await Motel.findOneAndUpdate({ _id: postId }, post, { new: true });
+  res.status(StatusCodes.OK).json("OK");
+};
 const deletePost = async (req, res) => {
   const { id: postId } = req.params;
 
@@ -106,4 +116,4 @@ const updatePost = async (req, res) => {
   res.status(StatusCodes.OK).json({ updatedPost });
 };
 
-export { createPost, deletePost, getAllPosts, updatePost };
+export { createPost, deletePost, getAllPosts, updatePost, create_post_image };

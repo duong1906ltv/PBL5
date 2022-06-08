@@ -263,7 +263,6 @@ const Wrapper = styled.main`
   }
 
   .icon {
-    transform: translateY(20%);
     margin-right: 0.2rem;
   }
 

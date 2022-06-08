@@ -41,8 +41,24 @@ const login = async (req, res) => {
   user.password = undefined;
   res.status(StatusCodes.OK).json({ user, token });
 };
-const updateUser = (req, res) => {
-  res.send("update user");
+const updateUser = async (req, res) => {
+  const userId = req.user.userId;
+
+  const { username, firstName, lastName, phone_number, address } = req.body;
+
+  if (!username || !firstName || !lastName || !phone_number || !address) {
+    throw new BadRequestError("Please provide all values");
+  }
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    throw new NotFoundError(`No post with id :${userId}`);
+  }
+
+  const updatedUser = await User.findOneAndUpdate({ _id: userId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(StatusCodes.OK).json({ updatedUser });
 };
 
 function sendEmail(email, token, subject, html) {
@@ -166,6 +182,15 @@ const change_password = async (req, res) => {
   res.status(StatusCodes.OK).json("change Password success");
 };
 
+const getAllProfile = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(StatusCodes.OK).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 export {
   register,
   login,
@@ -173,4 +198,5 @@ export {
   reset_password_email,
   reset_password,
   change_password,
+  getAllProfile,
 };

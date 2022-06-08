@@ -29,16 +29,16 @@ const AddPost = () => {
 
   const {
     showAlert,
-    displayAlert,
     createPost,
     isEditing,
     getPosts,
     posts,
     editPostId,
-    editJob,
+    editPost,
   } = useAppContext();
 
   const [values, setValues] = useState(initialState);
+  const [fileName, setFileName] = useState("");
 
   function renderCity(data) {
     for (const x of data) {
@@ -97,6 +97,7 @@ const AddPost = () => {
   useEffect(() => {
     getData();
     getPosts();
+
     if (isEditing) {
       getData();
 
@@ -124,7 +125,6 @@ const AddPost = () => {
       districts.options[values.district.id].text = post.district.name;
       wards.options[values.ward.id].text = post.ward.name;
     }
-    console.log(values);
   }, [isEditing]);
 
   const handlePostInput = (e) => {
@@ -145,23 +145,27 @@ const AddPost = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setFileName(e.target.files[0]);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    const { title, city, district, ward, address, price, area } = values;
-    if (!title || !city || !district || !ward || !address || !price || !area) {
-      displayAlert();
-      return;
-    }
+    const formData = new FormData();
+    formData.append("image", fileName);
+
     if (isEditing) {
-      editJob(values);
+      editPost(values, formData);
+      setValues(initialState);
       return;
     }
-    createPost(values);
+    createPost(values, formData);
+    setValues(initialState);
   };
   return (
     <Wrapper>
       <Form onSubmit={onSubmit}>
-        <h1>Add New Post</h1>
+        {isEditing ? <h1>Edit Your Post</h1> : <h1>Add New Post</h1>}
 
         {showAlert && <Alert />}
 
@@ -301,8 +305,7 @@ const AddPost = () => {
             accept="image/*"
             multiple
             name="image"
-            value={values.image}
-            onChange={handlePostInput}
+            onChange={handleFileChange}
           />
         </Form.Group>
 

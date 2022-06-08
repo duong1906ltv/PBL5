@@ -18,6 +18,8 @@ import {
   EDIT_POST_BEGIN,
   EDIT_POST_ERROR,
   SET_EDIT_POST,
+  GET_PROFILE_SUCCESS,
+  HANDLE_CHANGE,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -170,6 +172,31 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === GET_PROFILE_SUCCESS) {
+    return {
+      ...state,
+      username: action.payload.user.username,
+      firstName: action.payload.user.firstName
+        ? action.payload.user.firstName
+        : "",
+      lastName: action.payload.user.lastName
+        ? action.payload.user.lastName
+        : "",
+      phone_number: action.payload.user.phone_number
+        ? action.payload.user.phone_number
+        : "",
+      address: action.payload.user.address ? action.payload.user.address : "",
+    };
+  }
+
+  if (action.type === HANDLE_CHANGE) {
+    return {
+      ...state,
+      page: 1,
+      [action.payload.name]: action.payload.value,
     };
   }
 
