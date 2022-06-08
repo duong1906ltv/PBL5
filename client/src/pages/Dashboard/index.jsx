@@ -3,7 +3,7 @@ import AllPosts from "./AllPosts";
 import Profile from "./Profile";
 import ProfileTest from "./ProfileTest";
 import SharedLayout from "./SharedLayout";
-import Stats from "./Stats";
+import Chat from "./Chat";
 import HomePage from "./HomePage";
 import DetailPost from "./DetailPost";
 import ChangePassword from "./ChangePassword";
@@ -13,7 +13,7 @@ export {
   Profile,
   ProfileTest,
   SharedLayout,
-  Stats,
+  Chat,
   AddJob,
   HomePage,
   DetailPost,

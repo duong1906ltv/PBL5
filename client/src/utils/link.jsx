@@ -40,7 +40,7 @@ const links = [
   {
     id: 6,
     text: "Chat",
-    path: "stats",
+    path: "chat",
     icon: <IoMdChatboxes />,
   },
   {

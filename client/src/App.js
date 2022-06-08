@@ -9,7 +9,7 @@ import {
   AllPosts,
   ProfileTest,
   SharedLayout,
-  Stats,
+  Chat,
   ChangePassword,
   HomePage,
   DetailPost,
@@ -35,7 +35,7 @@ function App() {
             <Route path=":id" element={<ProfileTest />} />
           </Route>
           <Route path="ChangePassword" element={<ChangePassword />} />
-          <Route path="stats" element={<Stats />} />
+          <Route path="chat" element={<Chat />} />
           <Route path="/addpost" element={<AddPost />} />
           <Route path="detail-post/" element={<DetailPost />}>
             <Route path=":id" element={<DetailPost />} />

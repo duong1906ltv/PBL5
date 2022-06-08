@@ -13,8 +13,10 @@ import connectDB from "./db/connect.js";
 
 //routers
 import authRouter from "./routes/authRoutes.js";
-import jobRouter from "./routes/jobRouter.js";
 import postRouter from "./routes/postRoutes.js";
+import conversationRouter from "./routes/conversationRoutes.js";
+import messageRouter from "./routes/messageRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 // middleware
 import notFoundMiddleware from "./middleware/not-found.js";
@@ -27,8 +29,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
-app.use("/api/auth", jobRouter);
+app.use("/api/conversation", conversationRouter);
+app.use("/api/message", messageRouter);
 app.use("/api/post", postRouter);
+app.use("/api/users", userRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandleMiddleware);

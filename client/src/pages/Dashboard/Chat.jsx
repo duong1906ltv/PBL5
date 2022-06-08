@@ -1,120 +1,148 @@
+import axios from "axios";
 import React from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Conversation from "../../components/Conversation";
+import Message from "../../components/Message";
+import { useAppContext } from "../../context/appContext";
 
-function Stats() {
+function Chat() {
+  const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const { user } = useAppContext();
+
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const res = await axios.get("/api/conversation/" + user._id);
+        setConversations(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getConversations();
+  }, [user._id]);
+
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const res = await axios.get("/api/message/" + currentChat?._id);
+        setMessages(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMessages();
+  }, [currentChat]);
+
   return (
     <Wrapper className="full-page">
       <div className="chat-container">
-        {/* <div className="search-container">
-            <input type="text" placeholder="Search"/>
+        <div className="search-container">
+          <input type="text" placeholder="Search" />
         </div>
         <div className="chat-title">
-            <img src="/avatar2.webp" alt="image" />
-            <div>Mai Xuan Nhat</div>
+          <img src="/avatar2.webp" alt="image" />
+          <div>Mai Xuan Nhat</div>
         </div>
-        <form className="chat-form" >
-            <input type={"text"}></input>
-            <button>Send</button>
-        </form> 
-       
+        <form className="chat-form">
+          <input type={"text"}></input>
+          <button>Send</button>
+        </form>
+
         <div className="conversation-list">
-            <div className="conversation ">
-            <img src="/avatar2.webp" alt="image" />
-              <div className="title-text">Chinh</div>
-              <div className="created-date">3 Minute ago</div>
-              <div className="conversation-message">Con cho nay</div>
+          {conversations.map((c) => (
+            <div onClick={() => setCurrentChat(c)}>
+              <Conversation conversation={c} currentUser={user} />;
             </div>
-           <div className="conversation">
+          ))}
+
+          <div className="conversation">
             <img src="/avatar3.webp" alt="image" />
             <div className="title-text">Tuan</div>
             <div className="created-date">2 days ago</div>
-            <div className="conversation-message">
-             Rat vui
-            </div>
+            <div className="conversation-message">Rat vui</div>
           </div>
           <div className="conversation">
-           <img src="/avatar4.png" alt="image" />
-           <div className="title-text">Duong</div>
-           <div className="created-date">3 days ago</div>
-           <div className="conversation-message">
-             Vui bth
-           </div>
+            <img src="/avatar4.png" alt="image" />
+            <div className="title-text">Duong</div>
+            <div className="created-date">3 days ago</div>
+            <div className="conversation-message">Vui bth</div>
           </div>
-         <div className="conversation">
-           <img src="/avatar2.webp" alt="image" />
-           <div className="title-text">Mai Xuan Nhat</div>
-           <div className="created-date">2 days ago</div>
-           <div className="conversation-message">
-             Deo vui
-           </div>
-         </div>
-         <div className="conversation">
-           <img src="/avatar3.webp" alt="image" />
-           <div className="title-text">Nhat</div>
-           <div className="created-date">2 days ago</div>
-           <div className="conversation-message">
-             Deo vui
-           </div>
-         </div>
+          <div className="conversation">
+            <img src="/avatar2.webp" alt="image" />
+            <div className="title-text">Mai Xuan Nhat</div>
+            <div className="created-date">2 days ago</div>
+            <div className="conversation-message">Deo vui</div>
+          </div>
+          <div className="conversation">
+            <img src="/avatar3.webp" alt="image" />
+            <div className="title-text">Nhat</div>
+            <div className="created-date">2 days ago</div>
+            <div className="conversation-message">Deo vui</div>
+          </div>
         </div>
         <div className="chat-message-list">
-        <div className="message-row">
-            <div className="other-message">
-              <div className="message-content">
-              <img src="/avatar2.webp" alt="image" />
-               
-               <div className="message-text">
-                   Xin chao cac ban 
-               </div>
-               <div className="message-time">10 seconds ago</div>
-             </div>
+          {messages.map((m) => (
+            <div>
+              <Message message={m} own={m.sender === user._id} />;
             </div>
-        </div> 
-        <div className="message-row">
+          ))}
+          <div className="message-row">
             <div className="you-message">
               <div className="message-content">
-                <div className="message-text">
-                    Tro nay con khong a
-                </div>
+                <div className="message-text">Tro nay con khong a</div>
                 <div className="message-time">1 minutes</div>
+              </div>
             </div>
-            </div>
-        </div>  
-        <div className="message-row">
+          </div>
+          <div className="message-row">
             <div className="you-message">
               <div className="message-content">
-                <div className="message-text">
-                    cho Duong
-                </div>
+                <div className="message-text">cho Duong</div>
                 <div className="message-time">20 seconds ago</div>
+              </div>
             </div>
-            </div>
-        </div> 
-        <div className="message-row">
+          </div>
+          <div className="message-row">
             <div className="other-message">
               <div className="message-content">
-              <img src="/avatar2.webp" alt="image" />
-               
-               <div className="message-text">
-                   Tro nay con khong a 
-               </div>
-               <div className="message-time">1 minutes</div>
-             </div>
+                <img src="/avatar2.webp" alt="image" />
+
+                <div className="message-text">Tro nay con khong a</div>
+                <div className="message-time">1 minutes</div>
+              </div>
             </div>
-        </div>  
-        <div className="message-row">
+          </div>
+          <div className="message-row">
             <div className="you-message">
-               <div className="message-content">
-               
-               <div className="message-text">
-                   cho em thue voi
-               </div>
-               <div className="message-time">2 minutes</div>
-               </div>
+              <div className="message-content">
+                <div className="message-text">cho em thue voi</div>
+                <div className="message-time">2 minutes</div>
+              </div>
             </div>
-        </div>    
-      </div> */}
+            <div className="you-message">
+              <div className="message-content">
+                <div className="message-text">cho em thue voi</div>
+                <div className="message-time">2 minutes</div>
+              </div>
+            </div>
+            <div className="you-message">
+              <div className="message-content">
+                <div className="message-text">cho em thue voi</div>
+                <div className="message-time">2 minutes</div>
+              </div>
+            </div>
+            <div className="you-message">
+              <div className="message-content">
+                <div className="message-text">cho em thue voi</div>
+                <div className="message-time">2 minutes</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Wrapper>
   );
@@ -332,4 +360,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default Stats;
+export default Chat;
