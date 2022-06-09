@@ -6,8 +6,11 @@ import Conversation from "../../components/Conversation";
 import Message from "../../components/Message";
 import { useAppContext } from "../../context/appContext";
 import { io } from "socket.io-client";
+import { useLocation } from "react-router-dom";
 
 function Chat() {
+  const location = useLocation();
+  let conversationId = "";
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -17,6 +20,18 @@ function Chat() {
   const { user } = useAppContext();
   const scrollRef = useRef();
 
+  useEffect(() => {
+    if (!location.state) {
+      return;
+    } else {
+      let conversationId = location.state.conversationId;
+      const getConversation = async () => {
+        const res = await axios("/api/conversation/byId/" + conversationId);
+        setCurrentChat(res.data);
+      };
+      getConversation();
+    }
+  }, [location]);
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -67,7 +82,7 @@ function Chat() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newMessage == "") {
+    if (newMessage === "") {
       return;
     }
     const message = {

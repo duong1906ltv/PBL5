@@ -27,10 +27,20 @@ function Navbar() {
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
             <Link to="/ChangePassword">
-              q<button className="dropdown-button">Change password</button>
+              <button
+                className="dropdown-button"
+                onClick={() => setShowLogout(!showLogout)}
+              >
+                Change password
+              </button>
             </Link>
             <Link to={`/profile/${user._id}`}>
-              <button className="dropdown-button">profile</button>
+              <button
+                className="dropdown-button"
+                onClick={() => setShowLogout(!showLogout)}
+              >
+                profile
+              </button>
             </Link>
             <button className="dropdown-button" onClick={logoutUser}>
               logout

@@ -57,14 +57,19 @@ function ProfileTest() {
 
   const handleChat = async (e) => {
     e.preventDefault();
-    const res = await axios("/api/conversation/find/" + user._id + "/" + id);
+    let res = await axios("/api/conversation/find/" + user._id + "/" + id);
     if (res.data === null) {
       const data = {
         senderId: user._id,
         receiverId: id,
       };
-      await axios.post("/api/conversation/", data);
+      res = await axios.post("/api/conversation/", data);
     }
+    navigate("../chat", { state: { conversationId: res.data._id } });
+  };
+
+  const handleFollow = async (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -84,7 +89,9 @@ function ProfileTest() {
           </div>
           {id !== user._id && (
             <div className="action">
-              <button className="btn--follow">Follow</button>
+              <button className="btn--follow" onClick={handleFollow}>
+                Follow
+              </button>
               <button className="btn--message" onClick={handleChat}>
                 Message
               </button>

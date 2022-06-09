@@ -35,8 +35,19 @@ const getConversationFromTwoUser = async (req, res) => {
   }
 };
 
+const getConversationById = async (req, res) => {
+  const { id: conversationId } = req.params;
+  try {
+    const conversation = await Conversation.findOne({ _id: conversationId });
+    res.status(200).json(conversation);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 export {
   addNewConversation,
   getConversationFromUser,
   getConversationFromTwoUser,
+  getConversationById,
 };
