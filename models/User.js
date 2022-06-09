@@ -57,6 +57,14 @@ const UserSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  followers: {
+    type: Array,
+    default: [],
+  },
+  followings: {
+    type: Array,
+    default: [],
+  },
   role: {
     type: String,
     default: "user",

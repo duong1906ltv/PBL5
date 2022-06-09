@@ -12,6 +12,7 @@ import axios from "axios";
 
 function ProfileTest() {
   const [isEditForm, setIsEditForm] = useState(false);
+  const [follow, setFollow] = useState(false);
   let { id } = useParams();
   let navigate = useNavigate();
   const {
@@ -31,6 +32,11 @@ function ProfileTest() {
   useEffect(() => {
     getPosts();
     getProfileById(id);
+    const checkFollow = async () => {
+      const res = await axios("/api/users/" + user._id + "/" + id);
+      setFollow(res);
+    };
+    checkFollow();
   }, [id]);
 
   const handleProfileInput = (e) => {
@@ -70,6 +76,8 @@ function ProfileTest() {
 
   const handleFollow = async (e) => {
     e.preventDefault();
+    await axios("/api/users/" + id + "/follow", { userId: user._id });
+    setFollow(!follow);
   };
 
   return (
@@ -89,9 +97,16 @@ function ProfileTest() {
           </div>
           {id !== user._id && (
             <div className="action">
-              <button className="btn--follow" onClick={handleFollow}>
-                Follow
-              </button>
+              {follow ? (
+                <button className="btn--follow" onClick={handleFollow}>
+                  Followed
+                </button>
+              ) : (
+                <button className="btn--follow" onClick={handleFollow}>
+                  Follow
+                </button>
+              )}
+
               <button className="btn--message" onClick={handleChat}>
                 Message
               </button>
