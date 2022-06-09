@@ -20,6 +20,6 @@ router.route("/").get(getAllPosts);
 router
   .route("/:id")
   .delete(deletePost, authenticateUser)
-  .patch(authenticateUser, updatePost);
+  .patch(upload.single("image"), authenticateUser, updatePost);
 
 export default router;

@@ -41,7 +41,6 @@ const create_post_image = async (req, res) => {
 
   const post = await Motel.findOne({ _id: postId });
   post.image = "http://127.0.0.1:5000/images/" + req.file.filename;
-  console.log(post.image);
   await Motel.findOneAndUpdate({ _id: postId }, post, { new: true });
   res.status(StatusCodes.OK).json("OK");
 };
@@ -67,24 +66,6 @@ const getAllPosts = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-
-  // let posts_name = await User.aggregate([
-  //   {
-  //     $match: { _id: mongoose.Types.ObjectId("6275515a08c932db6fa1e0ef") },
-  //   },
-  // ]);
-  // let posts = await Motel.aggregate([
-  //   {
-  //     $lookup: {
-  //       from: "User",
-  //       localField: "createdBy",
-  //       foreignField: "_id",
-  //       as: "test",
-  //     },
-  //     // $match: { createdBy: mongoose.Types.ObjectId(User._id) },
-  //   },
-  // ]);
-  // res.status(StatusCodes.OK).json(posts);
 };
 const updatePost = async (req, res) => {
   const { id: postId } = req.params;
