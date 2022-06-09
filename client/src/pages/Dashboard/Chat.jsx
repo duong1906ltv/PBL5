@@ -30,7 +30,6 @@ function Chat() {
       try {
         const res = await axios.get('/api/message/' + currentChat?._id)
         setMessages(res.data)
-        console.log(messages)
       } catch (err) {
         console.log(err)
       }
@@ -54,11 +53,15 @@ function Chat() {
         </form>
 
         <div className='conversation-list'>
-          {conversations.map((c) => (
-            <div onClick={() => setCurrentChat(c)}>
-              <Conversation conversation={c} currentUser={user} />;
-            </div>
-          ))}
+          {conversations.map((c) => {
+            console.log('conversations')
+            console.log(conversations)
+            return (
+              <div onClick={() => setCurrentChat(c)}>
+                <Conversation conversation={c} currentUser={user} />;
+              </div>
+            )
+          })}
 
           <div className='conversation'>
             <img src='/avatar3.webp' alt='image' />
@@ -140,7 +143,7 @@ function Chat() {
           </div>
           {messages.map((m) => (
             <div>
-              <Message message={m} own={m.sender === user._id} />;
+              <Message message={m} own={m.sender === user._id} />
             </div>
           ))}
         </div>
@@ -195,7 +198,7 @@ const Wrapper = styled.div`
   .chat-message-list {
     grid-area: chat-message-list;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     padding: 10px 20px 0px 20px;
     overflow-y: scroll;
   }
