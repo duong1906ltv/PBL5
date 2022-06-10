@@ -10,6 +10,7 @@ import Menu from './Menu'
 import Filter from './Filter'
 import ImageSlider from './ImageSlider'
 import PostsContainer from './PostsContainer'
+import Filtering from './Filtering'
 
 export {
   Logo,
@@ -23,4 +24,6 @@ export {
   Filter,
   ImageSlider,
   PostsContainer,
+  UserBriefPost,
+  Filtering,
 }
