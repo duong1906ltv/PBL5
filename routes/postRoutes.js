@@ -10,6 +10,7 @@ import {
   deletePost,
   updatePost,
   create_post_image,
+  findPost,
 } from "../controllers/postController.js";
 
 router.route("/").post(authenticateUser, createPost);
@@ -21,5 +22,7 @@ router
   .route("/:id")
   .delete(deletePost, authenticateUser)
   .patch(upload.single("image"), authenticateUser, updatePost);
+
+router.route("/find").get(findPost);
 
 export default router;

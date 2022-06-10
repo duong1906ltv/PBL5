@@ -1,7 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ResetPassword from "./pages/ResetPassword";
 import Welcome from "./pages/WelcomePage";
-import { AddPost, Error, Landing, Register } from "./pages/index";
+import {
+  AddPost,
+  Error,
+  Landing,
+  Register,
+  Checkpost,
+  Test,
+} from "./pages/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Resending from "./pages/Resending";
 import {
@@ -40,12 +47,14 @@ function App() {
           <Route path="detail-post/" element={<DetailPost />}>
             <Route path=":id" element={<DetailPost />} />
           </Route>
+          <Route path="check-post" element={<Checkpost />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
         <Route path="/resending" element={<Resending />} />
         <Route path="/welcome" element={<Welcome />} />
+        <Route path="/test" element={<Test />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

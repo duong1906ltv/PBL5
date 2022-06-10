@@ -97,4 +97,32 @@ const updatePost = async (req, res) => {
   res.status(StatusCodes.OK).json({ updatedPost });
 };
 
-export { createPost, deletePost, getAllPosts, updatePost, create_post_image };
+const findPost = async (req, res) => {
+  const { city, district, ward } = req.query;
+  console.log(city);
+  const queryObject = { city: {}, district: {}, ward: {} };
+  if (city && city !== "all") {
+    queryObject.city.id = city;
+  }
+  if (district && district !== "all") {
+    queryObject.district.id = district;
+  }
+  if (ward && ward !== "all") {
+    queryObject.ward.id = ward;
+  }
+  console.log(queryObject);
+  let result = await Motel.find({
+    queryObject,
+  });
+
+  res.status(200).json({ result });
+};
+
+export {
+  createPost,
+  deletePost,
+  getAllPosts,
+  updatePost,
+  create_post_image,
+  findPost,
+};
