@@ -59,26 +59,26 @@ function Chat() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get("/api/conversation/" + user._id);
-        setConversations(res.data);
+        const res = await axios.get('/api/conversation/' + user._id)
+        setConversations(res.data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    getConversations();
-  }, [user._id]);
+    }
+    getConversations()
+  }, [user._id])
 
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("/api/message/" + currentChat?._id);
-        setMessages(res.data);
+        const res = await axios.get('/api/message/' + currentChat?._id)
+        setMessages(res.data)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
-    };
-    getMessages();
-  }, [currentChat]);
+    }
+    getMessages()
+  }, [currentChat])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,20 +115,34 @@ function Chat() {
   }, [messages]);
 
   return (
-    <Wrapper className="full-page">
-      <div className="chat-container">
-        <div className="search-container">
-          <input type="text" placeholder="Search" />
+    <Wrapper className='full-page'>
+      <div className='chat-container'>
+        <div className='search-container'>
+          <input type='text' placeholder='Search' />
         </div>
+        <div className='chat-title'>
+          <img src='/avatar2.webp' alt='image' />
+          <div>Mai Xuan Nhat</div>
+        </div>
+        <form className='chat-form'>
+          <input type={'text'}></input>
+          <button>Send</button>
+        </form>
 
-        <div className="conversation-list">
-          {conversations.map((c) => (
-            <div onClick={() => setCurrentChat(c)}>
-              <Conversation conversation={c} currentUser={user} />;
-            </div>
-          ))}
-        </div>
-        {currentChat ? (
+        <div className='conversation-list'>
+          {conversations.map((c) => {
+            return (
+              <div onClick={() => setCurrentChat(c)}>
+                <Conversation
+                  active={currentChat._id === c._id ? true : false}
+                  conversation={c}
+                  currentUser={user}
+                />
+                ;
+              </div>
+            )
+          })}
+         {currentChat ? (
           <>
             <div className="chat-title">
               <img src="/avatar2.webp" alt="" />
@@ -160,23 +174,22 @@ function Chat() {
         )}
       </div>
     </Wrapper>
-  );
+  )
 }
 const Wrapper = styled.div`
   .chat-container {
     display: grid;
     grid:
-      "search-container chat-title" 71px
-      "conversation-list chat-message-list" 1fr
-      "new-message-container chat-form" 50px
+      'search-container chat-title' 71px
+      'conversation-list chat-message-list' 1fr
+      'new-message-container chat-form' 50px
       / 275px 1fr;
-    min-width: 1000px;
-    max-width: 1000px;
-    max-height: 800px;
+    max-width: 1440px;
     width: 100%;
-    height: 95vh;
+    height: calc(100vh - 96px);
     background: white;
     border-radius: 10px;
+    margin: auto;
   }
 
   .chat-form {
@@ -210,7 +223,7 @@ const Wrapper = styled.div`
   .chat-message-list {
     grid-area: chat-message-list;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     padding: 10px 20px 0px 20px;
     overflow-y: scroll;
   }
@@ -291,6 +304,14 @@ const Wrapper = styled.div`
       cursor: pointer;
     }
 
+    &.active {
+      .title-text,
+      .created-date,
+      .conversation-message {
+        font-weight: bold;
+      }
+    }
+
     > img {
       grid-row: span 2;
       height: 40px;
@@ -342,7 +363,7 @@ const Wrapper = styled.div`
       padding-left: 48px;
       padding-right: 20px;
       font-size: 1.4rem;
-      background: url("search2.webp") no-repeat #ffffff4d;
+      background: url('search2.webp') no-repeat #ffffff4d;
       background-position: 15px center;
       background-size: 20px 20px;
     }
@@ -373,6 +394,6 @@ const Wrapper = styled.div`
       border-radius: 100%;
     }
   }
-`;
+`
 
-export default Chat;
+export default Chat
