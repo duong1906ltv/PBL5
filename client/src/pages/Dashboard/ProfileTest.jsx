@@ -7,10 +7,14 @@ import { MdOutlineDataSaverOff } from "react-icons/md";
 import { useAppContext } from "../../context/appContext";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ProfileTest() {
   const [isEditForm, setIsEditForm] = useState(false);
+  const [follow, setFollow] = useState(false);
   let { id } = useParams();
+  let navigate = useNavigate();
   const {
     posts,
     getPosts,
@@ -22,11 +26,17 @@ function ProfileTest() {
     address,
     getProfileById,
     handleChange,
+    updateUserProfile,
   } = useAppContext();
 
   useEffect(() => {
     getPosts();
     getProfileById(id);
+    const checkFollow = async () => {
+      const res = await axios("/api/users/" + user._id + "/" + id);
+      setFollow(res);
+    };
+    checkFollow();
   }, [id]);
 
   const handleProfileInput = (e) => {
@@ -48,7 +58,26 @@ function ProfileTest() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsEditForm(false);
-    console.log({ username, firstName, lastName, phone_number, address });
+    updateUserProfile();
+  };
+
+  const handleChat = async (e) => {
+    e.preventDefault();
+    let res = await axios("/api/conversation/find/" + user._id + "/" + id);
+    if (res.data === null) {
+      const data = {
+        senderId: user._id,
+        receiverId: id,
+      };
+      res = await axios.post("/api/conversation/", data);
+    }
+    navigate("../chat", { state: { conversationId: res.data._id } });
+  };
+
+  const handleFollow = async (e) => {
+    e.preventDefault();
+    await axios("/api/users/" + id + "/follow", { userId: user._id });
+    setFollow(!follow);
   };
 
   return (
@@ -66,10 +95,23 @@ function ProfileTest() {
             I have a lot of clean and quiet rooms for you guys, contact me to
             know more.
           </div>
-          <div className="action">
-            <button className="btn--follow">Follow</button>
-            <button className="btn--message">Message</button>
-          </div>
+          {id !== user._id && (
+            <div className="action">
+              {follow ? (
+                <button className="btn--follow" onClick={handleFollow}>
+                  Followed
+                </button>
+              ) : (
+                <button className="btn--follow" onClick={handleFollow}>
+                  Follow
+                </button>
+              )}
+
+              <button className="btn--message" onClick={handleChat}>
+                Message
+              </button>
+            </div>
+          )}
         </div>
         <div className="user__social">
           <ul>
@@ -95,7 +137,7 @@ function ProfileTest() {
         <div className="user__form">
           <form>
             <div className="form-input-group">
-              <label htmlFor="username">First Name</label>
+              <label htmlFor="username">User Name</label>
               <input
                 type="text"
                 name="username"

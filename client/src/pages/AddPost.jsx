@@ -121,7 +121,6 @@ const AddPost = () => {
       });
       districts = document.getElementById("district");
       wards = document.getElementById("ward");
-      console.log("HELLO");
       districts.options[values.district.id].text = post.district.name;
       wards.options[values.ward.id].text = post.ward.name;
     }
@@ -298,7 +297,15 @@ const AddPost = () => {
         </Form.Group>
 
         <Form.Group className="form-control">
-          <Form.Label>Image:</Form.Label>
+          {isEditing ? (
+            <>
+              <img width="100" src={values.image} alt="" />
+              <Form.Label>Choose new image</Form.Label>
+            </>
+          ) : (
+            <Form.Label>Image:</Form.Label>
+          )}
+
           <FormControl
             aria-describedby="basic-addon1"
             type="file"

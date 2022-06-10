@@ -1,17 +1,60 @@
-import axios from 'axios'
-import React from 'react'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import Conversation from '../../components/Conversation'
-import Message from '../../components/Message'
-import { useAppContext } from '../../context/appContext'
+import axios from "axios";
+import React from "react";
+import { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
+import Conversation from "../../components/Conversation";
+import Message from "../../components/Message";
+import { useAppContext } from "../../context/appContext";
+import { io } from "socket.io-client";
+import { useLocation } from "react-router-dom";
 
 function Chat() {
-  const [conversations, setConversations] = useState([])
-  const [currentChat, setCurrentChat] = useState(null)
-  const [messages, setMessages] = useState([])
-  const { user } = useAppContext()
+  const location = useLocation();
+  let conversationId = "";
+  const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef(io("ws://localhost:8900"));
+  const { user } = useAppContext();
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    if (!location.state) {
+      return;
+    } else {
+      let conversationId = location.state.conversationId;
+      const getConversation = async () => {
+        const res = await axios("/api/conversation/byId/" + conversationId);
+        setCurrentChat(res.data);
+      };
+      getConversation();
+    }
+  }, [location]);
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [user]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -37,6 +80,40 @@ function Chat() {
     getMessages()
   }, [currentChat])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (newMessage === "") {
+      return;
+    }
+    const message = {
+      sender: user._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+    };
+
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+
+    try {
+      const res = await axios.post("/api/message", message);
+      setMessages([...messages, res.data]);
+      setNewMessage("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <Wrapper className='full-page'>
       <div className='chat-container'>
@@ -54,10 +131,6 @@ function Chat() {
 
         <div className='conversation-list'>
           {conversations.map((c) => {
-            console.log('conversations')
-            console.log(conversations)
-            console.log('currentChat')
-            console.log(currentChat)
             return (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation
@@ -69,91 +142,36 @@ function Chat() {
               </div>
             )
           })}
-
-          <div className='conversation'>
-            <img src='/avatar3.webp' alt='image' />
-            <div className='title-text'>Tuan</div>
-            <div className='created-date'>2 days ago</div>
-            <div className='conversation-message'>Rat vui</div>
-          </div>
-          <div className='conversation'>
-            <img src='/avatar4.png' alt='image' />
-            <div className='title-text'>Duong</div>
-            <div className='created-date'>3 days ago</div>
-            <div className='conversation-message'>Vui bth</div>
-          </div>
-          <div className='conversation'>
-            <img src='/avatar2.webp' alt='image' />
-            <div className='title-text'>Mai Xuan Nhat</div>
-            <div className='created-date'>2 days ago</div>
-            <div className='conversation-message'>Deo vui</div>
-          </div>
-          <div className='conversation'>
-            <img src='/avatar3.webp' alt='image' />
-            <div className='title-text'>Nhat</div>
-            <div className='created-date'>2 days ago</div>
-            <div className='conversation-message'>Deo vui</div>
-          </div>
-        </div>
-        <div className='chat-message-list'>
-          <div className='message-row'>
-            <div className='you-message'>
-              <div className='message-content'>
-                <div className='message-text'>Tro nay con khong a</div>
-                <div className='message-time'>1 minutes</div>
-              </div>
+         {currentChat ? (
+          <>
+            <div className="chat-title">
+              <img src="/avatar2.webp" alt="" />
+              <div>Mai Xuan Nhat</div>
             </div>
-          </div>
-          <div className='message-row'>
-            <div className='you-message'>
-              <div className='message-content'>
-                <div className='message-text'>cho Duong</div>
-                <div className='message-time'>20 seconds ago</div>
-              </div>
+            <div className="chat-message-list">
+              {messages.map((m) => (
+                <div ref={scrollRef}>
+                  <Message message={m} own={m.sender === user._id} />
+                </div>
+              ))}
             </div>
-          </div>
-          <div className='message-row'>
-            <div className='other-message'>
-              <div className='message-content'>
-                <img src='/avatar2.webp' alt='image' />
-
-                <div className='message-text'>Tro nay con khong a</div>
-                <div className='message-time'>1 minutes</div>
-              </div>
+            <div className="chat-form">
+              <textarea
+                className="chatMessageInput"
+                placeholder="write something..."
+                onChange={(e) => setNewMessage(e.target.value)}
+                value={newMessage}
+              ></textarea>
+              <button className="chatSubmitButton" onClick={handleSubmit}>
+                Send
+              </button>
             </div>
-          </div>
-          <div className='message-row'>
-            <div className='you-message'>
-              <div className='message-content'>
-                <div className='message-text'>cho em thue voi</div>
-                <div className='message-time'>2 minutes</div>
-              </div>
-            </div>
-            <div className='you-message'>
-              <div className='message-content'>
-                <div className='message-text'>cho em thue voi</div>
-                <div className='message-time'>2 minutes</div>
-              </div>
-            </div>
-            <div className='you-message'>
-              <div className='message-content'>
-                <div className='message-text'>cho em thue voi</div>
-                <div className='message-time'>2 minutes</div>
-              </div>
-            </div>
-            <div className='you-message'>
-              <div className='message-content'>
-                <div className='message-text'>cho em thue voi</div>
-                <div className='message-time'>2 minutes</div>
-              </div>
-            </div>
-          </div>
-          {messages.map((m) => (
-            <div>
-              <Message message={m} own={m.sender === user._id} />
-            </div>
-          ))}
-        </div>
+          </>
+        ) : (
+          <span className="noConversationText">
+            Open a conversation to start a chat.
+          </span>
+        )}
       </div>
     </Wrapper>
   )

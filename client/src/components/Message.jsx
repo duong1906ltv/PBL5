@@ -19,9 +19,9 @@ function Message(props) {
 
   return (
     <div className='message-row'>
-      <div className={props.own ? 'other-message' : 'you-message'}>
+      <div className={props.own ? "you-message" : "other-message"}>
         <div className='message-content'>
-          {props.own && <img src={user.user_ava} alt='image' />}
+          {!props.own && <img src={user.user_ava} alt='image' />}
           <div className='message-text'>{props.message.text}</div>
           <div className='message-time'>{format(props.message.createdAt)}</div>
         </div>

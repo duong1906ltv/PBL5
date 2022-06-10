@@ -199,11 +199,12 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SET_EDIT_POST, payload: { id } });
     return;
   };
-  const editPost = async (post) => {
+  const editPost = async (post, formData) => {
     dispatch({ type: EDIT_POST_BEGIN });
-
+    const { editPostId } = state;
     try {
       await authFetch.patch(`/post/${state.editPostId}`, post);
+      await authFetch.patch(`/post/saveImage/${editPostId}`, formData);
       dispatch({ type: EDIT_POST_SUCCESS });
     } catch (error) {
       if (error.response.status === 401) return;
@@ -227,11 +228,19 @@ const AppProvider = ({ children }) => {
     dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
   };
 
-  const updateUserProfile = async (id) => {
-    dispatch({ type: UPDATE_PROFILE_BEGIN });
+  const updateUserProfile = async () => {
+    const { username, firstName, lastName, phone_number, address } = state;
     try {
-      await axios.post(`/api/auth/updateUser/${id}`);
-    } catch (error) {}
+      await authFetch.patch(`/users/changeProfile`, {
+        username,
+        firstName,
+        lastName,
+        phone_number,
+        address,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
