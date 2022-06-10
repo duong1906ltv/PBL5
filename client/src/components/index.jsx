@@ -10,6 +10,7 @@ import Menu from './Menu'
 import Filter from './Filter'
 import ImageSlider from './ImageSlider'
 import PostsContainer from './PostsContainer'
+import ChatProfile from './ChatProfile'
 import Filtering from './Filtering'
 
 export {
@@ -26,4 +27,5 @@ export {
   PostsContainer,
   UserBriefPost,
   Filtering,
+  ChatProfile,
 }

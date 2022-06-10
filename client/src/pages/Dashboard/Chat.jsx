@@ -7,6 +7,7 @@ import Message from '../../components/Message'
 import { useAppContext } from '../../context/appContext'
 import { io } from 'socket.io-client'
 import { useLocation } from 'react-router-dom'
+import { ChatProfile } from '../../components'
 import { FiSend } from 'react-icons/fi'
 
 function Chat() {
@@ -111,6 +112,7 @@ function Chat() {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+    console.log(currentChat)
   }, [messages])
 
   return (
@@ -118,10 +120,6 @@ function Chat() {
       <div className='chat-container'>
         <div className='search-container'>
           <input type='text' placeholder='Search' />
-        </div>
-        <div className='chat-title'>
-          <img src='/avatar2.webp' alt='image' />
-          <div>Mai Xuan Nhat</div>
         </div>
         <div className='conversation-list'>
           {conversations.map((c) => {
@@ -140,10 +138,7 @@ function Chat() {
         </div>
         {currentChat ? (
           <>
-            <div className='chat-title'>
-              <img src='/avatar2.webp' alt='' />
-              <div>Mai Xuan Nhat</div>
-            </div>
+            <ChatProfile currentChat={currentChat} />
             <div className='chat-message-list'>
               {messages.map((m) => (
                 <div ref={scrollRef}>

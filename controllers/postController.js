@@ -1,14 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import Motel from "../models/Motel.js";
-import {
-  BadRequestError,
-  NotFoundError,
-  UnAuthenticatedError,
-} from "../errors/index.js";
+import { BadRequestError, NotFoundError } from "../errors/index.js";
 import checkPermissions from "../utils/checkPermissions.js";
-import User from "../models/User.js";
-import mongoose from "mongoose";
-
 const createPost = async (req, res) => {
   const { title, category, city, district, ward, phone_number, price } =
     req.body;
@@ -61,7 +54,7 @@ const deletePost = async (req, res) => {
 };
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Motel.find().populate("createdBy");
+    const posts = await Motel.find().populate("createdBy").sort({ date: -1 });
     res.status(StatusCodes.OK).json(posts);
   } catch (error) {
     res.status(500).json(error);
@@ -98,22 +91,37 @@ const updatePost = async (req, res) => {
 };
 
 const findPost = async (req, res) => {
-  const { city, district, ward } = req.query;
-  console.log(city);
-  const queryObject = { city: {}, district: {}, ward: {} };
+  const { city, district, ward, price, area, category } = req.query;
+  const queryObject = {};
   if (city && city !== "all") {
-    queryObject.city.id = city;
+    queryObject.city = { id: city.split(",")[0], name: city.split(",")[1] };
   }
   if (district && district !== "all") {
-    queryObject.district.id = district;
+    queryObject.district = { id: district };
   }
   if (ward && ward !== "all") {
-    queryObject.ward.id = ward;
+    queryObject.ward = { id: ward };
   }
-  console.log(queryObject);
-  let result = await Motel.find({
-    queryObject,
-  });
+  if (price) {
+    const request = price.split(",");
+    if (request[0] < request[1]) {
+      queryObject.price = { $gte: request[0], $lte: request[1] };
+    } else {
+      queryObject.price = { $gte: request[1], $lte: request[0] };
+    }
+  }
+  if (area) {
+    const request = area.split(",");
+    if (request[0] < request[1]) {
+      queryObject.area = { $gte: request[0], $lte: request[1] };
+    } else {
+      queryObject.area = { $gte: request[1], $lte: request[0] };
+    }
+  }
+  if (category) {
+    queryObject.category = category;
+  }
+  let result = await Motel.find(queryObject);
 
   res.status(200).json({ result });
 };

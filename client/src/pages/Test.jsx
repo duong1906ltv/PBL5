@@ -9,6 +9,7 @@ import {
   Card,
   CardText,
 } from 'reactstrap'
+import axios from 'axios'
 
 function Test() {
   const [dataCity, setDataCity] = useState([])
@@ -129,6 +130,30 @@ function Test() {
   //     min={1000}
   //     max={10000}
   //   />
+  // );
+
+  // const [value, setValue] = useState([0, 1000000]);
+
+  // const onValueChange = (values) => {
+  //   setValue(values);
+  // };
+
+  // const handleClick = async () => {
+  //   console.log(value);
+  //   const res = await axios("/api/post/find?price=" + value);
+  //   console.log(res);
+  // };
+
+  // return (
+  //   <>
+  //     <TwoThumbInputRange
+  //       onChange={onValueChange}
+  //       values={value}
+  //       min={0}
+  //       max={10000000}
+  //     />
+  //     <button onClick={handleClick}>Submit</button>
+  //   </>
   // );
 }
 
