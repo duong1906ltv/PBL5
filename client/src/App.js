@@ -21,6 +21,7 @@ import {
   HomePage,
   DetailPost,
 } from "./pages/Dashboard";
+import { Admin, SharedLayoutAdmin } from "./pages/Admin";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
         <Route path="/resending" element={<Resending />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/admin" element={<SharedLayoutAdmin />}>
+          <Route index element={<Admin />} />
+        </Route>
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
