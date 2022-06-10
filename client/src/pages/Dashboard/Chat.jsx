@@ -56,9 +56,16 @@ function Chat() {
           {conversations.map((c) => {
             console.log('conversations')
             console.log(conversations)
+            console.log('currentChat')
+            console.log(currentChat)
             return (
               <div onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} currentUser={user} />;
+                <Conversation
+                  active={currentChat._id === c._id ? true : false}
+                  conversation={c}
+                  currentUser={user}
+                />
+                ;
               </div>
             )
           })}
@@ -277,6 +284,14 @@ const Wrapper = styled.div`
 
     &:hover {
       cursor: pointer;
+    }
+
+    &.active {
+      .title-text,
+      .created-date,
+      .conversation-message {
+        font-weight: bold;
+      }
     }
 
     > img {
