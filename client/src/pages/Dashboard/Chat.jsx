@@ -7,6 +7,7 @@ import Message from "../../components/Message";
 import { useAppContext } from "../../context/appContext";
 import { io } from "socket.io-client";
 import { useLocation } from "react-router-dom";
+import { ChatProfile } from "../../components";
 
 function Chat() {
   const location = useLocation();
@@ -112,6 +113,7 @@ function Chat() {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    console.log(currentChat);
   }, [messages]);
 
   return (
@@ -120,25 +122,17 @@ function Chat() {
         <div className="search-container">
           <input type="text" placeholder="Search" />
         </div>
-        <div className="chat-title">
-          <img src="/avatar2.webp" alt="image" />
-          <div>Mai Xuan Nhat</div>
-        </div>
-        <form className="chat-form">
-          <input type={"text"}></input>
-          <button>Send</button>
-        </form>
-
         <div className="conversation-list">
           {conversations.map((c) => {
             return (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation
-                  active={currentChat && currentChat._id === c._id ? true : false}
+                  active={
+                    currentChat && currentChat._id === c._id ? true : false
+                  }
                   conversation={c}
                   currentUser={user}
                 />
-                ;
               </div>
             );
           })}
@@ -146,10 +140,7 @@ function Chat() {
 
         {currentChat ? (
           <>
-            <div className="chat-title">
-              <img src="/avatar2.webp" alt="" />
-              <div>Mai Xuan Nhat</div>
-            </div>
+            <ChatProfile currentChat={currentChat} />
             <div className="chat-message-list">
               {messages.map((m) => (
                 <div ref={scrollRef}>
