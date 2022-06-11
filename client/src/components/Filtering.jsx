@@ -1,106 +1,162 @@
-// import { TwoThumbInputRange } from 'react-two-thumb-input-range'
-import { useState, useEffect } from 'react'
-import { GiDivergence } from 'react-icons/gi'
-import { MdOutlineAddAlert } from 'react-icons/md'
+import { TwoThumbInputRange } from "react-two-thumb-input-range";
+import { useState, useEffect } from "react";
+import { GiDivergence } from "react-icons/gi";
+import { MdOutlineAddAlert } from "react-icons/md";
 import {
   Modal,
   Button,
   ModalBody,
   ModalHeader,
-  // ModalFooter,
-  Card,
-  CardText,
-} from 'reactstrap'
-import Wrapper from '../assets/wrappers/Filtering'
+  Table,
+  ModalFooter,
+} from "reactstrap";
+import Wrapper from "../assets/wrappers/Filtering";
+import axios from "axios";
 
-function Filtering() {
-  const [dataCity, setDataCity] = useState([])
-  const [dataDistrict, setDataDistrict] = useState([])
-  const [dataWard, setDataWard] = useState([])
+function Filtering(props) {
+  const [dataCity, setDataCity] = useState([]);
+  const [dataDistrict, setDataDistrict] = useState([]);
+  const [dataWard, setDataWard] = useState([]);
+  const [valuePrice, setValuePrice] = useState([0, 10000000]);
+  const [valueArea, setValueArea] = useState([0, 100]);
+  const [city, setCity] = useState([0, "All"]);
+  const [district, setDistrict] = useState([0, "All"]);
+  const [ward, setWard] = useState([0, "All"]);
+
+  const onValueChangePrice = (values) => {
+    setValuePrice(values);
+  };
+  const onValueChangeArea = (values) => {
+    setValueArea(values);
+  };
   const getData = () => {
-    fetch('data.json', {
+    fetch("data.json", {
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
     })
       .then(function (response) {
-        console.log(response)
-        return response.json()
+        return response.json();
       })
       .then(function (myJson) {
-        console.log(myJson)
-        setDataCity(myJson)
-      })
-  }
+        setDataCity(myJson);
+      });
+  };
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
-  const [isOpenCity, setIsOpenCity] = useState(false)
-  const [isOpenDistrict, setIsOpenDistrict] = useState(false)
-  const [isOpenWard, setIsOpenWard] = useState(false)
+  const [isOpenCity, setIsOpenCity] = useState(false);
+  const [isOpenDistrict, setIsOpenDistrict] = useState(false);
+  const [isOpenWard, setIsOpenWard] = useState(false);
+  const [isOpenCategory, setIsOpenCategory] = useState(false);
+  const [isOpenPrice, setIsOpenPrice] = useState(false);
+  const [isOpenArea, setIsOpenArea] = useState(false);
 
   // const [cityId, setCityId] = useState('')
   const toggleCity = () => {
-    setIsOpenCity(!isOpenCity)
-  }
+    setIsOpenCity(!isOpenCity);
+  };
   const toggleDistrict = () => {
-    setIsOpenDistrict(!isOpenDistrict)
-  }
+    setIsOpenDistrict(!isOpenDistrict);
+  };
   const toggleWard = () => {
-    setIsOpenWard(!isOpenWard)
-  }
+    setIsOpenWard(!isOpenWard);
+  };
+  const toggleCategory = () => {
+    setIsOpenCategory(!isOpenCategory);
+  };
+  const togglePrice = () => {
+    setIsOpenPrice(!isOpenPrice);
+  };
+  const toggleArea = () => {
+    setIsOpenArea(!isOpenArea);
+  };
 
   const getDistrict = (cityId) => {
-    const res = dataCity.filter((item) => item.Id === cityId)[0]
-    return res.Districts
-  }
+    const res = dataCity.filter((item) => item.Id === cityId)[0];
+    return res.Districts;
+  };
 
   const getWard = (districtId) => {
-    const res = dataDistrict.filter((item) => item.Id === districtId)[0]
-    return res.Wards
-  }
+    const res = dataDistrict.filter((item) => item.Id === districtId)[0];
+    return res.Wards;
+  };
 
   const clickCity = (e) => {
-    toggleCity()
-    setDataDistrict(getDistrict(e.target.id))
-    toggleDistrict()
-  }
+    toggleCity();
+    setDataDistrict(getDistrict(e.target.id));
+    setCity([e.target.id, e.target.textContent]);
+    toggleDistrict();
+  };
   const clickDistrict = (e) => {
-    toggleDistrict()
-    setDataWard(getWard(e.target.id))
-    toggleWard()
-  }
-  const clickWard = (e) => {
-    toggleWard()
-  }
+    toggleDistrict();
+    setDataWard(getWard(e.target.id));
+    setDistrict([e.target.id, e.target.textContent]);
 
-  const listStyle = {}
+    toggleWard();
+  };
+  const clickWard = (e) => {
+    setWard([e.target.id, e.target.textContent]);
+    toggleWard();
+  };
+
+  const listStyle = {};
 
   const listItemStyle = {
-    borderBottom: '1px solid var(--grey-200)',
-    padding: '1rem 0px',
-    margin: '0',
-  }
+    borderBottom: "1px solid var(--grey-200)",
+    padding: "1rem 0px",
+    margin: "0",
+  };
+
+  const handleFind = async (e) => {
+    e.preventDefault();
+    const res = await axios(
+      "/api/post/find?city=" +
+        city +
+        "&area=" +
+        valueArea +
+        "&price=" +
+        valuePrice
+    );
+    props.setResult(res.data);
+  };
 
   return (
     <Wrapper>
       <div>
-        <form className='form'>
-          <div className='form__element'>
-            <Button className='input__btn'>Phong tro, nha tro</Button>
-            <Modal>
-              <ModalHeader>Modal title</ModalHeader>
-              <ModalBody>Tim ban o ghep</ModalBody>
+        <form className="form">
+          <div className="form__element">
+            <Button className="input__btn" onClick={toggleCategory}>
+              Loai Hinh
+            </Button>
+            <Modal isOpen={isOpenCategory}>
+              <ModalHeader toggle={toggleCategory}>Modal title</ModalHeader>
+              <ModalBody>
+                <Table>
+                  <tbody>
+                    <tr>
+                      <th scope="row">
+                        <td>Nha Tro</td>
+                      </th>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <td>Tim Ban o ghep</td>
+                      </th>
+                    </tr>
+                  </tbody>
+                </Table>
+              </ModalBody>
             </Modal>
           </div>
-          <div className='form__element'>
-            <Button className='input__btn' onClick={toggleCity}>
+          <div className="form__element">
+            <Button className="input__btn" onClick={toggleCity}>
               Tinh, thanh pho
             </Button>
-            <Modal isOpen={isOpenCity} toggle={toggleCity}>
-              <ModalHeader>Modal title</ModalHeader>
+            <Modal isOpen={isOpenCity}>
+              <ModalHeader toggle={toggleCity}>Choose City</ModalHeader>
               <ModalBody>
                 <div style={listStyle}>
                   {dataCity &&
@@ -113,54 +169,78 @@ function Filtering() {
                 </div>
               </ModalBody>
             </Modal>
-            <Modal isOpen={isOpenDistrict} toggle={toggleDistrict}>
-              <ModalHeader>Modal title</ModalHeader>
+            <Modal isOpen={isOpenDistrict}>
+              <ModalHeader toggle={toggleDistrict}>Choose District</ModalHeader>
               <ModalBody>
                 {dataDistrict &&
                   dataDistrict.length > 0 &&
                   dataDistrict.map((item) => (
-                    <Card onClick={clickDistrict}>
-                      <CardText id={item.Id}>{item.Name}</CardText>
-                    </Card>
+                    <div onClick={clickDistrict} style={listItemStyle}>
+                      <span id={item.Id}>{item.Name}</span>
+                    </div>
                   ))}
               </ModalBody>
             </Modal>
-            <Modal isOpen={isOpenWard} toggle={toggleWard}>
-              <ModalHeader>Modal title</ModalHeader>
+            <Modal isOpen={isOpenWard}>
+              <ModalHeader toggle={toggleWard}>Choose Ward</ModalHeader>
               <ModalBody>
                 {dataWard &&
                   dataWard.length > 0 &&
                   dataWard.map((item) => (
-                    <Card onClick={clickWard}>
-                      <CardText id={item.Id}>{item.Name}</CardText>
-                    </Card>
+                    <div onClick={clickWard} style={listItemStyle}>
+                      <span id={item.Id}>{item.Name}</span>
+                    </div>
                   ))}
               </ModalBody>
             </Modal>
           </div>
-          <div className='form__element'>
-            <Button className='input__btn'>Chon gia</Button>
-            <Modal>
-              <ModalHeader>Modal title</ModalHeader>
-              <ModalBody>choose price</ModalBody>
+          <div className="form__element">
+            <Button className="input__btn" onClick={togglePrice}>
+              Chon gia
+            </Button>
+            <Modal isOpen={isOpenPrice}>
+              <ModalHeader toggle={togglePrice}>Choose Price</ModalHeader>
+              <ModalBody>
+                <TwoThumbInputRange
+                  onChange={onValueChangePrice}
+                  values={valuePrice}
+                  min={0}
+                  max={10000000}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button onClick={togglePrice}>Submit</Button>
+              </ModalFooter>
             </Modal>
           </div>
-          <div className='form__element'>
-            <Button className='input__btn'>Dien tich</Button>
-            <Modal>
-              <ModalHeader>Modal title</ModalHeader>
-              <ModalBody>choose area</ModalBody>
+          <div className="form__element">
+            <Button className="input__btn" onClick={toggleArea}>
+              Dien tich
+            </Button>
+            <Modal isOpen={isOpenArea}>
+              <ModalHeader toggle={toggleArea}>Choose area</ModalHeader>
+              <ModalBody>
+                <TwoThumbInputRange
+                  onChange={onValueChangeArea}
+                  values={valueArea}
+                  min={0}
+                  max={100}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button onClick={toggleArea}>Submit</Button>
+              </ModalFooter>
             </Modal>
           </div>
-          <div className='form__element'>
-            <button className='submit__btn' type='submit'>
+          <div className="form__element">
+            <button className="submit__btn" type="submit" onClick={handleFind}>
               Tim kiem
             </button>
           </div>
         </form>
       </div>
     </Wrapper>
-  )
+  );
 }
 
-export default Filtering
+export default Filtering;
