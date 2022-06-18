@@ -1,9 +1,9 @@
-import Wrapper from '../assets/wrappers/NewPost'
+import Wrapper from '../../assets/wrappers/NewPost'
 import { useEffect, useState } from 'react'
-import { Button, Form, FormControl, InputGroup } from 'react-bootstrap'
-import FormRowControl from '../components/FormRowControl'
-import { useAppContext } from '../context/appContext'
-import { Alert } from '../components'
+import { Button, Form, FormControl } from 'react-bootstrap'
+import FormRowControl from '../../components/FormRowControl'
+import { useAppContext } from '../../context/appContext'
+import { Alert } from '../../components'
 
 const initialState = {
   title: '',
@@ -22,7 +22,7 @@ const initialState = {
   phone_number: '',
 }
 
-const AddPost = () => {
+const AddPostAdmin = () => {
   let citis = document.getElementById('city')
   let districts = document.getElementById('district')
   let wards = document.getElementById('ward')
@@ -327,4 +327,4 @@ const AddPost = () => {
   )
 }
 
-export default AddPost
+export default AddPostAdmin

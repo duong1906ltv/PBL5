@@ -1,3 +1,4 @@
-import NavbarAdmin from "./NavbarAdmin";
+import NavbarAdmin from './NavbarAdmin'
+import DeleteNoti from './DeleteNoti'
 
-export {NavbarAdmin}
+export { NavbarAdmin, DeleteNoti }
