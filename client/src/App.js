@@ -37,7 +37,7 @@ function App() {
           }
         >
           <Route index element={<HomePage />} />
-          <Route path="all-jobs" element={<AllPosts />} />
+          <Route path="find" element={<AllPosts />} />
           <Route path="add-job" element={<AddJob />} />
           <Route path="profile/" element={<ProfileTest />}>
             <Route path=":id" element={<ProfileTest />} />

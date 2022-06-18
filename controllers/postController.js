@@ -121,9 +121,9 @@ const findPost = async (req, res) => {
   if (category) {
     queryObject.category = category;
   }
-  let result = await Motel.find(queryObject);
+  let result = await Motel.find(queryObject).populate("createdBy");
 
-  res.status(200).json({ result });
+  res.status(200).json(result);
 };
 
 export {
