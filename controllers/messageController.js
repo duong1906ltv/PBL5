@@ -1,4 +1,5 @@
 import Message from "../models/Message.js";
+import User from "../models/User.js";
 
 const addMessage = async (req, res) => {
   const newMessage = new Message(req.body);
@@ -22,4 +23,18 @@ const getMessage = async (req, res) => {
   }
 };
 
-export { addMessage, getMessage };
+const getLastMessage = async (req, res) => {
+  const { conversationId, userId } = req.query;
+  console.log(conversationId);
+  try {
+    const message = await Message.findOne({
+      conversationId: conversationId,
+    }).sort({ createdAt: -1 });
+    const user = await User.findById(userId);
+    res.status(200).json({ message, user });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export { addMessage, getMessage, getLastMessage };
