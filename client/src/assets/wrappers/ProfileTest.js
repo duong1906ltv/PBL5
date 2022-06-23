@@ -40,14 +40,51 @@ const Wrapper = styled.main`
     text-align: center;
 
     .ava {
-      width: 100%;
-      height: auto;
+      width: 70%;
+      position: relative;
+      padding-bottom: 70%;
+      overflow: hidden;
+      margin-bottom: 10px;
 
       img {
-        width: 70%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
           rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+      }
+
+      .input-ava {
+        border: 1px solid #d0d7de;
+        border-radius: 7px;
+        background-color: var(--white);
+        color: var(--grey-800);
+        position: absolute;
+        bottom: 5%;
+        right: 10%;
+        transform: translateX(10%);
+        padding: 2px 7px;
+
+        &:hover {
+        color: var(--grey-600);
+        }
+
+        label {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1px;
+          cursor: pointer;
+          font-size: 1rem;
+        }
+
+        input {
+          display: none;
+        }
       }
     }
 
@@ -156,9 +193,10 @@ const Wrapper = styled.main`
           background: var(--white);
           font-family: inherit;
           color: var(--grey-700);
-          padding: 10px 15px;
+          padding: 1px 15px;
           border: 1px solid var(--white);
           transition: 0.2s;
+          line-height: calc(100% - 2px);
         }
 
         .input-text {
