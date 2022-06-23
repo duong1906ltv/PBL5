@@ -321,3 +321,54 @@ ul {
     margin-right: 0.5rem;
   }
 }
+
+.delete-modal.modal-dialog {
+  margin-top: 25vh;
+}
+
+.delete-modal .delete-modal__container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.delete-modal__icon {
+  color: var(--yellow-dark);
+  font-size: 70px;
+}
+
+.delete-modal__text1 {
+  font-size: 24px;
+  color: var(--grey-800);
+}
+
+.delete-modal__text2 {
+  font-size: 16px;
+  color: var(--grey-300);
+}
+
+.delete-modal__btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.delete-modal__btn {
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
+
+.delete-modal__btn--grey {
+  background: var(--grey-300);
+  color: var(--white);
+}
+
+.delete-modal__btn--red {
+  background: var(--red-dark);
+  color: var(--white);
+}

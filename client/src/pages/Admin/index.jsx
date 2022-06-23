@@ -1,4 +1,17 @@
-import Admin from "./Admin";
-import SharedLayoutAdmin from "./SharedLayoutAdmin";
+import Admin from './Admin'
+import ViewAllPosts from './ViewAllPosts'
+import ViewAllUsers from './ViewAllUsers'
+import ViewAllComments from './ViewAllComments'
+import AddUser from './AddUser'
+import AddPostAdmin from './AddPostAdmin'
+import SharedLayoutAdmin from './SharedLayoutAdmin'
 
-export {Admin, SharedLayoutAdmin}
+export {
+  Admin,
+  SharedLayoutAdmin,
+  ViewAllPosts,
+  ViewAllUsers,
+  ViewAllComments,
+  AddUser,
+  AddPostAdmin,
+}
