@@ -9,10 +9,14 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Modal, Button, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 
 function ProfileTest() {
   const [isEditForm, setIsEditForm] = useState(false);
   const [follow, setFollow] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState();
+
   let { id } = useParams();
   let navigate = useNavigate();
   const {
@@ -24,9 +28,11 @@ function ProfileTest() {
     lastName,
     phone_number,
     address,
+    user_ava,
     getProfileById,
     handleChange,
     updateUserProfile,
+    updateUserAva,
   } = useAppContext();
 
   useEffect(() => {
@@ -53,6 +59,24 @@ function ProfileTest() {
   const handleEdit = (e) => {
     e.preventDefault();
     setIsEditForm(true);
+  };
+
+  const toggleModal = () => {
+    setOpen(!open);
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+    setOpen(!open);
+  };
+
+  const updateImage = (e) => {
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    updateUserAva(formData);
+    toggleModal();
   };
 
   const handleSubmit = (e) => {
@@ -85,12 +109,32 @@ function ProfileTest() {
       <div className="container--left">
         <div className="user__info">
           <div className="ava">
-            <img
-              src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
-              alt="user-name"
+            <img src={user_ava} alt="user-name" />
+            <input
+              type="file"
+              accept="image/*,.jpg,.png"
+              onChange={handleFileChange}
             />
+            {selectedImage && (
+              <Modal isOpen={open}>
+                <ModalHeader toggle={toggleModal}>
+                  Update this image?
+                </ModalHeader>
+                <ModalBody>
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="user-ava"
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" onClick={updateImage}>
+                    Do Something
+                  </Button>{" "}
+                </ModalFooter>
+              </Modal>
+            )}
           </div>
-          <div className="name">Dinh Duong</div>
+          <div className="name">{username}</div>
           <div className="intro">
             I have a lot of clean and quiet rooms for you guys, contact me to
             know more.

@@ -20,6 +20,7 @@ import {
   SET_EDIT_POST,
   GET_PROFILE_SUCCESS,
   HANDLE_CHANGE,
+  GET_UPDATE_AVATAR,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -189,6 +190,9 @@ const reducer = (state, action) => {
         ? action.payload.user.phone_number
         : "",
       address: action.payload.user.address ? action.payload.user.address : "",
+      user_ava: action.payload.user.user_ava
+        ? action.payload.user.user_ava
+        : "",
     };
   }
 
@@ -197,6 +201,13 @@ const reducer = (state, action) => {
       ...state,
       page: 1,
       [action.payload.name]: action.payload.value,
+    };
+  }
+
+  if (action.type === GET_UPDATE_AVATAR) {
+    return {
+      ...state,
+      user_ava: action.payload.user_ava,
     };
   }
 

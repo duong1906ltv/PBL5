@@ -62,4 +62,13 @@ const checkFollow = async (req, res) => {
   }
 };
 
-export { getUserById, changeProfile, follow, checkFollow };
+const create_user_ava = async (req, res) => {
+  const { id: userId } = req.params;
+
+  const currentUser = await User.findOne({ _id: userId });
+  currentUser.user_ava = "http://127.0.0.1:5000/images/" + req.file.filename;
+  await User.findOneAndUpdate({ _id: userId }, currentUser, { new: true });
+  res.status(200).json(currentUser.user_ava);
+};
+
+export { getUserById, changeProfile, follow, checkFollow, create_user_ava };

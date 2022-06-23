@@ -21,15 +21,13 @@ import {
   EDIT_POST_SUCCESS,
   EDIT_POST_BEGIN,
   EDIT_POST_ERROR,
-  GET_PROFILE_BEGIN,
-  UPDATE_PROFILE_BEGIN,
   GET_PROFILE_SUCCESS,
   HANDLE_CHANGE,
+  GET_UPDATE_AVATAR,
 } from "./action";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
-const userLocation = localStorage.getItem("location");
 const initialState = {
   isLoading: false,
   showAlert: false,
@@ -48,6 +46,7 @@ const initialState = {
   lastName: "",
   phone_number: "",
   address: "",
+  user_ava: "",
 };
 
 const AppContext = React.createContext();
@@ -243,6 +242,23 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const updateUserAva = async (formData) => {
+    let { user, user_ava } = state;
+    try {
+      const res = await authFetch.patch(
+        `/users/saveImage/${user._id}`,
+        formData
+      );
+      const user_ava = res.data;
+      dispatch({
+        type: GET_UPDATE_AVATAR,
+        payload: { user_ava },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -260,6 +276,7 @@ const AppProvider = ({ children }) => {
         getProfileById,
         updateUserProfile,
         handleChange,
+        updateUserAva,
       }}
     >
       {children}
