@@ -21,8 +21,17 @@ import {
   HomePage,
   DetailPost,
 } from "./pages/Dashboard";
-import { Admin, SharedLayoutAdmin, ViewAllPosts, ViewAllUsers, ViewAllComments, AddUser, AddPostAdmin } from "./pages/Admin";
+import {
+  Admin,
+  SharedLayoutAdmin,
+  ViewAllPosts,
+  ViewAllUsers,
+  ViewAllComments,
+  AddUser,
+  AddPostAdmin,
+} from "./pages/Admin";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import ProtectedAdminRoute from "./pages/ProtectedAdminRoute";
 
 function App() {
   return (
@@ -56,7 +65,14 @@ function App() {
         <Route path="/resending" element={<Resending />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/admin" element={<SharedLayoutAdmin />}>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedAdminRoute>
+              <SharedLayoutAdmin />
+            </ProtectedAdminRoute>
+          }
+        >
           <Route index element={<Admin />} />
           <Route path="/admin/posts" element={<ViewAllPosts />} />
           <Route path="/admin/comments" element={<ViewAllComments />} />

@@ -24,6 +24,8 @@ import {
   GET_PROFILE_SUCCESS,
   HANDLE_CHANGE,
   GET_UPDATE_AVATAR,
+  UPDATE_MOTEL_IMAGES_SUCCESS,
+  SET_EDIT_USER,
 } from "./action";
 
 const token = localStorage.getItem("token");
@@ -39,6 +41,9 @@ const initialState = {
   posts: [],
   isEditing: false,
   editPostId: "",
+  isEditingUser: false,
+  editUserId: "",
+  createPostId: "",
   numOfPages: 2,
   page: 1,
   username: "",
@@ -166,7 +171,7 @@ const AppProvider = ({ children }) => {
       const { data } = await authFetch.post("/post", post);
       const id = data.post._id;
       await authFetch.patch(`/post/saveImage/${id}`, formData);
-      dispatch({ type: CREATE_POST_SUCCESS });
+      dispatch({ type: CREATE_POST_SUCCESS, payload: { id } });
     } catch (error) {
       dispatch({
         type: CREATE_POST_ERROR,
@@ -243,7 +248,7 @@ const AppProvider = ({ children }) => {
   };
 
   const updateUserAva = async (formData) => {
-    let { user, user_ava } = state;
+    let { user } = state;
     try {
       const res = await authFetch.patch(
         `/users/saveImage/${user._id}`,
@@ -257,6 +262,27 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const updateMultiImage = async (formData) => {
+    const { createPostId, editPostId } = state;
+    try {
+      if (editPostId === "") {
+        await authFetch.patch(`/post/MultiImage/${createPostId}`, formData);
+        dispatch({
+          type: UPDATE_MOTEL_IMAGES_SUCCESS,
+        });
+      } else {
+        await authFetch.patch(`/post/MultiImage/${editPostId}`, formData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setEditUser = (id) => {
+    dispatch({ type: SET_EDIT_USER, payload: { id } });
+    return;
   };
 
   return (
@@ -277,6 +303,8 @@ const AppProvider = ({ children }) => {
         updateUserProfile,
         handleChange,
         updateUserAva,
+        updateMultiImage,
+        setEditUser,
       }}
     >
       {children}

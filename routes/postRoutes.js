@@ -14,6 +14,8 @@ import {
   reviewPost,
   deleteReview,
   getPostById,
+  addMotelImage,
+  deleteMotelImage,
 } from "../controllers/postController.js";
 
 router.route("/").post(authenticateUser, createPost);
@@ -30,5 +32,9 @@ router
 router.route("/find").get(findPost);
 router.route("/review/:id").post(authenticateUser, reviewPost);
 router.route("/review/:id/:review_id").delete(authenticateUser, deleteReview);
+router
+  .route("/MultiImage/:id")
+  .patch(upload.single("image"), authenticateUser, addMotelImage)
+  .delete(deleteMotelImage);
 
 export default router;
