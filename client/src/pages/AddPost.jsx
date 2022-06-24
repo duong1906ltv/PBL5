@@ -1,6 +1,6 @@
 import Wrapper from '../assets/wrappers/NewPost'
 import { useEffect, useState } from 'react'
-import { Button, Form, FormControl, InputGroup } from 'react-bootstrap'
+import { Button, Form, FormControl } from 'react-bootstrap'
 import FormRowControl from '../components/FormRowControl'
 import { useAppContext } from '../context/appContext'
 import { Alert } from '../components'
@@ -37,11 +37,9 @@ const AddPost = () => {
     editPost,
   } = useAppContext()
 
-  const [values, setValues] = useState(initialState);
-  const [fileName, setFileName] = useState("");
-  const [fileObj, setFileObj] = useState([]);
-  const [fileArray, setFileArray] = useState([]);
-
+  const [values, setValues] = useState(initialState)
+  const [fileName, setFileName] = useState('')
+  const [fileObj, setFileObj] = useState([])
 
   function renderCity(data) {
     for (const x of data) {
@@ -149,16 +147,16 @@ const AddPost = () => {
   }
 
   const uploadMultipleFiles = (e) => {
-    setFileObj((oldData) => [...oldData, e.target.files[0]]);
-  };
+    setFileObj((oldData) => [...oldData, e.target.files[0]])
+  }
 
   const preview = (e) => {
-    const numberOfFile = fileObj.length;
-    console.log(fileObj);
+    const numberOfFile = fileObj.length
+    console.log(fileObj)
     // for (let i = 0; i < numberOfFile; i++) {
     //   setFileArray((oldData) => [...oldData, URL.createObjectURL(fileObj[i])]);
     // }
-  };
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -327,31 +325,36 @@ const AddPost = () => {
           />
         </Form.Group>
 
-
-        <Form.Group className="form-control">
-          <Form.Label>Image:</Form.Label>
-          <FormControl
-            aria-describedby="basic-addon1"
-            type="file"
-            accept="image/*"
-            multiple
-            name="image"
-            onChange={uploadMultipleFiles}
-          />
-          <div className="form-group multi-preview">
+        <Form.Group className='form-control multi-input-image'>
+          <div className='input-group'>
+            <Form.Label>Image:</Form.Label>
+            <FormControl
+              aria-describedby='basic-addon1'
+              type='file'
+              accept='image/*'
+              multiple
+              name='image'
+              onChange={uploadMultipleFiles}
+            />
+          </div>
+          <div className='multi-preview'>
             {fileObj &&
               fileObj.map((url) => (
-                <img src={URL.createObjectURL(url)} alt="..." />
+                <img
+                  src={URL.createObjectURL(url)}
+                  alt='...'
+                  width='100'
+                  height='100'
+                />
               ))}
           </div>
         </Form.Group>
 
-        <Form.Group className="form-control">
-          <Button variant="primary" onClick={preview}>
+        <Form.Group className='form-control'>
+          <Button variant='primary' onClick={preview}>
             Preview
           </Button>
-          <Button variant="success" type="submit">
-
+          <Button variant='success' type='submit'>
             Post
           </Button>
           <Button variant='danger' href='/'>

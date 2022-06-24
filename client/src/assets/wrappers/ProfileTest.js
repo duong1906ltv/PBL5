@@ -43,7 +43,6 @@ const Wrapper = styled.main`
       width: 70%;
       position: relative;
       padding-bottom: 70%;
-      overflow: hidden;
       margin-bottom: 10px;
 
       img {
@@ -238,8 +237,9 @@ const Wrapper = styled.main`
   .user__post {
     .post__container {
       display: flex;
+      justify-content: space-between;
       gap: 1rem;
-      max-width: 100%;
+      width: 100%;
 
       .post__action {
         display: flex;

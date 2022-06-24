@@ -42,7 +42,9 @@ function BriefPost({ post }) {
     <Wrapper>
       <div className='post'>
         <div className='flex-row'>
-          <img className='post-image' src={post.image} alt={post.title} />
+          <div className='post-image'>
+            <img src={post.image} alt={post.title} />
+          </div>
           <div className='post-content'>
             <div className='main-content' onClick={clickPost}>
               <h5>{post.title}</h5>
