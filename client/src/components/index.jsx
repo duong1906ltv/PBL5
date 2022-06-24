@@ -12,6 +12,7 @@ import ImageSlider from './ImageSlider'
 import PostsContainer from './PostsContainer'
 import ChatProfile from './ChatProfile'
 import Filtering from './Filtering'
+import FeedbackForm from './FeedbackForm'
 
 export {
   Logo,
@@ -28,4 +29,5 @@ export {
   UserBriefPost,
   Filtering,
   ChatProfile,
+  FeedbackForm,
 }

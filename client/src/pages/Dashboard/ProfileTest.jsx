@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Modal, Button, ModalBody, ModalHeader, ModalFooter } from 'reactstrap'
+import { Modal, ModalBody } from 'reactstrap'
 import { MdEdit } from 'react-icons/md'
 
 function ProfileTest() {

@@ -429,7 +429,7 @@ const Wrapper = styled.div`
       padding-left: 48px;
       padding-right: 20px;
       font-size: 1.4rem;
-      background: url('search2.webp') no-repeat #ffffff4d;
+      background: url('search2.webp') no-repeat #ffffff;
       background-position: 15px center;
       background-size: 20px 20px;
     }
