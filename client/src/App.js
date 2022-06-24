@@ -21,15 +21,9 @@ import {
   HomePage,
   DetailPost,
 } from "./pages/Dashboard";
-import {
-  Admin,
-  SharedLayoutAdmin,
-  ViewAllPosts,
-  ViewAllUsers,
-  ViewAllComments,
-  AddUser,
-  AddPostAdmin,
-} from "./pages/Admin";
+
+import { Admin, SharedLayoutAdmin, ViewAllPosts, ViewAllUsers, ViewAllComments, AddUser, AddPostAdmin } from "./pages/Admin/index";
+
 import ProtectedRoute from "./pages/ProtectedRoute";
 import ProtectedAdminRoute from "./pages/ProtectedAdminRoute";
 
