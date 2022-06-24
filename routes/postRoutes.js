@@ -11,6 +11,9 @@ import {
   updatePost,
   create_post_image,
   findPost,
+  reviewPost,
+  deleteReview,
+  getPostById,
 } from "../controllers/postController.js";
 
 router.route("/").post(authenticateUser, createPost);
@@ -20,9 +23,12 @@ router
 router.route("/").get(getAllPosts);
 router
   .route("/:id")
-  .delete(deletePost, authenticateUser)
+  .get(getPostById)
+  .delete(authenticateUser, deletePost)
   .patch(upload.single("image"), authenticateUser, updatePost);
 
 router.route("/find").get(findPost);
+router.route("/review/:id").post(authenticateUser, reviewPost);
+router.route("/review/:id/:review_id").delete(authenticateUser, deleteReview);
 
 export default router;
