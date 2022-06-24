@@ -1,35 +1,35 @@
-import React from "react";
-import { useAppContext } from "../context/appContext";
-import posts from "../utils/post";
-import BriefPost from "./BriefPost";
+import React from 'react'
+import { useAppContext } from '../context/appContext'
+import posts from '../utils/post'
+import BriefPost from './BriefPost'
 
 function NewPost() {
-  const { posts } = useAppContext();
+  const { posts } = useAppContext()
 
   function getNewPosts() {
-    return posts.filter((post) => post.status === "New");
+    return posts.filter((post) => post.feature === 'New')
   }
-  const newPosts = getNewPosts();
+  const newPosts = getNewPosts()
 
   if (newPosts.length === 0) {
     return (
-      <div className="new-content">
+      <div className='new-content'>
         <h3>New Posts</h3>
         <h5>No post to display...</h5>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="new-content">
+    <div className='new-content'>
       <h3>New Posts</h3>
-      <div className="posts">
+      <div className='posts'>
         {newPosts.map((post) => (
           <BriefPost key={post._id} post={post} />
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default NewPost;
+export default NewPost

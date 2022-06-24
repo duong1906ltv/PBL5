@@ -15,7 +15,7 @@ const userPosts = [
       phone: '0123456789',
     },
     time: '9 hours ago',
-    status: 'hot',
+    feature: 'hot',
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const userPosts = [
       phone: '0123456789',
     },
     time: '9 hours ago',
-    status: 'hot',
+    feature: 'hot',
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ const userPosts = [
       phone: '0123456789',
     },
     time: '9 hours ago',
-    status: 'hot',
+    feature: 'hot',
   },
   {
     id: 4,
@@ -69,7 +69,7 @@ const userPosts = [
       phone: '0123456789',
     },
     time: '9 hours ago',
-    status: 'hot',
+    feature: 'hot',
   },
 ]
 
