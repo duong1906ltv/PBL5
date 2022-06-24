@@ -78,6 +78,34 @@ const MotelSchema = new mongoose.Schema({
     type: String,
     default: "hot",
   },
+  list_img: [
+    {
+      image: {
+        type: String,
+      },
+    },
+  ],
+  review: [
+    {
+      user: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+      },
+      rating: {
+        type: Number,
+      },
+      text: {
+        type: String,
+      },
+      username: {
+        type: String,
+      },
+      avatar: {
+        type: String,
+      },
+    },
+    { timestamps: true },
+  ],
 });
 
 export default mongoose.model("Motel", MotelSchema);
