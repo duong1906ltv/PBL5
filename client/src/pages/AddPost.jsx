@@ -37,8 +37,11 @@ const AddPost = () => {
     editPost,
   } = useAppContext()
 
-  const [values, setValues] = useState(initialState)
-  const [fileName, setFileName] = useState('')
+  const [values, setValues] = useState(initialState);
+  const [fileName, setFileName] = useState("");
+  const [fileObj, setFileObj] = useState([]);
+  const [fileArray, setFileArray] = useState([]);
+
 
   function renderCity(data) {
     for (const x of data) {
@@ -144,6 +147,18 @@ const AddPost = () => {
   const handleFileChange = (e) => {
     setFileName(e.target.files[0])
   }
+
+  const uploadMultipleFiles = (e) => {
+    setFileObj((oldData) => [...oldData, e.target.files[0]]);
+  };
+
+  const preview = (e) => {
+    const numberOfFile = fileObj.length;
+    console.log(fileObj);
+    // for (let i = 0; i < numberOfFile; i++) {
+    //   setFileArray((oldData) => [...oldData, URL.createObjectURL(fileObj[i])]);
+    // }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -302,7 +317,6 @@ const AddPost = () => {
           ) : (
             <Form.Label>Image:</Form.Label>
           )}
-
           <FormControl
             aria-describedby='basic-addon1'
             type='file'
@@ -313,9 +327,31 @@ const AddPost = () => {
           />
         </Form.Group>
 
-        <Form.Group className='form-control'>
-          <Button variant='primary'>Preview</Button>
-          <Button variant='success' type='submit'>
+
+        <Form.Group className="form-control">
+          <Form.Label>Image:</Form.Label>
+          <FormControl
+            aria-describedby="basic-addon1"
+            type="file"
+            accept="image/*"
+            multiple
+            name="image"
+            onChange={uploadMultipleFiles}
+          />
+          <div className="form-group multi-preview">
+            {fileObj &&
+              fileObj.map((url) => (
+                <img src={URL.createObjectURL(url)} alt="..." />
+              ))}
+          </div>
+        </Form.Group>
+
+        <Form.Group className="form-control">
+          <Button variant="primary" onClick={preview}>
+            Preview
+          </Button>
+          <Button variant="success" type="submit">
+
             Post
           </Button>
           <Button variant='danger' href='/'>

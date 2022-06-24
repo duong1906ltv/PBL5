@@ -1,7 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import Motel from "../models/Motel.js";
+import User from "../models/User.js";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import checkPermissions from "../utils/checkPermissions.js";
+
 const createPost = async (req, res) => {
   const { title, category, city, district, ward, phone_number, price } =
     req.body;
@@ -60,6 +62,16 @@ const getAllPosts = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+const getPostById = async (req, res) => {
+  try {
+    const post = await Motel.findById(req.params.id);
+    res.status(StatusCodes.OK).json(post);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 const updatePost = async (req, res) => {
   const { id: postId } = req.params;
   const { title, category, city, district, ward, phone_number, price } =
@@ -126,6 +138,61 @@ const findPost = async (req, res) => {
   res.status(200).json(result);
 };
 
+const reviewPost = async (req, res) => {
+  const user = await User.findById(req.user.userId);
+  const post = await Motel.findById(req.params.id);
+  const newReview = {
+    text: req.body.text,
+    username: user.username,
+    avatar: user.avatar,
+    user: req.user.userId,
+    rating: req.body.rating,
+  };
+  post.review.unshift(newReview);
+
+  await post.save();
+
+  res.json(post.review);
+};
+
+const deleteReview = async (req, res) => {
+  try {
+    const post = await Motel.findById(req.params.id);
+    //Pull out comment
+
+    let review;
+    post.review.forEach((element) => {
+      if (element._id.toString() === req.params.review_id) {
+        review = element;
+      }
+    });
+
+    // Make sure comment exists
+    if (!review) {
+      return res.status(404).json({ msg: "Review does not exist" });
+    }
+
+    // Check user
+    if (review.user.toString() !== req.user.userId) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    // Get remove index
+    const removeIndex = post.review
+      .map((review) => review._id.toString())
+      .indexOf(req.params.review_id);
+
+    post.review.splice(removeIndex, 1);
+
+    post.save();
+
+    res.json(post.review);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(error);
+  }
+};
+
 export {
   createPost,
   deletePost,
@@ -133,4 +200,7 @@ export {
   updatePost,
   create_post_image,
   findPost,
+  reviewPost,
+  deleteReview,
+  getPostById,
 };
