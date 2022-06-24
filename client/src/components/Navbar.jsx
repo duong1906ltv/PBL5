@@ -34,6 +34,16 @@ function Navbar() {
                 Change password
               </button>
             </Link>
+            {user.role === "admin" && (
+              <Link to={`/admin`}>
+                <button
+                  className="dropdown-button"
+                  onClick={() => setShowLogout(!showLogout)}
+                >
+                  Admin
+                </button>
+              </Link>
+            )}
             <Link to={`/profile/${user._id}`}>
               <button
                 className="dropdown-button"

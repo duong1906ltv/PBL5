@@ -21,6 +21,8 @@ import {
   GET_PROFILE_SUCCESS,
   HANDLE_CHANGE,
   GET_UPDATE_AVATAR,
+  UPDATE_MOTEL_IMAGES_SUCCESS,
+  SET_EDIT_USER,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -103,6 +105,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "New Post Created!",
+      createPostId: action.payload.id,
     };
   }
 
@@ -208,6 +211,22 @@ const reducer = (state, action) => {
     return {
       ...state,
       user_ava: action.payload.user_ava,
+    };
+  }
+
+  if (action.type === UPDATE_MOTEL_IMAGES_SUCCESS) {
+    return {
+      ...state,
+      createPostId: "",
+    };
+  }
+
+  if (action.type === SET_EDIT_USER) {
+    const id = action.payload.id;
+    return {
+      ...state,
+      isEditingUser: true,
+      editUserId: id,
     };
   }
 

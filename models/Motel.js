@@ -74,7 +74,7 @@ const MotelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  status: {
+  feature: {
     type: String,
     default: "hot",
   },
@@ -103,8 +103,11 @@ const MotelSchema = new mongoose.Schema({
       avatar: {
         type: String,
       },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
-    { timestamps: true },
   ],
 });
 

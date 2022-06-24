@@ -9,9 +9,11 @@ import {
   follow,
   checkFollow,
   create_user_ava,
+  deleteUser,
 } from "../controllers/userController.js";
 
 router.route("/").get(getUserById);
+router.route("/:id").delete(deleteUser);
 router.route("/changeProfile").patch(authenticateUser, changeProfile);
 router.route("/:id/follow").patch(follow);
 router.route("/:currentUserId/:id").get(checkFollow);

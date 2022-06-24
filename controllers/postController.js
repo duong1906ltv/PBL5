@@ -193,6 +193,40 @@ const deleteReview = async (req, res) => {
   }
 };
 
+const addMotelImage = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+
+    const post = await Motel.findOne({ _id: postId });
+    const image = "http://127.0.0.1:5000/images/" + req.file.filename;
+
+    const newImage = {
+      image: image,
+    };
+
+    post.list_img.unshift(newImage);
+    post.save();
+    res.status(StatusCodes.OK).json(post.list_img);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json(error);
+  }
+};
+
+const deleteMotelImage = async (req, res) => {
+  try {
+    Motel.updateOne(
+      { _id: req.params.id },
+      {
+        $set: { list_img: [] },
+      }
+    );
+    res.status(200).json("OK");
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
 export {
   createPost,
   deletePost,
@@ -203,4 +237,6 @@ export {
   reviewPost,
   deleteReview,
   getPostById,
+  addMotelImage,
+  deleteMotelImage,
 };
