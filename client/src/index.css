@@ -358,13 +358,16 @@ ul {
 }
 
 .delete-modal__btns,
-.update-ava-modal__btns {
+.update-ava-modal__btns,
+.feedback-form__btns {
   display: flex;
   gap: 1rem;
+  justify-content: center;
 }
 
 .delete-modal__btn,
-.update-ava-modal__btn {
+.update-ava-modal__btn,
+.feedback-form__btn {
   padding: 0.5rem 1rem;
   font-size: 16px;
   border: none;
@@ -373,7 +376,8 @@ ul {
 }
 
 .delete-modal__btn--grey,
-.update-ava-modal__btn--grey {
+.update-ava-modal__btn--grey,
+.feedback-form__btn--grey {
   background: var(--grey-300);
   color: var(--white);
 }
@@ -383,7 +387,8 @@ ul {
   color: var(--white);
 }
 
-.update-ava-modal__btn--primary {
+.update-ava-modal__btn--primary,
+.feedback-form__btn--primary {
   background: var(--primary-500);
   color: var(--white);
 }
@@ -397,4 +402,68 @@ ul {
 .update-ava-modal__img img {
   width: 100%;
   height: auto;
+}
+
+.feedback-modal.modal-dialog {
+  margin-top: 20vh;
+  height: 60vh;
+}
+
+.feedback-modal .modal-content {
+  border-radius: 0.3rem;
+}
+
+.feedback-modal .feedback-modal__container {
+  padding: 2rem;
+}
+
+.feedback-modal__container .feedback-modal__form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feedback-form__rating span {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-500);
+  margin-bottom: 0.5rem;
+}
+
+.feedback-form__rating .icon-container .icon {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.feedback-form__textarea label {
+  font-size: 16px;
+  color: var(--grey-500);
+  margin-bottom: 0.5rem;
+}
+
+.feedback-form__textarea textarea {
+  width: 100%;
+  height: 150px;
+  outline: none;
+  resize: none;
+  border: 1px solid #eee;
+  background-color: #f2f3f5;
+  color: var(--grey-900);
+  line-height: 20px;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 0.3rem;
+}
+.feedback-form__textarea textarea:focus {
+  border: 1px solid #e0e0e0;
+}
+.feedback-form__textarea textarea::-webkit-scrollbar {
+  background-color: transparent;
+  width: 10px;
+}
+.feedback-form__textarea textarea::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
 }
