@@ -71,4 +71,19 @@ const create_user_ava = async (req, res) => {
   res.status(200).json(currentUser.user_ava);
 };
 
-export { getUserById, changeProfile, follow, checkFollow, create_user_ava };
+const deleteUser = async (req, res) => {
+  const { id: userId } = req.params;
+
+  const user = await User.findOne({ _id: userId });
+  await user.remove();
+  res.status(200).json({ msg: "Success! User removed" });
+};
+
+export {
+  getUserById,
+  changeProfile,
+  follow,
+  checkFollow,
+  create_user_ava,
+  deleteUser,
+};
