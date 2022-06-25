@@ -138,6 +138,11 @@ const findPost = async (req, res) => {
   res.status(200).json(result);
 };
 
+const getReview = async (req, res) => {
+  const post = await Motel.findById(req.params.id);
+  res.json(post.review);
+};
+
 const reviewPost = async (req, res) => {
   const user = await User.findById(req.user.userId);
   const post = await Motel.findById(req.params.id);
@@ -239,4 +244,5 @@ export {
   getPostById,
   addMotelImage,
   deleteMotelImage,
+  getReview,
 };

@@ -285,6 +285,18 @@ const AppProvider = ({ children }) => {
     return;
   };
 
+  const writeFeedback = async (text, rating, postId) => {
+    try {
+      const res = await authFetch.post(`/post/review/${postId}`, {
+        text: text,
+        rating: rating,
+      });
+      return res;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -305,6 +317,7 @@ const AppProvider = ({ children }) => {
         updateUserAva,
         updateMultiImage,
         setEditUser,
+        writeFeedback,
       }}
     >
       {children}
