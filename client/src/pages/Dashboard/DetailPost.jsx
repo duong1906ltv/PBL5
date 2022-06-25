@@ -11,6 +11,8 @@ import {
   AiOutlineLeft,
 } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 function DetailPost(props) {
   let { id } = useParams();
@@ -18,6 +20,12 @@ function DetailPost(props) {
   const toggleFeedbackForm = () => {
     setIsFeedbackFormOpen(!isFeedbackFormOpen);
   };
+
+  useEffect(() => {
+    const getPostById = async () => {
+      const res = await axios.get("/api/post/" + id);
+    };
+  });
 
   return (
     <Wrapper>

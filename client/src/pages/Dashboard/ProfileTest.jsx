@@ -12,7 +12,6 @@ import axios from "axios";
 import { Modal, Button, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { MdEdit } from "react-icons/md";
 
-
 function ProfileTest() {
   const [isEditForm, setIsEditForm] = useState(false);
   const [follow, setFollow] = useState(false);
@@ -112,18 +111,22 @@ function ProfileTest() {
         <div className="user__info">
           <div className="ava">
             <img src={user_ava} alt="user-name" />
-            <div className="input-ava">
-              <label htmlFor="input-ava">
-                <MdEdit />
-                <span>Edit</span>
-              </label>
-              <input
-                type="file"
-                accept="image/*,.jpg,.png"
-                onChange={handleFileChange}
-                id="input-ava"
-              />
-            </div>
+            {user._id === id && (
+              <>
+                <div className="input-ava">
+                  <label htmlFor="input-ava">
+                    <MdEdit />
+                    <span>Edit</span>
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*,.jpg,.png"
+                    onChange={handleFileChange}
+                    id="input-ava"
+                  />
+                </div>
+              </>
+            )}
             {selectedImage && (
               <Modal
                 isOpen={open}

@@ -105,13 +105,13 @@ const updatePost = async (req, res) => {
 const findPost = async (req, res) => {
   const { city, district, ward, price, area, category } = req.query;
   const queryObject = {};
-  if (city && city !== "all") {
+  if (city && city.split(",")[1] !== "All") {
     queryObject.city = { id: city.split(",")[0], name: city.split(",")[1] };
   }
-  if (district && district !== "all") {
+  if (district && district.split(",")[1] !== "All") {
     queryObject.district = { id: district };
   }
-  if (ward && ward !== "all") {
+  if (ward && ward.split(",")[1] !== "All") {
     queryObject.ward = { id: ward };
   }
   if (price) {
