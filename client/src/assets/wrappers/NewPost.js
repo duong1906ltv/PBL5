@@ -29,6 +29,40 @@ const Wrapper = styled.main`
     margin-bottom: 12px;
     width: 60vw;
   }
+
+  .multi-input-image {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .input-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      align-content: center;
+      margin-top: 12px;
+    }
+
+    .multi-preview {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 1rem;
+      width: 80%;
+      margin: 0 0 12px auto;
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+          rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+      }
+    }
+  }
   
 
 `;

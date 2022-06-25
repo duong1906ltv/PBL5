@@ -1,10 +1,10 @@
-import Wrapper from "../assets/wrappers/NewPost";
-import { useEffect, useState } from "react";
-import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
-import FormRowControl from "../components/FormRowControl";
-import { useAppContext } from "../context/appContext";
-import { Alert } from "../components";
-import axios from "axios";
+import Wrapper from '../assets/wrappers/NewPost'
+import { useEffect, useState } from 'react'
+import { Button, Form, FormControl } from 'react-bootstrap'
+import FormRowControl from '../components/FormRowControl'
+import { useAppContext } from '../context/appContext'
+import { Alert } from '../components'
+
 
 const initialState = {
   title: "",
@@ -39,6 +39,7 @@ const AddPost = () => {
     editPost,
     updateMultiImage,
   } = useAppContext();
+
 
   const [values, setValues] = useState(initialState);
   const [fileName, setFileName] = useState("");
@@ -153,13 +154,11 @@ const AddPost = () => {
     setFileName(e.target.files[0]);
   };
 
+
   const handleMultipleFiles = (e) => {
     setFileObj((oldData) => [...oldData, e.target.files[0]]);
   };
 
-  const preview = (e) => {
-    updateMultipleImage();
-  };
 
   const updateMultipleImage = () => {
     fileObj.map((file) => {
@@ -354,26 +353,33 @@ const AddPost = () => {
           />
         </Form.Group>
 
-        <Form.Group className="form-control">
-          <Form.Label>Image:</Form.Label>
-          <FormControl
-            aria-describedby="basic-addon1"
-            type="file"
-            accept="image/*"
-            multiple
-            name="image"
-            onChange={handleMultipleFiles}
-          />
-          <div className="form-group multi-preview">
+        <Form.Group className='form-control multi-input-image'>
+          <div className='input-group'>
+            <Form.Label>Image:</Form.Label>
+            <FormControl
+              aria-describedby='basic-addon1'
+              type='file'
+              accept='image/*'
+              multiple
+              name='image'
+              onChange={handleMultipleFiles}
+            />
+          </div>
+          <div className='multi-preview'>
             {fileObj &&
               fileObj.map((url) => (
-                <img src={URL.createObjectURL(url)} alt="..." />
+                <img
+                  src={URL.createObjectURL(url)}
+                  alt='...'
+                  width='100'
+                  height='100'
+                />
               ))}
           </div>
         </Form.Group>
 
-        <Form.Group className="form-control">
-          <Button variant="primary" onClick={preview}>
+        <Form.Group className='form-control'>
+          <Button variant='primary' onClick={preview}>
             Preview
           </Button>
           <Button variant="success" type="submit">

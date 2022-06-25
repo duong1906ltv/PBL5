@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   background-color: var(--white);
+  width: 100%;
 
   .post {
     width: 100%;
@@ -26,7 +27,20 @@ const Wrapper = styled.div`
 
   .post-image {
     width: 30%;
+    padding-bottom: 25%;
     border-radius: 0.3rem;
+    position: relative;
+    height: 0;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0.3rem;
+      object-fit: cover;
+    }
   }
 
   .post-content {
