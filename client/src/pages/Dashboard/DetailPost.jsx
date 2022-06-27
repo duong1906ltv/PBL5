@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ImageSlider, FeedbackForm } from "../../components";
+import { ImageSlider, FeedbackForm, RatingStar } from "../../components";
 import SliderData from "../../utils/sliderData";
 import { BsStarFill, BsStar } from "react-icons/bs";
 import { FiPhoneCall } from "react-icons/fi";
@@ -13,10 +13,17 @@ import {
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import { format } from "timeago.js";
 
 function DetailPost(props) {
   let { id } = useParams();
   const [isFeedbackFormOpen, setIsFeedbackFormOpen] = useState(false);
+  const [detailPost, setDetailPost] = useState([]);
+  const [city, setCity] = useState([]);
+  const [district, setDistrict] = useState([]);
+  const [ward, setWard] = useState([]);
+  const [user, setUser] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const toggleFeedbackForm = () => {
     setIsFeedbackFormOpen(!isFeedbackFormOpen);
   };
@@ -24,18 +31,29 @@ function DetailPost(props) {
   useEffect(() => {
     const getPostById = async () => {
       const res = await axios.get("/api/post/" + id);
+      setDetailPost(res.data);
+      setCity(res.data.city);
+      setDistrict(res.data.district);
+      setWard(res.data.ward);
+      setUser(res.data.createdBy);
     };
-  });
+    const getReviewOfPost = async () => {
+      const res = await axios.get("/api/post/review/" + id);
+      setReviews(res.data);
+    };
+    getPostById();
+    getReviewOfPost();
+  }, [id]);
 
   return (
     <Wrapper>
       <div className="flex-row align-center space-between nav-menu">
         <div className="nav-path">
-          City X
+          {city.name}
           <AiOutlineLeft className="icon" />
-          District Y
+          {district.name}
           <AiOutlineLeft className="icon" />
-          Ward Z
+          {ward.name}
         </div>
         <div className="nav-btns flex-row space-between">
           <div className="btn-left">
@@ -55,40 +73,45 @@ function DetailPost(props) {
           </div>
           <div className="post-content flex-column">
             <span>
-              <b>Motel Name:</b> KIKI
+              <b>Title: </b> {detailPost.title}
             </span>
             <div className="flex-row">
               <span style={{ flex: "1" }}>
-                <b>Price:</b> 1000$
+                <b>Price:</b> {detailPost.price}$
               </span>
               <span style={{ flex: "1" }}>
-                <b>Area:</b> 150m<sup>2</sup>
+                <b>Deposit:</b> {detailPost.deposit}$
               </span>
             </div>
             <span>
-              <b>Detail:</b> A beautiful house for u
+              <b>Area:</b> {detailPost.area}m<sup>2</sup>
+            </span>
+            <span>
+              <b>Description:</b>
+              {detailPost.description}
             </span>
             <span className="flex-row align-center">
               <b>Rating:</b>
               <div className="icon-container">
+                {/* <BsStarFill className="icon icon-star" />
                 <BsStarFill className="icon icon-star" />
                 <BsStarFill className="icon icon-star" />
                 <BsStarFill className="icon icon-star" />
-                <BsStarFill className="icon icon-star" />
-                <BsStar className="icon icon-star" />
+                <BsStar className="icon icon-star" /> */}
+                <RatingStar valueStar={3} />
               </div>
+            </span>
+            <span>
+              <b>Contact number:</b>
+              {detailPost.phone_number}
             </span>
           </div>
         </div>
         <div className="author-container flex-column">
           <div className="author-info flex-row align-center">
-            <img
-              src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
-              alt="user-name"
-              className="ava"
-            />
+            <img src={user.user_ava} alt="user-name" className="ava" />
             <div className="flex-column">
-              <span className="name">Dinh Duong</span>
+              <span className="name">{user.username}</span>
               <span className="time-active">Active 5 minutes ago</span>
             </div>
             <div></div>
@@ -98,7 +121,7 @@ function DetailPost(props) {
               <span className="icon-container">
                 <FiPhoneCall className="icon icon-phone" />
               </span>
-              <span className="phone">0123******</span>
+              <span className="phone">{user.phone_number}</span>
               <span style={{ marginLeft: "1rem" }}>Click to see full..</span>
             </div>
             <div className="author-chat flex-row align-center">
@@ -138,60 +161,38 @@ function DetailPost(props) {
           <div className="post-comment">
             <h6>Comment about this post</h6>
             <div className="comment-list">
-              <div className="comment-item">
-                <div className="flex-row align-center">
-                  <img
-                    src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
-                    alt="user-name"
-                    className="ava"
-                  />
-                  <div className="flex-column justify-center">
-                    <span className="comment-author">Nguyen Van A</span>
-                    <span className="comment-time">6 months ago</span>
-                  </div>
-                  <div className="rating">
-                    <span className="flex-row align-center">
-                      <span>Rating:</span>
-                      <div className="icon-container">
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
+              {reviews.length !== 0 ? (
+                reviews.map((review) => (
+                  <div className="comment-item">
+                    <div className="flex-row align-center">
+                      <img
+                        src={review.avatar}
+                        alt="user-name"
+                        className="ava"
+                      />
+                      <div className="flex-column justify-center">
+                        <span className="comment-author">
+                          {review.username}
+                        </span>
+                        <span className="comment-time">
+                          {format(review.createdAt)}
+                        </span>
                       </div>
-                    </span>
-                  </div>
-                </div>
-                <div className="comment-content">
-                  This house is clean, the owner is very friendly!!
-                </div>
-              </div>
-              <div className="comment-item">
-                <div className="flex-row align-center">
-                  <img
-                    src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8="
-                    alt="user-name"
-                    className="ava"
-                  />
-                  <div className="flex-column justify-center">
-                    <span className="comment-author">Nguyen Van B</span>
-                    <span className="comment-time">1 year ago</span>
-                  </div>
-                  <div className="rating">
-                    <span className="flex-row align-center">
-                      <span>Rating:</span>
-                      <div className="icon-container">
-                        <BsStarFill className="icon icon-star" />
-                        <BsStarFill className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
-                        <BsStar className="icon icon-star" />
+                      <div className="rating">
+                        <span className="flex-row align-center">
+                          <span>Rating:</span>
+                          <div className="icon-container">
+                            <RatingStar valueStar={review.rating} />
+                          </div>
+                        </span>
                       </div>
-                    </span>
+                    </div>
+                    <div className="comment-content">{review.text}</div>
                   </div>
-                </div>
-                <div className="comment-content">A little noisy!!!</div>
-              </div>
+                ))
+              ) : (
+                <div>No feedback for this post</div>
+              )}
             </div>
           </div>
         </div>

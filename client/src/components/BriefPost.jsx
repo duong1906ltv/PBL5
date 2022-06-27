@@ -1,6 +1,7 @@
 import Wrapper from "../assets/wrappers/BriefPost";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { format } from "timeago.js";
 
 function BriefPost({ post }) {
   let date = moment(post.date);
@@ -19,7 +20,9 @@ function BriefPost({ post }) {
         {post.area} m<sup>2</sup>
       </span>
       <span className="position-content">{post.city.name}</span>
-      {post.feature !== "New" && <span className="time-content">{date}</span>}
+      {post.feature === "new" && (
+        <span className="time-content">{format(post.date)}</span>
+      )}
     </div>
   );
 

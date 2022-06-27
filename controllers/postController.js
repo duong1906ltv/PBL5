@@ -65,7 +65,7 @@ const getAllPosts = async (req, res) => {
 
 const getPostById = async (req, res) => {
   try {
-    const post = await Motel.findById(req.params.id);
+    const post = await Motel.findById(req.params.id).populate("createdBy");
     res.status(StatusCodes.OK).json(post);
   } catch (error) {
     res.status(500).json(error);
@@ -149,7 +149,7 @@ const reviewPost = async (req, res) => {
   const newReview = {
     text: req.body.text,
     username: user.username,
-    avatar: user.avatar,
+    avatar: user.user_ava,
     user: req.user.userId,
     rating: req.body.rating,
   };

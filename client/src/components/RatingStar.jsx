@@ -2,6 +2,8 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 
 function RatingStar({ valueStar }) {
+  const stars = Array(5).fill(0);
+
   return (
     <div>
       {" "}

@@ -1,6 +1,5 @@
 import React from "react";
 import { useAppContext } from "../context/appContext";
-import posts from "../utils/post";
 import BriefPost from "./BriefPost";
 
 function NewPost() {
