@@ -25,7 +25,8 @@ const Wrapper = styled.div`
         color: var(--black);
         border: none;
         outline: none;
-        font-weight: 600;
+        font-weight: 500;
+        font-size: 16px;
       }
 
       .submit__btn {
