@@ -94,6 +94,7 @@ const Wrapper = styled.div`
       width: 30px;
       height: 30px;
       border-radius: 50%;
+      object-fit: cover;
     }
     span {
       text-transform: capitalize;

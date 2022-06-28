@@ -5,7 +5,7 @@ const Wrapper = styled.main`
   display: flex;
   justify-content: space-between;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 2rem auto;
 
   .container--left,
   .container--right {

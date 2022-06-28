@@ -25,10 +25,11 @@ function AllPosts(props) {
 }
 
 const Wrapper = styled.main`
-  margin: 1rem;
+  max-width: 1440px;
+  margin: 2rem auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 
   .filtering {
     min-height: 10vh;
@@ -36,8 +37,14 @@ const Wrapper = styled.main`
 
   .content-container {
     min-height: 100vh;
-    border: 1px solid blue;
-    width: 100%;
+    margin: 0 auto;
+    width: 90%;
+    padding: 2rem 4rem;
+    background: var(--white);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 `
 
