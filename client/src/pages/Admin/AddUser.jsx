@@ -1,75 +1,131 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useAppContext } from "../../context/appContext";
+import axios from "axios";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  username: "",
+  email: "",
+  address: "",
+  phone_number: "",
+};
 
 function AddUser() {
+  const [user, setUser] = useState(initialState);
+
+  const { editUserId, isEditingUser } = useAppContext();
+  useEffect(() => {
+    const getUserById = async () => {
+      try {
+        const res = await axios("/api/users?userId=" + editUserId);
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (isEditingUser) {
+      getUserById();
+    }
+  }, [editUserId]);
   return (
     <Wrapper>
-      <h2 className='title'>Add User</h2>
-      <form className='form'>
-        <div className='input-group'>
-          <label htmlFor='firstName'>First Name</label>
+      {isEditingUser ? (
+        <h2 className="title">Update User</h2>
+      ) : (
+        <h2 className="title">Add User</h2>
+      )}
+      <form className="form">
+        <div className="input-group">
+          <label htmlFor="firstName">First Name</label>
           <input
-            type='text'
-            id='firstName'
-            placeholder='Please enter first name'
+            type="text"
+            id="firstName"
+            placeholder="Please enter first name"
+            value={user.firstName}
           />
         </div>
-        <div className='input-group'>
-          <label htmlFor='lastName'>Last Name</label>
+        <div className="input-group">
+          <label htmlFor="lastName">Last Name</label>
           <input
-            type='text'
-            id='lastName'
-            placeholder='Please enter last name'
+            type="text"
+            id="lastName"
+            placeholder="Please enter last name"
+            value={user.lastName}
           />
         </div>
-        <div className='input-group'>
-          <label htmlFor='username'>Username</label>
+        <div className="input-group">
+          <label htmlFor="username">Username</label>
           <input
-            type='text'
-            id='username'
-            placeholder='Please enter username'
+            type="text"
+            id="username"
+            placeholder="Please enter username"
+            value={user.username}
           />
         </div>
-        <div className='input-group'>
-          <label htmlFor='email'>Email</label>
-          <input type='email' id='email' placeholder='Please enter email' />
-        </div>
-        <div className='input-group'>
-          <label htmlFor='address'>Address</label>
+        <div className="input-group">
+          <label htmlFor="email">Email</label>
           <input
-            type='address'
-            id='address'
-            placeholder='Please enter address'
+            type="email"
+            id="email"
+            placeholder="Please enter email"
+            value={user.email}
           />
         </div>
-        <div className='input-group'>
-          <label htmlFor='phone'>Phone number</label>
-          <input type='phone' id='phone' placeholder='Please enter phone' />
-        </div>
-        <div className='input-group'>
-          <label htmlFor='password'>Password</label>
+        <div className="input-group">
+          <label htmlFor="address">Address</label>
           <input
-            type='password'
-            id='password'
-            placeholder='Please enter password'
+            type="address"
+            id="address"
+            placeholder="Please enter address"
+            value={user.address}
           />
         </div>
-        <div className='input-group'>
-          <label htmlFor='password-confirm'>Confirm password</label>
+        <div className="input-group">
+          <label htmlFor="phone">Phone number</label>
           <input
-            type='password'
-            id='password-confirm'
-            placeholder='Please re-enter password'
+            type="phone"
+            id="phone"
+            placeholder="Please enter phone"
+            value={user.phone_number}
           />
         </div>
+        {!isEditingUser && (
+          <>
+            <div className="input-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Please enter password"
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="password-confirm">Confirm password</label>
+              <input
+                type="password"
+                id="password-confirm"
+                placeholder="Please re-enter password"
+              />
+            </div>
+          </>
+        )}
+
         <div>
-          <button type='submit' className='form__btn--submit'>
-            Add User
-          </button>
+          {isEditingUser ? (
+            <button type="submit" className="form__btn--submit">
+              Update user
+            </button>
+          ) : (
+            <button type="submit" className="form__btn--submit">
+              Add User
+            </button>
+          )}
         </div>
       </form>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
@@ -123,6 +179,6 @@ const Wrapper = styled.main`
       margin-top: 1rem;
     }
   }
-`
+`;
 
-export default AddUser
+export default AddUser;

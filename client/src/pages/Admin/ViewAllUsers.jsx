@@ -1,24 +1,54 @@
-import React from 'react'
-import styled from 'styled-components'
-import users from '../../utils/user'
-import { DeleteNoti } from '../../components/Admin'
-import { useState } from 'react'
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { DeleteNoti } from "../../components/Admin";
+import { useState } from "react";
+import axios from "axios";
+import { useAppContext } from "../../context/appContext";
+import { useNavigate } from "react-router-dom";
 
 function ViewAllUsers() {
-  const [isDelete, setIsDelete] = useState(false)
+  let navigate = useNavigate();
+
+  const [isDelete, setIsDelete] = useState(false);
+  const [userDeleteId, setUserDeleteId] = useState();
+  const [users, setUsers] = useState([]);
+
+  const { setEditUser } = useAppContext();
+
   const toggle = () => {
-    setIsDelete(!isDelete)
-  }
+    setIsDelete(!isDelete);
+  };
+  const chooseUserDelete = (userId) => {
+    setUserDeleteId(userId);
+    toggle();
+  };
+
+  const editUser = (id) => {
+    setEditUser(id);
+    navigate("/admin/add_user");
+  };
+
+  useEffect(() => {
+    const getAllUsers = async () => {
+      try {
+        const res = await axios("/api/auth/getProfiles  ");
+        setUsers(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getAllUsers();
+  }, []);
 
   return (
     <Wrapper>
-      <h2 className='title'>View All Users</h2>
-      <form className='sort_form'>
-        <strong style={{ color: 'var(--primary-500)' }}>Filter by</strong>
-        <select name='sort' id='sort'>
-          <option value='all_user'>All Users</option>
+      <h2 className="title">View All Users</h2>
+      <form className="sort_form">
+        <strong style={{ color: "var(--primary-500)" }}>Filter by</strong>
+        <select name="sort" id="sort">
+          <option value="all_user">All Users</option>
         </select>
-        <button className='sort_btn'>Filter</button>
+        <button className="sort_btn">Filter</button>
       </form>
       <table>
         <thead>
@@ -31,13 +61,13 @@ function ViewAllUsers() {
             <th>Phone number</th>
             <th>Address</th>
             <th>Role</th>
-            <th colspan='2'>Action</th>
+            <th colspan="2">Action</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users.map((user, index) => (
             <tr>
-              <td>{user.id}</td>
+              <td>{index + 1}</td>
               <td>{user.username}</td>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
@@ -47,20 +77,23 @@ function ViewAllUsers() {
               <td>
                 <select name={`role_of_${user.id}`} id={`role_of_${user.id}`}>
                   <option value={user.role}>{user.role}</option>
-                  {user.role === 'admin' ? (
-                    <option value='user'>user</option>
+                  {user.role === "admin" ? (
+                    <option value="user">user</option>
                   ) : (
-                    <option value='admin'>admin</option>
+                    <option value="admin">admin</option>
                   )}
                 </select>
               </td>
               <td>
-                <a href='/admin/users' className='edit__link'>
+                <a onClick={(e) => editUser(user._id)} className="edit__link">
                   Edit
                 </a>
               </td>
               <td>
-                <span className='delete__link' onClick={toggle}>
+                <span
+                  className="delete__link"
+                  onClick={(e) => chooseUserDelete(user._id)}
+                >
                   Delete
                 </span>
               </td>
@@ -72,11 +105,14 @@ function ViewAllUsers() {
         <DeleteNoti
           isOpenPopup={isDelete}
           toggle={toggle}
-          deleteObject='user'
+          deleteObject="user"
+          userDeleteId={userDeleteId}
+          users={users}
+          setUsers={setUsers}
         />
       )}
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
@@ -169,6 +205,6 @@ const Wrapper = styled.main`
       border-radius: 5px;
     }
   }
-`
+`;
 
-export default ViewAllUsers
+export default ViewAllUsers;

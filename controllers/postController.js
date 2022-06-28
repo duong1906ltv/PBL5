@@ -65,7 +65,7 @@ const getAllPosts = async (req, res) => {
 
 const getPostById = async (req, res) => {
   try {
-    const post = await Motel.findById(req.params.id);
+    const post = await Motel.findById(req.params.id).populate("createdBy");
     res.status(StatusCodes.OK).json(post);
   } catch (error) {
     res.status(500).json(error);
@@ -105,13 +105,13 @@ const updatePost = async (req, res) => {
 const findPost = async (req, res) => {
   const { city, district, ward, price, area, category } = req.query;
   const queryObject = {};
-  if (city && city !== "all") {
+  if (city && city.split(",")[1] !== "All") {
     queryObject.city = { id: city.split(",")[0], name: city.split(",")[1] };
   }
-  if (district && district !== "all") {
+  if (district && district.split(",")[1] !== "All") {
     queryObject.district = { id: district };
   }
-  if (ward && ward !== "all") {
+  if (ward && ward.split(",")[1] !== "All") {
     queryObject.ward = { id: ward };
   }
   if (price) {
@@ -138,13 +138,18 @@ const findPost = async (req, res) => {
   res.status(200).json(result);
 };
 
+const getReview = async (req, res) => {
+  const post = await Motel.findById(req.params.id);
+  res.json(post.review);
+};
+
 const reviewPost = async (req, res) => {
   const user = await User.findById(req.user.userId);
   const post = await Motel.findById(req.params.id);
   const newReview = {
     text: req.body.text,
     username: user.username,
-    avatar: user.avatar,
+    avatar: user.user_ava,
     user: req.user.userId,
     rating: req.body.rating,
   };
@@ -193,6 +198,40 @@ const deleteReview = async (req, res) => {
   }
 };
 
+const addMotelImage = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+
+    const post = await Motel.findOne({ _id: postId });
+    const image = "http://127.0.0.1:5000/images/" + req.file.filename;
+
+    const newImage = {
+      image: image,
+    };
+
+    post.list_img.unshift(newImage);
+    post.save();
+    res.status(StatusCodes.OK).json(post.list_img);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json(error);
+  }
+};
+
+const deleteMotelImage = async (req, res) => {
+  try {
+    Motel.updateOne(
+      { _id: req.params.id },
+      {
+        $set: { list_img: [] },
+      }
+    );
+    res.status(200).json("OK");
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
 export {
   createPost,
   deletePost,
@@ -203,4 +242,7 @@ export {
   reviewPost,
   deleteReview,
   getPostById,
+  addMotelImage,
+  deleteMotelImage,
+  getReview,
 };

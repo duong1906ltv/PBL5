@@ -1,25 +1,36 @@
-import React from 'react'
-import styled from 'styled-components'
-import posts from '../../utils/post'
-import { DeleteNoti } from '../../components/Admin'
-import { useState } from 'react'
+import React from "react";
+import styled from "styled-components";
+import { DeleteNoti } from "../../components/Admin";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
 
 function ViewAllPosts() {
-  const [isDelete, setIsDelete] = useState(false)
+  const [isDelete, setIsDelete] = useState(false);
+  const [posts, setPosts] = useState([]);
   const toggle = () => {
-    setIsDelete(!isDelete)
-  }
+    setIsDelete(!isDelete);
+  };
+
+  useEffect(() => {
+    const getAllPosts = async () => {
+      const res = await axios.get("/api/post");
+      setPosts(res.data);
+    };
+    getAllPosts();
+  }, []);
 
   return (
     <Wrapper>
-      <h2 className='title'>View All Posts</h2>
+      <h2 className="title">View All Posts</h2>
       <div>
-        <form className='sort_form'>
-          <strong style={{ color: 'var(--primary-500)' }}>Filter by</strong>
-          <select name='sort' id='sort'>
-            <option value='all_post'>All Posts</option>
+        <form className="sort_form">
+          <strong style={{ color: "var(--primary-500)" }}>Filter by</strong>
+          <select name="sort" id="sort">
+            <option value="all_post">All Posts</option>
           </select>
-          <button className='sort_btn'>Filter</button>
+          <button className="sort_btn">Filter</button>
         </form>
       </div>
       <table>
@@ -34,16 +45,15 @@ function ViewAllPosts() {
             <th>Price (VND)</th>
             <th>Area</th>
             <th>Feature</th>
-            <th>Comments</th>
             <th>Date</th>
-            <th colspan='2'>Action</th>
+            <th colspan="2">Action</th>
           </tr>
         </thead>
         <tbody>
-          {posts.map((post) => (
+          {posts.map((post, index) => (
             <tr>
-              <td>{post.id}</td>
-              <td>{post.author.name}</td>
+              <td>{index + 1}</td>
+              <td>{post.createdBy.username}</td>
               <td>{post.title}</td>
               <td>{post.category}</td>
               <td>
@@ -52,36 +62,47 @@ function ViewAllPosts() {
                   id={`status_of_${post.id}`}
                 >
                   <option value={post.status}>{post.status}</option>
-                  {post.status === 'published' ? (
-                    <option value='draft'>draft</option>
+                  {post.status === "published" ? (
+                    <option value="draft">draft</option>
                   ) : (
-                    <option value='published'>published</option>
+                    <option value="published">published</option>
                   )}
                 </select>
               </td>
               <td>
                 <img
-                  width='100'
-                  height='70'
-                  src={post.imageUrl}
+                  width="100"
+                  height="70"
+                  src={post.image}
                   alt={post.title}
                 />
               </td>
-              <td style={{ textAlign: 'right' }}>{post.price}</td>
+              <td style={{ textAlign: "right" }}>{post.price}</td>
               <td>
-                {post.area}
-                <sup>2</sup>
+                {post.area}m<sup>2</sup>
               </td>
-              <td>{post.feature}</td>
-              <td>{post.comments}</td>
-              <td>{post.date}</td>
               <td>
-                <a href='/admin/posts' className='edit__link'>
+                {" "}
+                <select
+                  name={`feature_of_${post.id}`}
+                  id={`feature_of_${post.id}`}
+                >
+                  <option value={post.feature}>{post.feature}</option>
+                  {post.feature === "hot" ? (
+                    <option value="new">New</option>
+                  ) : (
+                    <option value="hot">Hot</option>
+                  )}
+                </select>
+              </td>
+              <td>{moment(post.date).format("MMM Do, YYYY")}</td>
+              <td>
+                <a href="/admin/posts" className="edit__link">
                   Edit
                 </a>
               </td>
               <td>
-                <span className='delete__link' onClick={toggle}>
+                <span className="delete__link" onClick={toggle}>
                   Delete
                 </span>
               </td>
@@ -93,11 +114,11 @@ function ViewAllPosts() {
         <DeleteNoti
           isOpenPopup={isDelete}
           toggle={toggle}
-          deleteObject='post'
+          deleteObject="post"
         />
       )}
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.main`
@@ -190,6 +211,6 @@ const Wrapper = styled.main`
       border-radius: 5px;
     }
   }
-`
+`;
 
-export default ViewAllPosts
+export default ViewAllPosts;

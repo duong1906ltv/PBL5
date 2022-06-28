@@ -21,7 +21,11 @@ function Filtering(props) {
   const [valueArea, setValueArea] = useState([0, 100]);
   const [city, setCity] = useState([0, "All"]);
   const [district, setDistrict] = useState([0, "All"]);
+  const [category, setCategory] = useState();
   const [ward, setWard] = useState([0, "All"]);
+
+  const [isSetArea, SetIsSetArea] = useState(false);
+  const [isSetPrice, SetIsSetPrice] = useState(false);
 
   const onValueChangePrice = (values) => {
     setValuePrice(values);
@@ -69,9 +73,11 @@ function Filtering(props) {
   };
   const togglePrice = () => {
     setIsOpenPrice(!isOpenPrice);
+    SetIsSetPrice(true);
   };
   const toggleArea = () => {
     setIsOpenArea(!isOpenArea);
+    SetIsSetArea(true);
   };
 
   const getDistrict = (cityId) => {
@@ -112,14 +118,24 @@ function Filtering(props) {
 
   const handleFind = async (e) => {
     e.preventDefault();
-    const res = await axios(
-      "/api/post/find?city=" +
-        city +
-        "&area=" +
-        valueArea +
-        "&price=" +
-        valuePrice
-    );
+    let url =
+      "/api/post/find/1?city=" +
+      city +
+      "&ward=" +
+      ward +
+      "&district=" +
+      district;
+    if (category) {
+      url = url + "&category=" + category;
+    }
+    if (valueArea) {
+      url = url + "&area=" + valueArea;
+    }
+
+    if (valuePrice) {
+      url = url + "&price=" + valuePrice;
+    }
+    const res = await axios.get(url);
     props.setResult(res.data);
   };
 
@@ -196,7 +212,13 @@ function Filtering(props) {
           </div>
           <div className="form__element">
             <Button className="input__btn" onClick={togglePrice}>
-              Chon gia
+              {isSetPrice ? (
+                <>
+                  {valuePrice[0]} - {valuePrice[1]}
+                </>
+              ) : (
+                <>Chon gia</>
+              )}
             </Button>
             <Modal isOpen={isOpenPrice}>
               <ModalHeader toggle={togglePrice}>Choose Price</ModalHeader>
@@ -215,7 +237,13 @@ function Filtering(props) {
           </div>
           <div className="form__element">
             <Button className="input__btn" onClick={toggleArea}>
-              Dien tich
+              {isSetArea ? (
+                <>
+                  {valueArea[0]} - {valueArea[1]}
+                </>
+              ) : (
+                <>Dien tich</>
+              )}
             </Button>
             <Modal isOpen={isOpenArea}>
               <ModalHeader toggle={toggleArea}>Choose area</ModalHeader>
