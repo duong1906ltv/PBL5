@@ -194,6 +194,8 @@ const Wrapper = styled.main`
   background: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 3rem;
+  margin: 2rem auto;
+  border-radius: 5px;
 
   .flex-row {
     display: flex;

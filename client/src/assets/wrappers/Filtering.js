@@ -4,7 +4,6 @@ const Wrapper = styled.div`
 
   .form {
     width: 100%;
-    max-width: 1440px;
     margin: 0 auto;
     background: var(--primary-400);
     display: flex;
@@ -32,7 +31,7 @@ const Wrapper = styled.div`
       .submit__btn {
         width: 100%;
         height: 100%;
-        background: var(--yellow-dark);
+        background: #FCA311;
         color: var(--white);
         border: none;
         outline: none;
