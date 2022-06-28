@@ -71,8 +71,8 @@ html {
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-html body {
-  background: var(--backgroundColor);
+body {
+  background: var(--backgroundColor) !important ;
   font-family: var(--bodyFont);
   font-weight: 400;
   line-height: 1.75;
